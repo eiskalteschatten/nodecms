@@ -10,13 +10,9 @@
     </ul>
   </div>
   <div class="uk-navbar-right">
-    <ul class="uk-navbar-nav">
+    <ul class="uk-navbar-nav uk-visible@m">
       <li>
-        <a href="#">
-          <span class="uk-visible@m">{{ req.user.firstName }}</span>
-          <i class="fas fa-user uk-hidden@m"></i>
-          &nbsp;&nbsp;<i class="fas fa-caret-down"></i>
-        </a>
+        <a href="#">{{ req.user.firstName }}&nbsp;&nbsp;<i class="fas fa-caret-down"></i></a>
         <div class="uk-navbar-dropdown">
           <ul class="uk-nav uk-navbar-dropdown-nav">
             <li class="uk-nav-header">Account</li>
