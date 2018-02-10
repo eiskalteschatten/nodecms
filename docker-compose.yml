@@ -12,18 +12,16 @@ services:
       - "3000:3000"
       - "5858:5858"
     links:
-      - db
+      - mongo
     cap_drop:
       - ALL
     cap_add:
       - CHOWN
 
-  db:
-    image: mysql:latest
+  mongo:
+    image: mongo:3
     volumes:
-      - "./.data/db:/var/lib/mysql"
-    environment:
-      MYSQL_ROOT_PASSWORD: wordpress
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
+      - ./.data/mongo:/data/db
+    command: mongod --smallfiles --wiredTigerEngineConfigString='cache_size=512M'
+    ports:
+      - "27017:27017"
