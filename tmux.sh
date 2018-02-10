@@ -1,5 +1,5 @@
 #!/bin/bash
-SESSION=alexwiki
+SESSION=historymuseum
 #tmux="tmux -2 -f tmux.conf"
 tmux="tmux"
 
