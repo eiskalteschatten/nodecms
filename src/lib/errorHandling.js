@@ -1,8 +1,5 @@
 'use strict';
 
-const transLib = require('./translate');
-const translate = transLib.translate;
-
 module.exports = {
   returnError
 };
@@ -13,6 +10,6 @@ function returnError(error, res, req) {
   }
   else {
     console.error(error);
-    res.status(500).send(translate(req.lang, 'anErrorOccurred', req.app.locals));
+    res.status(500).send('An error occurred.');
   }
 }

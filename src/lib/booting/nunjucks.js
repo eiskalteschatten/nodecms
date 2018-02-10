@@ -7,7 +7,6 @@ const path = require('path');
 const slug = require('slug');
 
 const helper = require('../helper');
-const transLib = require('../translate');
 
 
 module.exports = app => {
@@ -21,14 +20,6 @@ module.exports = app => {
 
 
   // Custom filters in Nunjucks
-  nunjucksEnv.addFilter('translate', (str, lang) => {
-    return transLib.translate(lang, str, app.locals);
-  });
-
-  nunjucksEnv.addFilter('formatDate', (date, lang) => {
-    return transLib.getLocalizedDate(date, lang);
-  });
-
   nunjucksEnv.addFilter('cssClass', str => {
     if (str) {
       return slug(str).replace( /([a-z])([A-Z])/g, '$1-$2' ).toLowerCase();

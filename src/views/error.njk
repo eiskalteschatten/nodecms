@@ -1,6 +1,6 @@
 {% extends "base.njk" %}
 
-{% block title %}{{ "anErrorOccurred" | translate(req.lang) }}{% endblock %}
+{% block title %}An error occurred{% endblock %}
 
 {% block content %}
   {% if message %}
@@ -11,7 +11,7 @@
     {% if error %}
       {{ error }}
     {% else %}
-      {{ "anErrorOccurred" | translate(req.lang) }}
+      An error occurred
     {% endif %}
   </div>
 {% endblock %}
