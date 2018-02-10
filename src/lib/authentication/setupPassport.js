@@ -70,4 +70,31 @@ module.exports = () => {
       done(error, user);
     });
   });
+
+  if (process.env.SETUP_DEFAULT_USER) {
+    const defaultUser = require('../../config/config.json').defaultUser;
+
+    User.findOne({userName: defaultUser.userName}).exec().then(user => {
+      if (user) {
+        console.error('You are trying to create a new default user, but one has already been setup!');
+        return;
+      }
+
+      const newUser = new User({
+        firstName: defaultUser.firstName,
+        lastName: defaultUser.lastName,
+        userName: defaultUser.userName,
+        emailAddress: defaultUser.emailAddress,
+        role: defaultUser.role
+      });
+
+      newUser.password = newUser.generateHash(defaultUser.password);
+
+      return newUser.save();
+    }).then(user => {
+      if (user) {
+        console.log('Created new default user:', defaultUser);
+      }
+    }).catch(console.error);
+  }
 };

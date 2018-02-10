@@ -4,7 +4,7 @@ services:
   app:
     build:
       context: .
-    command: npm run docker:start
+    command: npm run start:dev
     volumes:
       - "./src:/app/src"
       - "./dev:/app/dev"
@@ -17,6 +17,8 @@ services:
       - ALL
     cap_add:
       - CHOWN
+    environment:
+      - SETUP_DEFAULT_USER=true
 
   mongo:
     image: mongo:3
