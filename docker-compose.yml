@@ -17,8 +17,8 @@ services:
       - ALL
     cap_add:
       - CHOWN
-    environment:
-      - SETUP_DEFAULT_USER=true
+    # environment:
+    #   - SETUP_DEFAULT_USER=true
 
   mongo:
     image: mongo:3
