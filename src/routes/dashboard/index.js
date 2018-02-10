@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
 
   res.render('dashboard/dashboard.njk', {
     pageTitle: pageTitle,
-    pageId: pageTitle
+    pageId: pageTitle.toLowerCase()
   });
 });
 

@@ -2,7 +2,11 @@
   <div class="uk-navbar-left">
     <a href="/dashboard" class="uk-navbar-item uk-logo">History Museum Console</a>
     <ul class="uk-navbar-nav">
-      <li class="uk-active"><a href="/dashboard">Home</a></li>
+      <li {% if pageId == "dashboard" %}class="uk-active"{% endif %}><a href="/dashboard">Home</a></li>
+      <li {% if pageId == "exhibitions" %}class="uk-active"{% endif %}><a href="/dashboard/exhibitions">Exhibitions</a></li>
+      <li {% if pageId == "blog" %}class="uk-active"{% endif %}><a href="/dashboard/blog">Blog</a></li>
+      <li {% if pageId == "media" %}class="uk-active"{% endif %}><a href="/dashboard/media">Media</a></li>
+      <li {% if pageId == "links" %}class="uk-active"{% endif %}><a href="/dashboard/links">Links</a></li>
     </ul>
   </div>
   <div class="uk-navbar-right">
