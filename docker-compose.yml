@@ -1,0 +1,29 @@
+version: '3.1'
+services:
+
+  app:
+    build:
+      context: .
+    command: npm run docker:start
+    volumes:
+      - "./src:/app/src"
+      - "./dev:/app/dev"
+    ports:
+      - "3000:3000"
+      - "5858:5858"
+    links:
+      - db
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+
+  db:
+    image: mysql:latest
+    volumes:
+      - "./.data/db:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9, user-scalable=0"/>
+    <meta name="description" content="">
+    <meta name="robots" content="noindex,nofollow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Language" content="{{ req.lang }}">
+    <meta name="author" content="Alex Seifert">
+    <meta name="copyright" content="Copyright (c) Alex Seifert">
+
+    <title>{% block title %}{% endblock %} - AlexWiki</title>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="/css/libs.css" type="text/css">
+        <link rel="stylesheet" href="/css/main.css" type="text/css">
+    {% endblock %}
+
+    {% for locale in appLocals.availableLanguages %}
+      {% set href = baseUrl + plainRoute | langUrl(locale) %}
+      <link hreflang="{{ locale }}" rel="alternate" href="{{ href }}" />
+    {% endfor %}
+  </head>
+  <body class="{{ req.lang }} {{ pageId | cssClass }}">
+    {% block body %}{% endblock %}
+
+    <div>
+    </div>
+
+    {% block javascripts %}
+      <script type="text/javascript" src="/js/libs.js"></script>
+      <script type="text/javascript" src="/js/scripts.js"></script>
+    {% endblock %}
+  </body>
+</html>

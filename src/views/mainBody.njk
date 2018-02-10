@@ -1,0 +1,30 @@
+{% extends "base.njk" %}
+
+{% block body %}
+  <div class="main-flex-container">
+    {% include "components/navbar.njk" %}
+
+    <main>
+      {% include "components/sidebar.njk" %}
+      {% if breadcrumbs %}
+        <ul class="uk-breadcrumb">
+          <li>
+            <a href="{{ "/" | langUrl(req.lang) }}">{{ "dashboard" | translate(req.lang) }}</a>
+          </li>
+
+          {% for url, title in breadcrumbs %}
+            <li>
+                <a href="{{ url }}">{{ title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      <div id="messageAnchor" class="uk-hidden"></div>
+
+      {% block content %}{% endblock %}
+    </main>
+
+    {% include "components/footer.njk" %}
+  </div>
+{% endblock %}
