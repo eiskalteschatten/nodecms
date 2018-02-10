@@ -29,6 +29,7 @@
     "node-sass": "^4.7.2",
     "nunjucks": "^2.5.2",
     "nunjucks-markdown": "^2.0.1",
+    "passport": "^0.4.0",
     "serve-favicon": "~2.3.0",
     "slug": "^0.9.1",
     "uikit": "^3.0.0-beta.39"

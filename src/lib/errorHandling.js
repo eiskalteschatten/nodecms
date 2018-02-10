@@ -4,7 +4,7 @@ module.exports = {
   returnError
 };
 
-function returnError(error, res, req) {
+function returnError(error, res) {
   if (error.statusCode) {
     res.status(error.statusCode).send(error.message);
   }
