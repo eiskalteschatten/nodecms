@@ -2,21 +2,22 @@
   <div class="uk-navbar-left">
     <a href="/dashboard" class="uk-navbar-item uk-logo">History Museum Console</a>
     <ul class="uk-navbar-nav">
-      <li {% if pageId == "dashboard" %}class="uk-active"{% endif %}><a href="/dashboard"><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;Dashboard</a></li>
-      <li {% if pageId == "exhibitions" %}class="uk-active"{% endif %}><a href="/dashboard/exhibitions"><i class="fas fa-book"></i>&nbsp;&nbsp;Exhibitions</a></li>
-      <li {% if pageId == "blog" %}class="uk-active"{% endif %}><a href="/dashboard/blog"><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Blog</a></li>
-      <li {% if pageId == "media" %}class="uk-active"{% endif %}><a href="/dashboard/media"><i class="fas fa-images"></i>&nbsp;&nbsp;Media</a></li>
-      <li {% if pageId == "links" %}class="uk-active"{% endif %}><a href="/dashboard/links"><i class="fas fa-link"></i>&nbsp;&nbsp;Links</a></li>
+      <li {% if pageId == "dashboard" %}class="uk-active"{% endif %}><a href="/dashboard"><i class="fas fa-tachometer-alt text-icon-left"></i>Dashboard</a></li>
+      <li {% if pageId == "exhibitions" %}class="uk-active"{% endif %}><a href="/dashboard/exhibitions"><i class="fas fa-book text-icon-left"></i>Exhibitions</a></li>
+      <li {% if pageId == "blog" %}class="uk-active"{% endif %}><a href="/dashboard/blog"><i class="fas fa-pencil-alt text-icon-left"></i>Blog</a></li>
+      <li {% if pageId == "media" %}class="uk-active"{% endif %}><a href="/dashboard/media"><i class="fas fa-images text-icon-left"></i>Media</a></li>
+      <li {% if pageId == "links" %}class="uk-active"{% endif %}><a href="/dashboard/links"><i class="fas fa-link text-icon-left"></i>Links</a></li>
     </ul>
   </div>
   <div class="uk-navbar-right">
     <ul class="uk-navbar-nav">
       <li>
-        <a href="#">{{ req.user.firstName }}&nbsp;&nbsp;<i class="fas fa-caret-down"></i></a>
+        <a href="#">{{ req.user.firstName }}<i class="fas fa-caret-down text-icon-right"></i></a>
         <div class="uk-navbar-dropdown">
           <ul class="uk-nav uk-navbar-dropdown-nav">
-            <li class="uk-nav-header">Account</li>
-            <li><a href="/dashboard/logout">Logout</a></li>
+            <li><a href="/dashboard/account"><i class="fas fa-user-circle text-icon-left"></i>Account</a></li>
+            <li class="uk-nav-divider"></li>
+            <li><a href="/dashboard/logout"><i class="fas fa-sign-out-alt text-icon-left"></i>Logout</a></li>
           </ul>
         </div>
       </li>
