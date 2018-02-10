@@ -29,13 +29,20 @@ module.exports = (express, app) => {
     for (const routePath of Object.keys(routesToInclude)) {
       const router = routesToInclude[routePath];
 
+      const isLoggedIn = (req, res, next) => {
+        if (req.isAuthenticated()) {
+          return next();
+        }
+        res.redirect('/admin/login');
+      };
+
       const appUse = (routePath, require) => {
         if (type === 'public') {
           app.use(routePath, require);
         }
         else {
           // If authentication is necessary for the route, do it here
-          //app.use(routePath, keycloak.protect(), require);
+          app.use(routePath, isLoggedIn, require);
         }
       };
 

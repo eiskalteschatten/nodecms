@@ -9,8 +9,14 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+const session = require('express-session');
+const flash = require('connect-flash');
+const passport = require('passport');
+
 const path = require('path');
 
+const MongoStore = require('connect-mongo')(session);
+const db = require('./lib/mongo/connection');
 
 module.exports = async () => {
   // Nunjucks
@@ -31,9 +37,21 @@ module.exports = async () => {
   app.use(express.static(path.join(__dirname, 'public')));
   app.disable('x-powered-by');
 
+  // Session setup
+  app.use(session({
+    secret: 'wow-what-a_secretkeyThisisForthis_website',
+    saveUninitialized: false,
+    resave: false,
+    store: new MongoStore({
+      mongooseConnection: db
+    })
+  }));
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use(flash());
 
   // Setup Passport authentication
-  //require('./lib/authentication/setupPassport')();
+  require('./lib/authentication/setupPassport')();
 
 
   // SASS compliation and frontend JavaScript concatination

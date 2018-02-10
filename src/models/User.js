@@ -8,10 +8,12 @@ const bcrypt = require('bcrypt-nodejs');
 const modelName = 'User';
 
 const schema = new mongoose.Schema({
+  firstName: String,
+  lastName: String,
+  userName: String,
   emailAddress: String,
   password: String,
-  authType: String,
-  accountType: String
+  role: String,
 },
 {
   collection: 'users',

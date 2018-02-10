@@ -1,45 +1,26 @@
 'use strict';
 
-const transLib = require('../../lib/translate');
-const translate = transLib.translate;
-
 const passport = require('passport');
 
 const LocalStrategy = require('passport-local').Strategy;
 
 const User = require('../../models/User');
-const Organization = require('../../models/Organization');
 
 const localConfig = {
-  usernameField: 'emailAddress',
+  usernameField: 'userName',
   passwordField: 'password',
   passReqToCallback: true
 };
 
 module.exports = () => {
-  passport.use('local-login', new LocalStrategy(localConfig, (req, emailAddress, password, done) => {
+  passport.use('local-login', new LocalStrategy(localConfig, (req, userName, password, done) => {
     process.nextTick(() => {
-      let finalUser;
-
-      User.findOne({ emailAddress: emailAddress }).exec().then(user => {
+      User.findOne({ userName: userName }).exec().then(user => {
         if (!user || !user.validPassword(password)) {
-          return done(null, false, req.flash('loginMessage', translate(req.lang, 'emailAddressOrPasswordIncorrect', req.app.locals)));
+          return done(null, false, req.flash('loginMessage', 'Incorrect username or password.'));
         }
 
-        finalUser = user;
-
-        return Organization.findOne({ userId: user['_id'] }).exec();
-      }).then(organization => {
-        if (!organization) {
-          return done(null, false, req.flash('loginMessage', translate(req.lang, 'anErrorOccurred', req.app.locals)));
-        }
-
-        req.session.organizationId = organization['_id'];
-        req.session.organizationName = organization.name;
-        req.session.settings = {};
-        req.session.settings.languages = organization.settings.languages;
-
-        return done(null, finalUser);
+        return done(null, user);
       }).catch(error => {
         console.error(error);
         done(error);
@@ -47,50 +28,32 @@ module.exports = () => {
     });
   }));
 
-  passport.use('local-register', new LocalStrategy(localConfig, (req, emailAddress, password, done) => {
+  passport.use('local-register', new LocalStrategy(localConfig, (req, userName, password, done) => {
     process.nextTick(() => {
-      const lang = req.lang;
       const body = req.body;
-      let savedUser;
 
-      User.findOne({emailAddress: emailAddress}).exec().then(user => {
+      User.findOne({userName: userName}).exec().then(user => {
         if (user) {
-          return done(null, false, req.flash('registerMessage', translate(lang, 'emailAddressAlreadyTaken', req.app.locals)));
+          return done(null, false, req.flash('registerMessage', 'A user with this username already exists.'));
         }
 
         if (body.password !== body.repeatPassword) {
-          return done(null, false, req.flash('registerMessage', translate(lang, 'passwordsDoNotMatch', req.app.locals)));
+          return done(null, false, req.flash('registerMessage', 'The passwords do not match.'));
         }
 
         const newUser = new User({
+          firstName: body.firstName,
+          lastName: body.lastName,
+          userName: body.userName,
           emailAddress: body.emailAddress,
-          authType: 'local',
-          accountType: 'standard'
+          role: body.role
         });
 
         newUser.password = newUser.generateHash(body.password);
 
         return newUser.save();
       }).then(user => {
-        savedUser = user;
-
-        const newOrganization = new Organization({
-          name: body.organizationName,
-          type: body.organizationType,
-          userId: savedUser['_id'],
-          settings: {
-            languages: [body.defaultLanguage]
-          }
-        });
-
-        return newOrganization.save();
-      }).then(savedOrganization => {
-        req.session.organizationId = savedOrganization['_id'];
-        req.session.organizationName = savedOrganization.name;
-        req.session.settings = {};
-        req.session.settings.languages = savedOrganization.settings.languages;
-
-        return done(null, savedUser);
+        return done(null, user);
       }).catch(error => {
         console.error(error);
         done(error);

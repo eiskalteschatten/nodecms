@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
   const pageTitle = 'Homepage';
 
   res.render('home/index.njk', {
-    pageTitle: pageTitle,
+    title: pageTitle,
     items: [
       { name : pageTitle },
       { name : 'item #3' },
