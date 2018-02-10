@@ -6,11 +6,13 @@ const path = require('path');
 
 const libs = [
   '../../node_modules/jquery/dist/jquery.min.js',
-  //'../../node_modules/nunjucks/browser/nunjucks.min.js',
+  '../public/js/libs/fontawesome-all.js',
+  '../../node_modules/nunjucks/browser/nunjucks.min.js',
   '../../node_modules/uikit/dist/js/uikit.min.js'
 ];
 
 const scripts = [
+  '../public/js/messages.js'
 ];
 
 module.exports = {

@@ -20,12 +20,19 @@
   <body class="{{ pageId | cssClass }}">
     {% block body %}{% endblock %}
 
-    <div>
-    </div>
+    {% include "components/clientSideTemplates.njk" %}
 
     {% block javascripts %}
       <script type="text/javascript" src="/js/libs.js"></script>
-      {#<script type="text/javascript" src="/js/scripts.js"></script>#}
+      <script type="text/javascript" src="/js/scripts.js"></script>
+
+      {% if flashMessage and flashMessage.length > 0 %}
+        <script type="text/javascript">
+          $(document).ready(function() {
+            messages.show('error', '{{ flashMessage }}');
+          });
+        </script>
+      {% endif %}
     {% endblock %}
   </body>
 </html>

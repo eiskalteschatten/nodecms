@@ -1,5 +1,8 @@
 FROM node:9-alpine
 
+RUN apk update && \
+    apk add vim
+
 COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
 

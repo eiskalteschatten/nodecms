@@ -6,7 +6,6 @@ const concatenateJs = require('concatenate-js-middleware');
 
 const cssConfig = require('../../config/css');
 const jsConfig = require('../../config/javascripts');
-
 const iAmHere = path.join(__dirname, '../../');
 
 function setupCleanupOnExit(jsFiles) {
@@ -73,7 +72,9 @@ module.exports = app => {
         sassFilePath: path.join(iAmHere, 'public/scss/')
       }));
 
-      app.use('/js/:jsName', concatenateJs(jsConfig));
+      app.use('/js/:jsName', concatenateJs({
+        config: jsConfig
+      }));
 
       setupCleanupOnExit(jsFiles);
 
