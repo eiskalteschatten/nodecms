@@ -33,7 +33,7 @@ module.exports = (express, app) => {
         if (req.isAuthenticated()) {
           return next();
         }
-        res.redirect('/admin/login');
+        res.redirect('/dashboard/login');
       };
 
       const appUse = (routePath, require) => {

@@ -11,11 +11,11 @@ const tempToken = require('../../lib/authentication/tempToken');
 
 router.get('/', (req, res) => {
   if (req.isAuthenticated()) {
-    return res.redirect('/admin');
+    return res.redirect('/dashboard');
   }
 
   tempToken.createNewTempToken().then(authToken => {
-    res.render('admin/login.njk', {
+    res.render('dashboard/login.njk', {
       pageTitle: 'Login',
       authToken: authToken,
       flashMessage: req.flash('loginMessage')
@@ -35,7 +35,7 @@ router.post('/', (req, res, next) => {
       }
 
       if (!user) {
-        return res.redirect('/admin/login');
+        return res.redirect('/dashboard/login');
       }
 
       req.logIn(user, error => {
@@ -44,7 +44,7 @@ router.post('/', (req, res, next) => {
           return next(error);
         }
 
-        return res.redirect('/admin');
+        return res.redirect('/dashboard');
       });
     })(req, res, next);
   }).catch(error => {
@@ -53,7 +53,7 @@ router.post('/', (req, res, next) => {
     }
 
     req.flash('loginMessage', 'An error occurred');
-    res.redirect('/admin/login');
+    res.redirect('/dashboard/login');
   });
 });
 

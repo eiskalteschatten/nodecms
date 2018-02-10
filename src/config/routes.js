@@ -9,10 +9,10 @@ module.exports = {
   'controllerRoutes': {
     'public': {
       '/': './routes/index',
-      '/admin/login': './routes/admin/login'
+      '/dashboard/login': './routes/dashboard/login'
     },
     'auth': {
-      '/admin/': './routes/admin/index',
+      '/dashboard/': './routes/dashboard/index',
     }
   }
 };

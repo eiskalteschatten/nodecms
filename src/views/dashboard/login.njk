@@ -1,4 +1,4 @@
-{% extends "admin/base.njk" %}
+{% extends "dashboard/base.njk" %}
 
 {% block title %}{{ pageTitle }}{% endblock %}
 
@@ -14,7 +14,7 @@
         <div id="messageAnchor" class="uk-hidden"></div>
 
         <div class="text-center">
-          <form id="loginForm" action="/admin/login" method="post">
+          <form id="loginForm" action="/dashboard/login" method="post">
             <input type="hidden" name="authToken" value="{{ authToken }}">
 
             <div class="uk-margin">

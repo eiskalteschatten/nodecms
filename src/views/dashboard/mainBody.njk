@@ -1,14 +1,14 @@
-{% extends "admin/base.njk" %}
+{% extends "dashboard/base.njk" %}
 
 {% block body %}
   <div class="main-flex-container">
-    {% include "admin/components/navbar.njk" %}
+    {% include "dashboard/components/navbar.njk" %}
 
     <main>
       {% if breadcrumbs %}
         <ul class="uk-breadcrumb uk-margin-top">
           <li>
-            <a href="/admin">Dashboard</a>
+            <a href="/dashboard">Dashboard</a>
           </li>
 
           {% for url, title in breadcrumbs %}
@@ -24,6 +24,6 @@
       {% block content %}{% endblock %}
     </main>
 
-    {% include "components/footer.njk" %}
+    {% include "dashboard/components/footer.njk" %}
   </div>
 {% endblock %}
