@@ -1,15 +1,14 @@
-{% extends "base.njk" %}
+{% extends "admin/base.njk" %}
 
 {% block body %}
   <div class="main-flex-container">
-    {% include "components/navbar.njk" %}
+    {% include "admin/components/navbar.njk" %}
 
     <main>
-      {% include "components/sidebar.njk" %}
       {% if breadcrumbs %}
         <ul class="uk-breadcrumb">
           <li>
-            <a href="/">dashboard</a>
+            <a href="/admin">Dashboard</a>
           </li>
 
           {% for url, title in breadcrumbs %}

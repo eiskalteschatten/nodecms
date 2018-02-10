@@ -5,16 +5,22 @@ const router = express.Router();
 //const cache = require('apicache').middleware;
 
 router.get('/', (req, res) => {
-  const pageTitle = 'Homepage';
+  const pageTitle = 'Dashboard';
 
-  res.render('home/index.njk', {
-    title: pageTitle,
+  res.render('admin/dashboard.njk', {
+    pageTitle: pageTitle,
+    pageId: pageTitle,
     items: [
       { name : pageTitle },
       { name : 'item #3' },
       { name : 'item #4' }
     ]
   });
+});
+
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/admin');
 });
 
 module.exports = router;
