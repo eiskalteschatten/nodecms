@@ -1,0 +1,21 @@
+.main-nav {
+  padding: 30px 0;
+
+  .main-logo {
+    // Logo styles
+  }
+
+  .nav-links {
+    a {
+      color: #000000;
+      display: inline-block;
+      font-weight: bold;
+      margin: 9px 15px;
+
+      &:hover {
+        color: $metaColor;
+        text-decoration: none;
+      }
+    }
+  }
+}

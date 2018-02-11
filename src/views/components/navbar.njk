@@ -1,16 +1,26 @@
-<div class="uk-navbar-container" uk-navbar>
-  <div class="uk-navbar-left">
-      <a href="/" class="uk-navbar-item uk-logo">History Museum</a>
-      <ul class="uk-navbar-nav">
-        <li class="uk-active"><a href="/">Home</a></li>
-      </ul>
-    </div>
-    <div class="uk-navbar-center">
-      <div class="uk-navbar-item">
-        <form action="javascript:void(0)">
-            <input class="uk-input uk-form-width-large" type="text" placeholder="Search">
-        </form>
+<nav class="main-nav">
+  <div class="uk-container">
+    <div uk-grid>
+      <div>
+        <div class="main-logo">History Museum</div>
       </div>
+
+      <div>
+        <div class="nav-links">
+          <a href="/exhibitions"><i class="fas fa-image text-icon-left"></i>Exhibitions</a>
+          <a href="/browse"><i class="fas fa-eye text-icon-left"></i>Browse</a>
+          <a href="/inventory"><i class="fas fa-archive text-icon-left"></i>Inventory</a>
+          <a href="/research"><i class="fas fa-book text-icon-left"></i>Research</a>
+          <a href="/blog"><i class="fas fa-newspaper text-icon-left"></i>Blog</a>
+        </div>
+      </div>
+
+      <div class="uk-width-expand@m">
+        <div class="uk-text-right">
+          <a href="/donate" class="uk-button uk-button-secondary">Donate</a>
+        </div>
+      </div>
+
     </div>
   </div>
-</div>
+</nav>

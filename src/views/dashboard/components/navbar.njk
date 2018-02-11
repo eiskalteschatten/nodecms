@@ -6,7 +6,7 @@
         <a href="/dashboard"><i class="fas fa-tachometer-alt text-icon-left"></i>Dashboard</a>
       </li>
       <li {% if pageId == "exhibitions" or pageId == "newExhibition" %}class="uk-active"{% endif %}>
-        <a href="/dashboard/exhibitions"><i class="fas fa-book text-icon-left"></i>Exhibitions</a>
+        <a href="/dashboard/exhibitions"><i class="fas fa-image text-icon-left"></i>Exhibitions</a>
         <div class="uk-navbar-dropdown">
           <ul class="uk-nav uk-navbar-dropdown-nav">
             <li {% if pageId == "exhibitions" %}class="uk-active"{% endif %}>
@@ -18,14 +18,14 @@
           </ul>
         </div>
       </li>
-      <li {% if pageId == "blog" %}class="uk-active"{% endif %}><a href="/dashboard/blog">
-        <i class="fas fa-pencil-alt text-icon-left"></i>Blog</a>
+      <li {% if pageId == "blog" %}class="uk-active"{% endif %}>
+        <a href="/dashboard/blog"><i class="fas fa-newspaper text-icon-left"></i>Blog</a>
       </li>
-      <li {% if pageId == "media" %}class="uk-active"{% endif %}><a href="/dashboard/media">
-        <i class="fas fa-images text-icon-left"></i>Media</a>
+      <li {% if pageId == "media" %}class="uk-active"{% endif %}>
+        <a href="/dashboard/inventory"><i class="fas fa-archive text-icon-left"></i>Inventory</a>
       </li>
-      <li {% if pageId == "links" %}class="uk-active"{% endif %}><a href="/dashboard/links">
-        <i class="fas fa-link text-icon-left"></i>Links</a>
+      <li {% if pageId == "research" %}class="uk-active"{% endif %}>
+        <a href="/dashboard/research"><i class="fas fa-book text-icon-left"></i>Research</a>
       </li>
     </ul>
   </div>

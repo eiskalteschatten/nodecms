@@ -13,11 +13,7 @@ router.get('/', (req, res) => {
 
   res.render('home/index.njk', {
     pageTitle: pageTitle,
-    items: [
-      { name : pageTitle },
-      { name : 'item #3' },
-      { name : 'item #4' }
-    ]
+    pageId: pageTitle.toLowerCase()
   });
 });
 

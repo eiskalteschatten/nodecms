@@ -1,4 +1,11 @@
-// Create and use to override default values from UIkit, until then, import the default
-// @import "libs/uikit-variables";
+$screen-sm-max: 768px;
+$screen-md-min: 769px;
+$screen-lg-min: 1280px;
 
-@import "../../../node_modules/uikit/src/scss/variables-theme";
+$metaColor: #2c58b2;
+$metaColorDark: #193a7c;
+
+@import "libs/uikit-variables";
+
+// Default UIkit variables
+//@import "../../../node_modules/uikit/src/scss/variables-theme";
