@@ -7,22 +7,93 @@
 
       <div id="mainNavLinks">
         <div class="nav-links">
+
+
+          {# Exhibitions #}
           <a href="/exhibitions" class="main"><i class="fas fa-image text-icon-left"></i>Exhibitions</a>
           <div class="remove-mobile" uk-dropdown>
-            <ul class="uk-nav uk-dropdown-nav">
-              <li class="uk-active"><a href="#">Active</a></li>
-              <li><a href="#">Item</a></li>
-              <li class="uk-nav-header">Header</li>
-              <li><a href="#">Item</a></li>
-              <li><a href="#">Item</a></li>
-              <li class="uk-nav-divider"></li>
-              <li><a href="#">Item</a></li>
-            </ul>
+            <div class="uk-dropdown-grid" uk-grid>
+              <div class="uk-width-medium">
+                <div class="uk-inline uk-margin-bottom">
+                  <img src="/img/tmp/clark-young-160446.jpg" width="100%" alt="News">
+                  <a href="/exhibitions/new" class="uk-position-cover uk-flex uk-flex-center uk-flex-middle overlay-link">New</a>
+                </div>
+                <ul class="uk-nav uk-dropdown-nav">
+                  <li><a href="/exhibitions/e/the-home-in-the-wild-west">The Home in the Wild West</a></li>
+                  <li><a href="/exhibitions/e/bavarian-kings">Bavarian Kings</a></li>
+                  <li><a href="/exhibitions/e/mining-towns-in-the-rocky-mountains">Mining Towns in the Rocky Mountains</a></li>
+                </ul>
+              </div>
+              <div class="uk-width-medium">
+                <div class="uk-inline uk-margin-bottom">
+                  <img src="/img/tmp/david-gylland-342621.jpg" width="100%" alt="Featured">
+                  <a href="/exhibitions/featured" class="uk-position-cover uk-flex uk-flex-center uk-flex-middle overlay-link">Featured</a>
+                </div>
+                <ul class="uk-nav uk-dropdown-nav">
+                  <li><a href="/exhibitions/e/who-were-the-real-cowboys">Who were the real cowboys?</a></li>
+                  <li><a href="/exhibitions/e/nineteenth-century-german-history">Nineteenth-Century German History</a></li>
+                </ul>
+              </div>
+            </div>
+            <hr>
+            <a href="/exhibitions">All exhibitions &raquo;</a>
           </div>
+
+
+          {# Browse #}
           <a href="/browse" class="main"><i class="fas fa-eye text-icon-left"></i>Browse</a>
+          <div class="remove-mobile" uk-dropdown>
+            <div class="uk-dropdown-grid" uk-grid>
+              <div class="uk-width-medium">
+                <div class="uk-inline uk-margin-bottom">
+                  <img src="/img/tmp/joanna-kosinska-44214.jpg" width="100%" alt="Era">
+                  <a href="/browse/era" class="uk-position-cover uk-flex uk-flex-center uk-flex-middle overlay-link">Era</a>
+                </div>
+                <ul class="uk-nav uk-dropdown-nav">
+                  <li><a href="/browse/era/e/ancient-era">Ancient Era</a></li>
+                  <li><a href="/browse/era/e/middle-ages">Middle Ages</a></li>
+                  <li><a href="/browse/era/e/nineteenth-century">Nineteenth Century</a></li>
+                </ul>
+              </div>
+              <div class="uk-width-medium">
+                <div class="uk-inline uk-margin-bottom">
+                  <img src="/img/tmp/kiwihug-393319.jpg" width="100%" alt="Region">
+                  <a href="/browse/region" class="uk-position-cover uk-flex uk-flex-center uk-flex-middle overlay-link">Region</a>
+                </div>
+                <ul class="uk-nav uk-dropdown-nav">
+                  <li><a href="/browse/region/r/north-america">North America</a></li>
+                  <li><a href="/browse/region/r/europe">Europe</a></li>
+                </ul>
+              </div>
+              <div class="uk-width-medium">
+                <div class="uk-inline uk-margin-bottom">
+                  <img src="/img/tmp/mike-petrucci-142796.jpg" width="100%" alt="Topic">
+                  <a href="/browse/topic" class="uk-position-cover uk-flex uk-flex-center uk-flex-middle overlay-link">Topic</a>
+                </div>
+                <ul class="uk-nav uk-dropdown-nav">
+                  <li><a href="/browse/topic/t/politics">Politics</a></li>
+                  <li><a href="/browse/topic/t/history-of-the-home">History of the Home</a></li>
+                  <li><a href="/browse/topic/t/wild-west">Wild West</a></li>
+                  <li><a href="/browse/topic/t/royalty-and-aristocracy">Royalty and Aristocracy</a></li>
+                </ul>
+              </div>
+            </div>
+            <hr>
+            <a href="/exhibitions">Browse all &raquo;</a>
+          </div>
+
+
+          {# Inventory #}
           <a href="/inventory" class="main"><i class="fas fa-archive text-icon-left"></i>Inventory</a>
+
+
+          {# Research #}
           <a href="/research" class="main"><i class="fas fa-book text-icon-left"></i>Research</a>
+
+
+          {# Blog #}
           <a href="/blog" class="main"><i class="fas fa-newspaper text-icon-left"></i>Blog</a>
+
         </div>
       </div>
 
@@ -35,6 +106,7 @@
     </div>
   </div>
 </nav>
+
 
 <nav class="main-nav mobile-menu uk-hidden@m uk-margin-left uk-margin-right">
   <div uk-grid>
