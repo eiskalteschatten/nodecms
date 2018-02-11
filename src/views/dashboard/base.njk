@@ -10,7 +10,13 @@
     <meta name="author" content="Alex Seifert">
     <meta name="copyright" content="Copyright (c) Alex Seifert">
 
-    <title>{% block title %}{% endblock %} - History Museum Dashboard</title>
+    <title>
+      {% if pageTitle %}
+        {% block title %}{% endblock %} - History Museum Dashboard
+      {% else %}
+        History Museum Dashboard
+      {% endif %}
+    </title>
 
     {% block stylesheets %}
         <link rel="stylesheet" href="/css/libs.css" type="text/css">

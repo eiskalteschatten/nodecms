@@ -7,13 +7,10 @@ const router = express.Router();
 const track = require('../lib/matomo');
 
 router.get('/', (req, res) => {
-  const pageTitle = 'Homepage';
-
-  track(req, pageTitle);
+  track(req, 'Home');
 
   res.render('home/index.njk', {
-    pageTitle: pageTitle,
-    pageId: pageTitle.toLowerCase()
+    pageId: 'home'
   });
 });
 
