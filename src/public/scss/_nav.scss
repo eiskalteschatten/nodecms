@@ -6,7 +6,7 @@
   }
 
   .nav-links {
-    a {
+    .main {
       color: #000000;
       display: inline-block;
       font-weight: bold;
@@ -31,7 +31,7 @@
 
 #mobileMenu {
   .nav-links {
-    a {
+    .main {
       display: block;
       margin: 15px;
     }

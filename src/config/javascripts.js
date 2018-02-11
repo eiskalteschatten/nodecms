@@ -15,6 +15,7 @@ const scripts = [
   '../public/js/messages.js',
   '../public/js/loader.js',
   '../public/js/forms.js',
+  '../public/js/mainNav.js',
   '../public/js/documentReady.js'
 ];
 
