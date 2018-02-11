@@ -1,4 +1,4 @@
-var messages = {
+var _messages = {
   show: function(type, message) {
     var template = $('#message').html();
     var html = nunjucks.renderString(template, {

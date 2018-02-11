@@ -12,7 +12,10 @@ const libs = [
 ];
 
 const scripts = [
-  '../public/js/messages.js'
+  '../public/js/messages.js',
+  '../public/js/loader.js',
+  '../public/js/forms.js',
+  '../public/js/documentReady.js'
 ];
 
 module.exports = {

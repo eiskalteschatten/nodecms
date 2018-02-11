@@ -1,0 +1,105 @@
+{% extends "dashboard/mainBody.njk" %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block content %}
+
+<div class="uk-child-width-expand@m" uk-grid>
+    <div>
+      <div class="uk-card uk-card-body uk-card-default">
+        <h3 class="uk-card-title">Account Information</h3>
+
+        <form id="accountForm" action="/dashboard/account" method="patch" class="uk-form-horizontal">
+          <div class="uk-margin">
+            <label for="userName" class="uk-form-label">Username</label>
+            <div class="uk-form-controls">
+              <input type="text" value="{{ req.user.userName }}" name="userName" class="uk-input" placeholder="Username" required>
+            </div>
+          </div>
+
+          <div class="uk-margin">
+            <label for="firstName" class="uk-form-label">First Name</label>
+            <div class="uk-form-controls">
+              <input type="text" value="{{ req.user.firstName }}" name="firstName" class="uk-input" placeholder="First Name" required>
+            </div>
+          </div>
+
+          <div class="uk-margin">
+            <label for="lastName" class="uk-form-label">Last Name</label>
+            <div class="uk-form-controls">
+              <input type="text" value="{{ req.user.lastName }}" name="lastName" class="uk-input" placeholder="Last Name" required>
+            </div>
+          </div>
+
+          <div class="uk-margin">
+            <label for="emailAddress" class="uk-form-label">Email Address</label>
+            <div class="uk-form-controls">
+              <input type="email" value="{{ req.user.emailAddress }}" name="emailAddress" class="uk-input" placeholder="Email Address" required>
+            </div>
+          </div>
+
+          <div class="uk-margin">
+            <div class="uk-form-controls">
+              <button class="uk-button uk-button-primary">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div>
+      <div class="uk-card uk-card-body uk-card-default">
+        <h3 class="uk-card-title">Password</h3>
+
+        <form id="passwordForm" action="/dashboard/account/password" method="patch" class="uk-form-horizontal">
+          <div class="uk-margin">
+            <label for="oldPassword" class="uk-form-label">Old Password</label>
+            <div class="uk-form-controls">
+              <input type="password" value="" name="oldPassword" class="uk-input" placeholder="Old Password" required>
+            </div>
+          </div>
+
+          <div class="uk-margin">
+            <label for="password" class="uk-form-label">New Password</label>
+            <div class="uk-form-controls">
+              <input type="password" value="" name="password" id="password" class="uk-input" placeholder="New Password" required>
+            </div>
+          </div>
+
+          <div class="uk-margin">
+            <label for="repeatPassword" class="uk-form-label">Repeat New Password</label>
+            <div class="uk-form-controls">
+              <input type="password" value="" name="repeatPassword" class="uk-input" placeholder="Repeat New Password" required>
+            </div>
+          </div>
+
+          <div class="uk-margin">
+            <div class="uk-form-controls">
+              <button class="uk-button uk-button-primary">Save New Password</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+  {{ super() }}
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#accountForm').submit(function(e) {
+        e.preventDefault();
+        _forms.submitForm($(this), $(this).attr('method'));
+      });
+
+      $('#passwordForm').submit(function(e) {
+        e.preventDefault();
+        _forms.submitForm($(this), $(this).attr('method'));
+      });
+    });
+  </script>
+{% endblock %}
