@@ -13,7 +13,7 @@ const schema = new mongoose.Schema({
   userName: String,
   emailAddress: String,
   password: String,
-  role: String,
+  role: String
 },
 {
   collection: 'users',
