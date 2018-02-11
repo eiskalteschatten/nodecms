@@ -6,14 +6,30 @@ const router = express.Router();
 
 // const Exhibition = require('../../models/Exhibition');
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   const pageTitle = 'Exhibitions';
+
+
 
   res.render('dashboard/exhibitions/index.njk', {
     pageTitle: pageTitle,
     pageId: pageTitle.toLowerCase(),
     breadcrumbs: {
       '/dashboard/exhibitions': pageTitle
+    }
+  });
+});
+
+
+router.get('/new', (req, res) => {
+  const pageTitle = 'Create New Exhibition';
+
+  res.render('dashboard/exhibitions/edit.njk', {
+    pageTitle: pageTitle,
+    pageId: 'newExhibition',
+    breadcrumbs: {
+      '/dashboard/exhibitions': 'Exhibitions',
+      '/dashboard/exhibitions/new': pageTitle,
     }
   });
 });
