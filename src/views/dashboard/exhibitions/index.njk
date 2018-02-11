@@ -1,0 +1,61 @@
+{% extends "dashboard/mainBody.njk" %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block content %}
+
+  <div class="uk-margin uk-card uk-card-default">
+    <div class="uk-card-header">
+      <div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid>
+        <div>
+          <h2 class="uk-card-title"><i class="fas fa-book text-icon-left"></i>Exhibitions</h2>
+        </div>
+        <div>
+          <div class="uk-text-right">
+            <a href="/dashboard/exhibitions/new" class="uk-button uk-button-secondary"><i class="fas fa-edit text-icon-left"></i>Create new exhibition</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="uk-card-body">
+      <table class="uk-table uk-table-middle uk-table-striped">
+        <tbody>
+          <tr>
+            <td>
+              Exhibition A
+              <div class="uk-text-meta">A short preview of the first text with ellipsis done server-side.</div>
+            </td>
+            <td class="uk-text-right">
+              {% include "dashboard/components/itemEditButtons.njk" %}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Exhibition B
+              <div class="uk-text-meta">A short preview of the first text with ellipsis done server-side.</div>
+            </td>
+            <td class="uk-text-right">
+              {% include "dashboard/components/itemEditButtons.njk" %}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="uk-card-footer">
+      <ul class="uk-pagination uk-flex-center" uk-margin>
+        <li><a href="#"><span uk-pagination-previous></span></a></li>
+        <li><a href="#">1</a></li>
+        <li class="uk-disabled"><span>...</span></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">6</a></li>
+        <li class="uk-active"><span>7</span></li>
+        <li><a href="#">8</a></li>
+        <li><a href="#"><span uk-pagination-next></span></a></li>
+      </ul>
+    </div>
+  </div>
+
+
+{% endblock %}
