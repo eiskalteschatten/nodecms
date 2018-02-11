@@ -40,3 +40,5 @@ src/public/js/libs.js
 .DS_Store
 
 .data
+
+src/public/uploads
