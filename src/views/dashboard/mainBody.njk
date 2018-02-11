@@ -4,7 +4,7 @@
   <div class="main-flex-container">
     {% include "dashboard/components/navbar.njk" %}
 
-    <main class="uk-container uk-container-expand uk-margin-top">
+    <main class="uk-container uk-container-expand {% if not breadcrumbs %}uk-margin-top{% endif %}">
       {% if breadcrumbs %}
         <ul class="uk-breadcrumb uk-margin-top">
           <li>

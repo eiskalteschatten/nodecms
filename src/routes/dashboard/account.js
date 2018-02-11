@@ -11,7 +11,10 @@ router.get('/', (req, res) => {
 
   res.render('dashboard/account.njk', {
     pageTitle: pageTitle,
-    pageId: pageTitle.toLowerCase()
+    pageId: pageTitle.toLowerCase(),
+    breadcrumbs: {
+      '/dashboard/account': pageTitle
+    }
   });
 });
 
