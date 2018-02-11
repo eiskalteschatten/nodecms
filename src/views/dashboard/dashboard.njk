@@ -4,6 +4,78 @@
 
 {% block content %}
 
-test
+<div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid>
+  <div>
+    <div class="uk-margin uk-card uk-card-default">
+      <div class="uk-card-header">
+        <h2 class="uk-card-title"><i class="fas fa-book text-icon-left"></i>Exhibitions</h2>
+      </div>
+
+      <div class="uk-card-body">
+        <h3>The latest five exhibitions</h3>
+
+        <table class="uk-table uk-table-middle uk-table-striped">
+          <tbody>
+            <tr>
+              <td>
+                Exhibition A
+                <div class="uk-text-meta">A short preview of the first text with ellipsis done server-side.</div>
+              </td>
+              <td><a href="#"><i class="fas fa-eye"></i></a></td>
+            </tr>
+            <tr>
+              <td>
+                Exhibition B
+                <div class="uk-text-meta">A short preview of the first text with ellipsis done server-side.</div>
+              </td>
+              <td><a href="#"><i class="fas fa-eye"></i></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="uk-card-footer uk-text-right">
+        <a href="/dashboard/exhibitions" class="uk-button uk-button-default uk-margin-right">All exhibitions</a>
+        <a href="/dashboard/exhibitions/new" class="uk-button uk-button-secondary"><i class="fas fa-edit text-icon-left"></i>Create new exhibition</a>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="uk-margin uk-card uk-card-default">
+      <div class="uk-card-header">
+        <h2 class="uk-card-title"><i class="fas fa-pencil-alt text-icon-left"></i>Blog</h2>
+      </div>
+
+      <div class="uk-card-body">
+        <h3>The latest five blog posts</h3>
+
+        <table class="uk-table uk-table-middle uk-table-striped">
+          <tbody>
+            <tr>
+              <td>
+                Blog Post A
+                <div class="uk-text-meta">A short preview with ellipsis done server-side.</div>
+              </td>
+              <td><a href="#"><i class="fas fa-eye"></i></a></td>
+            </tr>
+            <tr>
+              <td>
+                Blog Post B
+                <div class="uk-text-meta">A short preview with ellipsis done server-side.</div>
+              </td>
+              <td><a href="#"><i class="fas fa-eye"></i></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="uk-card-footer uk-text-right">
+        <a href="/dashboard/blog" class="uk-button uk-button-default uk-margin-right">All blog posts</a>
+        <a href="/dashboard/blog/new" class="uk-button uk-button-secondary"><i class="fas fa-edit text-icon-left"></i>Create new blog post</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 {% endblock %}
