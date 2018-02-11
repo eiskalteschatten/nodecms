@@ -18,4 +18,22 @@
       }
     }
   }
+
+  @media (max-width: $breakpoint-medium) {
+    padding: 10px 0;
+
+    .burger-menu {
+      color: #000000;
+    }
+
+  }
+}
+
+#mobileMenu {
+  .nav-links {
+    a {
+      display: block;
+      margin: 15px;
+    }
+  }
 }
