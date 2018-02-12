@@ -12,7 +12,6 @@ const schema = new mongoose.Schema({
   media: [],
   creator: String,
   author: String,
-  createdBy: String,
   lastEditedBy: String
 },
 {
