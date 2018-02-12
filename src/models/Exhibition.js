@@ -10,6 +10,8 @@ const schema = new mongoose.Schema({
   template: Number,
   texts: [],
   media: [],
+  creator: String,
+  author: String,
   createdBy: String,
   lastEditedBy: String
 },
