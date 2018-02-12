@@ -9,7 +9,7 @@ services:
       - "./src:/app/src"
       - "./dev:/app/dev"
     ports:
-      - "3000:3000"
+      - "3025:3000"
       - "5858:5858"
     links:
       - mongo
