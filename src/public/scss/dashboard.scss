@@ -1,0 +1,19 @@
+.new-exhibition {
+  .exhibition-templates-menu {
+    .image-link {
+      display: block;
+      text-align: center;
+
+      span {
+        color: #666666;
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      &:hover {
+        background: #f8f8f8;
+        text-decoration: none;
+      }
+    }
+  }
+}

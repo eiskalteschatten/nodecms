@@ -1,6 +1,7 @@
 {
   "sassFilesToCompile": [
     "libs.scss",
-    "main.scss"
+    "main.scss",
+    "dashboard.scss"
   ]
 }

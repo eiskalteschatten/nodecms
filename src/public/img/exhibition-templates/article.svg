@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="150" height="250" viewBox="0, 0, 150, 250">
+  <g id="Ebene_1">
+    <path d="M13.75,17.25 L97.25,17.25" fill-opacity="0" stroke="#666666" stroke-width="3"/>
+    <path d="M13.75,33.125 L97.25,33.125" fill-opacity="0" stroke="#666666" stroke-width="3"/>
+    <path d="M13.75,49.25 L97.25,49.25" fill-opacity="0" stroke="#666666" stroke-width="3"/>
+    <path d="M104.25,15 L139.5,15 L139.5,50.25 L104.25,50.25 L104.25,15 z" fill="#666666"/>
+    <path d="M13.75,62.667 L140,62.667" fill-opacity="0" stroke="#666666" stroke-width="3"/>
+    <path d="M13.75,78.542 L140,78.542" fill-opacity="0" stroke="#666666" stroke-width="3"/>
+    <path d="M13.75,94.667 L140,94.667" fill-opacity="0" stroke="#666666" stroke-width="3"/>
+    <path d="M13.75,109.5 L140,109.5" fill-opacity="0" stroke="#666666" stroke-width="3"/>
+    <path d="M13.75,125.375 L140,125.375" fill-opacity="0" stroke="#666666" stroke-width="3"/>
+    <path d="M13.75,189.667 L140,189.667" fill-opacity="0" stroke="#666666" stroke-width="3"/>
+    <path d="M13.75,204.5 L140,204.5" fill-opacity="0" stroke="#666666" stroke-width="3"/>
+    <path d="M13.75,220.375 L140,220.375" fill-opacity="0" stroke="#666666" stroke-width="3"/>
+    <path d="M13.75,236.5 L140,236.5" fill-opacity="0" stroke="#666666" stroke-width="3"/>
+    <path d="M56.5,141.542 L140,141.542" fill-opacity="0" stroke="#666666" stroke-width="3"/>
+    <path d="M56.5,157.417 L140,157.417" fill-opacity="0" stroke="#666666" stroke-width="3"/>
+    <path d="M56.5,173.542 L140,173.542" fill-opacity="0" stroke="#666666" stroke-width="3"/>
+    <path d="M13.25,139.417 L48.5,139.417 L48.5,174.667 L13.25,174.667 L13.25,139.417 z" fill="#666666"/>
+  </g>
+</svg>
