@@ -19,6 +19,7 @@ const scripts = [
   '../public/js/documentReady.js'
 ];
 
+
 module.exports = {
   libs: libs.map(file => {
     return path.join(__dirname, file);

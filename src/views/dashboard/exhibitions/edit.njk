@@ -21,16 +21,16 @@
       <div class="uk-inline exhibition-templates-menu">
         <input type="hidden" id="template">
         <button class="uk-button uk-button-default">Choose a template<i class="fas fa-caret-down text-icon-right"></i></button>
-        <div uk-dropdown="mode: click">
+        <div uk-dropdown="mode: click" id="exhibitionTemplatesMenuDropdown">
           <div class="uk-column-1-2">
             <div class="uk-width-medium">
-              <a href="#" class="image-link uk-padding-small">
+              <a href="#" class="image-link uk-padding-small js-exhibition-template-button" data-template-id="article">
                 <span>Article</span>
                 <img src="/img/exhibition-templates/article.svg" alt="Article">
               </a>
             </div>
             <div class="uk-width-medium">
-              <a href="#" class="image-link uk-padding-small">
+              <a href="#" class="image-link uk-padding-small js-exhibition-template-button" data-template-id="sections">
                 <span>Sections</span>
                 <img src="/img/exhibition-templates/sections.svg" alt="Sections">
               </a>
@@ -38,6 +38,12 @@
           </div>
         </div>
       </div>
+
+      <div class="uk-hidden uk-text-center" id="loadTemplateSpinner">
+        <div uk-spinner></div>
+      </div>
+
+      <div id="templateAnchor"></div>
     </div>
   </div>
 

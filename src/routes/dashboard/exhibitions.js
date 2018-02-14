@@ -35,6 +35,12 @@ router.get('/new', (req, res) => {
 });
 
 
+router.get('/new/exhibition-template', (req, res) => {
+  const template = req.query.template;
+  res.render(`dashboard/exhibitions/templates/${template}.njk`);
+});
+
+
 // router.patch('/', async (req, res) => {
 //   const body = req.body;
 //   const currentUserName = req.user.userName;
