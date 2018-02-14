@@ -3,10 +3,16 @@ var _dashboard = {
     var loadTemplateSpinner = $('#loadTemplateSpinner');
     loadTemplateSpinner.removeClass('uk-hidden');
 
-    $.get('/dashboard/exhibitions/new/exhibition-template', {template:id}, function(markup) {
-      loadTemplateSpinner.addClass('uk-hidden');
-      $('#templateAnchor').html(markup);
-    });
+    $.ajax('/dashboard/exhibitions/new/exhibition-template?id=' + id)
+      .done(function(markup) {
+        $('#templateAnchor').html(markup);
+      })
+      .fail(function(xhr, status, error) {
+        _messages.show('error', error);
+      })
+      .always(function() {
+        loadTemplateSpinner.addClass('uk-hidden');
+      });
   }
 };
 

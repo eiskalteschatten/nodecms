@@ -38,6 +38,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "serve-favicon": "~2.3.0",
+    "simplemde": "^1.11.2",
     "slug": "^0.9.1",
     "uikit": "^3.0.0-beta.39",
     "uuid": "^3.2.1"

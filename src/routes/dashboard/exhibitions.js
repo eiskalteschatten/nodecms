@@ -2,6 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
+// const cache = require('apicache').middleware;
 // const errorHandling = require('../../lib/errorHandling');
 
 // const Exhibition = require('../../models/Exhibition');
@@ -36,8 +37,11 @@ router.get('/new', (req, res) => {
 
 
 router.get('/new/exhibition-template', (req, res) => {
-  const template = req.query.template;
-  res.render(`dashboard/exhibitions/templates/${template}.njk`);
+  const id = req.query.id;
+
+  res.render(`dashboard/exhibitions/templates/${id}.njk`, {}, (error, html) => {
+    return error ? res.status(404).send(error) : res.send(html);
+  });
 });
 
 

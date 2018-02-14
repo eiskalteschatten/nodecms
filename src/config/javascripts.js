@@ -8,7 +8,7 @@ const libs = [
   '../../node_modules/jquery/dist/jquery.min.js',
   '../public/js/libs/fontawesome-all.js',
   '../../node_modules/nunjucks/browser/nunjucks.min.js',
-  '../../node_modules/uikit/dist/js/uikit.min.js'
+  '../../node_modules/uikit/dist/js/uikit.min.js',
 ];
 
 const scripts = [
@@ -19,6 +19,10 @@ const scripts = [
   '../public/js/documentReady.js'
 ];
 
+const dashboard = [
+  '../../node_modules/simplemde/dist/simplemde.min.js',
+  '../public/js/dashboard/scripts.js'
+];
 
 module.exports = {
   libs: libs.map(file => {
@@ -26,5 +30,8 @@ module.exports = {
   }),
   scripts: scripts.map(file => {
     return path.join(__dirname, file);
-  })
+  }),
+  dashboard: dashboard.map(file => {
+    return path.join(__dirname, file);
+  }),
 };
