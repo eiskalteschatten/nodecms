@@ -36,6 +36,6 @@ $(document).ready(function() {
 
   $('#markdownGuide').click(function(e) {
     e.preventDefault();
-    window.open('/dashboard/markdown-guide', 'markdownGuide', 'resizable=no, toolbar=no, scrollbars=no, menubar=no, status=no, directories=no, width=900, height=1000');
+    window.open('/dashboard/markdown-guide', 'markdownGuide', 'resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no, width=900, height=1000');
   });
 });
