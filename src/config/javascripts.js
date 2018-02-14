@@ -9,6 +9,7 @@ const libs = [
   '../public/js/libs/fontawesome-all.js',
   '../../node_modules/nunjucks/browser/nunjucks.min.js',
   '../../node_modules/uikit/dist/js/uikit.min.js',
+  '../../node_modules/marked/marked.min.js'
 ];
 
 const scripts = [
@@ -33,5 +34,5 @@ module.exports = {
   }),
   dashboard: dashboard.map(file => {
     return path.join(__dirname, file);
-  }),
+  })
 };

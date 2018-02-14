@@ -23,7 +23,10 @@ var _dashboard = {
     var simplemde = new SimpleMDE({
       element: $('.js-markdown-editor')[0],
       toolbar: false,
-      autofocus: true
+      autofocus: true,
+      previewRender: function(plainText) {
+        return marked(plainText);
+      }
     });
   }
 };
