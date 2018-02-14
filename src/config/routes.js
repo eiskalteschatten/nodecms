@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = {
   'virtualRoutes': {
-    '/css/libs/simplemde': path.join(__dirname, '../node_modules/simplemde/dist/')
+    '/libs/simplemde': path.join(__dirname, '../../node_modules/simplemde/dist/')
   },
   'controllerRoutes': {
     'public': {
