@@ -2,6 +2,11 @@
 
 {% block title %}{{ pageTitle }}{% endblock %}
 
+{% block stylesheets %}
+  {{ super() }}
+  <link rel="stylesheet" href="/css/libs/simplemde/simplemde.min.css" type="text/css">
+{% endblock %}
+
 {% block content %}
 
   <div class="uk-margin uk-card uk-card-default">
