@@ -33,4 +33,9 @@ $(document).ready(function() {
     e.preventDefault();
     _dashboard.loadExhibitionTemplate($(this).data('template-id'));
   });
+
+  $('#markdownGuide').click(function(e) {
+    e.preventDefault();
+    window.open('/dashboard/markdown-guide', 'markdownGuide', 'resizable=no, toolbar=no, scrollbars=no, menubar=no, status=no, directories=no, width=900, height=1000');
+  });
 });

@@ -12,6 +12,10 @@ router.get('/', (req, res) => {
   });
 });
 
+router.get('/markdown-guide', (req, res) => {
+  res.render('dashboard/markdownGuide.njk');
+});
+
 router.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/dashboard');
