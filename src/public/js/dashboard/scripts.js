@@ -3,6 +3,9 @@ var _dashboard = {
     var loadTemplateSpinner = $('#loadTemplateSpinner');
     loadTemplateSpinner.removeClass('uk-hidden');
 
+    var dropdown = document.getElementById('exhibitionTemplatesDropdown');
+    UIkit.dropdown(dropdown).hide();
+
     $.ajax('/dashboard/exhibitions/new/exhibition-template?id=' + id)
       .done(function(markup) {
         $('#templateAnchor').html(markup);
@@ -18,7 +21,9 @@ var _dashboard = {
 
   loadMarkdownEditors: function() {
     var simplemde = new SimpleMDE({
-      element: $('.js-markdown-editor')[0]
+      element: $('.js-markdown-editor')[0],
+      toolbar: false,
+      autofocus: true
     });
   }
 };
