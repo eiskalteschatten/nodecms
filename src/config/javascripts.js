@@ -8,8 +8,7 @@ const libs = [
   '../../node_modules/jquery/dist/jquery.min.js',
   '../public/js/libs/fontawesome-all.js',
   '../../node_modules/nunjucks/browser/nunjucks.min.js',
-  '../../node_modules/uikit/dist/js/uikit.min.js',
-  '../../node_modules/marked/marked.min.js'
+  '../../node_modules/uikit/dist/js/uikit.min.js'
 ];
 
 const scripts = [
@@ -22,6 +21,7 @@ const scripts = [
 
 const dashboard = [
   '../../node_modules/simplemde/dist/simplemde.min.js',
+  '../../node_modules/marked/marked.min.js',
   '../public/js/dashboard/scripts.js'
 ];
 
