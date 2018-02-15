@@ -1,4 +1,6 @@
 var _dashboard = {
+  simplemdes: [],
+
   loadExhibitionTemplate: function(id) {
     var loadTemplateSpinner = $('#loadTemplateSpinner');
     loadTemplateSpinner.removeClass('uk-hidden');
@@ -16,6 +18,7 @@ var _dashboard = {
     $.ajax('/dashboard/exhibitions/new/exhibition-template?id=' + id)
       .done(function(markup) {
         $('#templateAnchor').html(markup);
+        _dashboard.simplemdes = [];
         _dashboard.loadMarkdownEditors();
       })
       .fail(function(xhr, status, error) {
@@ -28,6 +31,27 @@ var _dashboard = {
 
   loadMarkdownEditors: function() {
     var $editorElement = $('.js-markdown-editor');
+
+    $editorElement.each(function(i) {
+      var simplemde = new SimpleMDE({
+        element: $editorElement[i],
+        toolbar: false,
+        autofocus: true,
+        previewRender: function(plainText) {
+          return marked(plainText);
+        }
+      });
+
+      simplemde.codemirror.on('change', function() {
+        var html = _dashboard.convertMarkdownToHtml(simplemde.value());
+        $editorElement.closest('.js-exhibition-template').find('.markdown-preview').html(html);
+      });
+
+      _dashboard.simplemdes.push(simplemde);
+    });
+  },
+
+  loadMarkdownEditor: function($editorElement) {
     var simplemde = new SimpleMDE({
       element: $editorElement[0],
       toolbar: false,
@@ -41,6 +65,8 @@ var _dashboard = {
       var html = _dashboard.convertMarkdownToHtml(simplemde.value());
       $editorElement.closest('.js-exhibition-template').find('.markdown-preview').html(html);
     });
+
+    _dashboard.simplemdes.push(simplemde);
   },
 
   convertMarkdownToHtml: function(markdown) {

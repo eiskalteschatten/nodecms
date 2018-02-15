@@ -7,22 +7,25 @@ var _dashboardTemplates = {
         'uk-section-secondary'
       ];
 
-      var sectionClone = $('.js-section').last().clone();
+      var $sectionClone = $('.js-section').last().clone();
       var cloneClass;
 
       for (var i = 0; i < sectionClasses.length; i++) {
         var sectionClass = sectionClasses[i];
-        if (sectionClone.hasClass(sectionClass)) {
-          sectionClone.removeClass(sectionClass);
+        if ($sectionClone.hasClass(sectionClass)) {
+          $sectionClone.removeClass(sectionClass);
           cloneClass = i + 1 === sectionClasses.length ? sectionClasses[0] : sectionClasses[i + 1];
         }
       }
 
-      sectionClone.addClass(cloneClass);
+      $sectionClone.addClass(cloneClass);
+      $sectionClone.find('.markdown-preview').html('');
+      $sectionClone.find('.CodeMirror').remove();
+      $sectionClone.find('.editor-preview-side').remove();
+      $sectionClone.find('.editor-statusbar').remove();
+      _dashboard.loadMarkdownEditor($sectionClone.find('.js-markdown-editor'));
 
-      // remove anything from the markdown editor
-
-      sectionClone.find('.markdown-preview').html('');
+      $sectionClone.insertBefore('#sectionFooter');
     }
   }
 };
