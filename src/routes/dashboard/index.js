@@ -2,6 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
+const cache = require('apicache').middleware;
 
 router.get('/', (req, res) => {
   const pageTitle = 'Dashboard';
@@ -12,7 +13,7 @@ router.get('/', (req, res) => {
   });
 });
 
-router.get('/markdown-guide', (req, res) => {
+router.get('/markdown-guide', cache('1 day'), (req, res) => {
   res.render('dashboard/markdownGuide.njk');
 });
 
