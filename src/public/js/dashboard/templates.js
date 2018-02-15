@@ -26,6 +26,22 @@ var _dashboardTemplates = {
       _dashboard.loadMarkdownEditor($sectionClone.find('.js-markdown-editor'));
 
       $sectionClone.insertBefore('#sectionFooter');
+      $('.js-delete-section-wrapper').removeClass('uk-hidden');
+    },
+
+    deleteSection: function($button) {
+      var $section = $button.closest('.js-section');
+      $section.addClass('uk-background-primary');
+      if (confirm('Are you sure you would like to delete this section? This will remove any content within.')) {
+        $section.remove();
+      }
+      else {
+        $section.removeClass('uk-background-primary');
+      }
+
+      if ($('.js-section').length <= 1) {
+        $('.js-delete-section-wrapper').addClass('uk-hidden');
+      }
     }
   },
 
@@ -58,5 +74,9 @@ $(document).ready(function() {
 
   $(document).on('click', '#addSection', function() {
     _dashboardTemplates.sections.addSection();
+  });
+
+  $(document).on('click', '.js-delete-section', function() {
+    _dashboardTemplates.sections.deleteSection($(this));
   });
 });

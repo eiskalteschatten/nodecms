@@ -2,18 +2,18 @@ var _dashboard = {
   simplemdes: [],
 
   loadExhibitionTemplate: function(id) {
-    var loadTemplateSpinner = $('#loadTemplateSpinner');
-    loadTemplateSpinner.removeClass('uk-hidden');
 
     var dropdown = document.getElementById('exhibitionTemplatesDropdown');
     UIkit.dropdown(dropdown).hide();
 
     if ($('#templateAnchor').html() !== '') {
       if (!confirm('Are you sure you would like to change the template? This will remove any content below.')) {
-        loadTemplateSpinner.addClass('uk-hidden');
         return;
       }
     }
+
+    var loadTemplateSpinner = $('#loadTemplateSpinner');
+    loadTemplateSpinner.removeClass('uk-hidden');
 
     $.ajax('/dashboard/exhibitions/new/exhibition-template?id=' + id)
       .done(function(markup) {
