@@ -27,8 +27,9 @@ var _dashboard = {
   },
 
   loadMarkdownEditors: function() {
+    var $editorElement = $('.js-markdown-editor');
     var simplemde = new SimpleMDE({
-      element: $('.js-markdown-editor')[0],
+      element: $editorElement[0],
       toolbar: false,
       autofocus: true,
       previewRender: function(plainText) {
@@ -38,7 +39,7 @@ var _dashboard = {
 
     simplemde.codemirror.on('change', function() {
       var html = _dashboard.convertMarkdownToHtml(simplemde.value());
-      $('#markdownPreview').html(html);
+      $editorElement.closest('.js-exhibition-template').find('.markdown-preview').html(html);
     });
   },
 
