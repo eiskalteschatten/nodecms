@@ -28,6 +28,15 @@ var _dashboard = {
         return marked(plainText);
       }
     });
+
+    simplemde.codemirror.on('change', function() {
+      var html = _dashboard.convertMarkdownToHtml(simplemde.value());
+      $('#markdownPreview').html(html);
+    });
+  },
+
+  convertMarkdownToHtml: function(markdown) {
+    return marked(markdown);
   }
 };
 
