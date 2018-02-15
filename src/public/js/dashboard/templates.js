@@ -1,24 +1,14 @@
 var _dashboardTemplates = {
   sections: {
+    sectionClasses: [
+      'uk-section-default',
+      'uk-section-muted',
+      'uk-section-secondary'
+    ],
+
     addSection: function() {
-      var sectionClasses = [
-        'uk-section-default',
-        'uk-section-muted',
-        'uk-section-secondary'
-      ];
-
       var $sectionClone = $('.js-section').last().clone();
-      var cloneClass;
 
-      for (var i = 0; i < sectionClasses.length; i++) {
-        var sectionClass = sectionClasses[i];
-        if ($sectionClone.hasClass(sectionClass)) {
-          $sectionClone.removeClass(sectionClass);
-          cloneClass = i + 1 === sectionClasses.length ? sectionClasses[0] : sectionClasses[i + 1];
-        }
-      }
-
-      $sectionClone.addClass(cloneClass);
       $sectionClone.find('.markdown-preview').html('');
       $sectionClone.find('.CodeMirror').remove();
       $sectionClone.find('.editor-preview-side').remove();
@@ -26,6 +16,7 @@ var _dashboardTemplates = {
       _dashboard.loadMarkdownEditor($sectionClone.find('.js-markdown-editor'));
 
       $sectionClone.insertBefore('#sectionFooter');
+      _dashboardTemplates.sections.assignSectionClasses();
       $('.js-delete-section-wrapper').removeClass('uk-hidden');
     },
 
@@ -34,6 +25,7 @@ var _dashboardTemplates = {
       $section.addClass('uk-background-primary');
       if (confirm('Are you sure you would like to delete this section? This will remove any content within.')) {
         $section.remove();
+        _dashboardTemplates.sections.assignSectionClasses();
       }
       else {
         $section.removeClass('uk-background-primary');
@@ -42,6 +34,19 @@ var _dashboardTemplates = {
       if ($('.js-section').length <= 1) {
         $('.js-delete-section-wrapper').addClass('uk-hidden');
       }
+    },
+
+    assignSectionClasses: function() {
+      var sectionClasses = _dashboardTemplates.sections.sectionClasses;
+      var $sections = $('.js-section');
+      $sections.removeClass(sectionClasses.join(' '));
+
+      var i = 0;
+
+      $('.js-section').each(function() {
+        $(this).addClass(sectionClasses[i]);
+        i = i === sectionClasses.length - 1 ? 0 : i + 1;
+      });
     }
   },
 
