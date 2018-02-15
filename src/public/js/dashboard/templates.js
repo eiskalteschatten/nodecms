@@ -27,5 +27,36 @@ var _dashboardTemplates = {
 
       $sectionClone.insertBefore('#sectionFooter');
     }
+  },
+
+  save: function() {
+    alert("save");
   }
 };
+
+
+$(document).ready(function() {
+  $('#toolbarSaveButtton').click(function(e) {
+    e.preventDefault();
+    _dashboardTemplates.save();
+  });
+
+  $('#toolbarPreviewButtton').click(function(e) {
+    e.preventDefault();
+    //_dashboardTemplates.save();
+  });
+
+  $('#toolbarUploadButtton').click(function(e) {
+    e.preventDefault();
+    //_dashboardTemplates.save();
+  });
+
+  $('#toolbarDeleteButtton').click(function(e) {
+    e.preventDefault();
+    //_dashboardTemplates.save();
+  });
+
+  $(document).on('click', '#addSection', function() {
+    _dashboardTemplates.sections.addSection();
+  });
+});

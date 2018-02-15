@@ -22,7 +22,6 @@ const scripts = [
 const dashboard = [
   '../../node_modules/simplemde/dist/simplemde.min.js',
   '../../node_modules/marked/marked.min.js',
-  '../public/js/dashboard/templates.js',
   '../public/js/dashboard/scripts.js'
 ];
 

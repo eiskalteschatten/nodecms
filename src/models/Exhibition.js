@@ -7,7 +7,7 @@ const modelName = 'Exhibition';
 
 const schema = new mongoose.Schema({
   name: String,
-  template: Number,
+  template: String,
   texts: [],
   media: [],
   creator: String,

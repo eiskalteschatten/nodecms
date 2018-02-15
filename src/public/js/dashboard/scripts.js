@@ -84,8 +84,4 @@ $(document).ready(function() {
     e.preventDefault();
     window.open('/dashboard/markdown-guide', 'markdownGuide', 'resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no, width=900, height=1000');
   });
-
-  $(document).on('click', '#addSection', function() {
-    _dashboardTemplates.sections.addSection();
-  });
 });
