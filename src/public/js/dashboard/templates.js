@@ -20,8 +20,9 @@ var _dashboardTemplates = {
 
       sectionClone.addClass(cloneClass);
 
-      // 1. remove anything from the markdown editor
-      // 2. remove anything from the markdown preview
+      // remove anything from the markdown editor
+
+      sectionClone.find('.markdown-preview').html('');
     }
   }
 };
