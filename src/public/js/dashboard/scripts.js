@@ -6,6 +6,13 @@ var _dashboard = {
     var dropdown = document.getElementById('exhibitionTemplatesDropdown');
     UIkit.dropdown(dropdown).hide();
 
+    if ($('#templateAnchor').html() !== '') {
+      if (!confirm('Are you sure you would like to change the template? This will remove any content below.')) {
+        loadTemplateSpinner.addClass('uk-hidden');
+        return;
+      }
+    }
+
     $.ajax('/dashboard/exhibitions/new/exhibition-template?id=' + id)
       .done(function(markup) {
         $('#templateAnchor').html(markup);

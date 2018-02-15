@@ -45,7 +45,7 @@ router.get('/new/exhibition-template', (req, res) => {
 });
 
 
-// router.patch('/', async (req, res) => {
+// router.post('/', async (req, res) => {
 //   const body = req.body;
 //   const currentUserName = req.user.userName;
 //   const newUserName = body.userName;
