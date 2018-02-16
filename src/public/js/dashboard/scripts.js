@@ -47,5 +47,7 @@ var _dashboard = {
 };
 
 $(document).ready(function() {
-
+  $('.js-item-row').click(function() {
+    window.location = $(this).data('edit-link');
+  });
 });

@@ -1,11 +1,12 @@
 {% for exhibition in exhibitions %}
+  {% set editLink = "/dashboard/exhibitions/edit/" + exhibition.slug %}
+
   <tr>
-    <td>
+    <td class="item-row js-item-row" data-edit-link="{{ editLink }}">
       {{ exhibition.name }}
       <div class="uk-text-meta">{{ exhibition.description }}</div>
     </td>
     <td class="uk-text-right">
-      {% set editLink = "/dashboard/exhibitions/edit/" + exhibition.slug %}
       {% include "dashboard/components/itemEditButtons.njk" %}
     </td>
   </tr>
