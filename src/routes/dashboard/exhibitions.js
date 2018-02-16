@@ -12,16 +12,30 @@ const Exhibition = require('../../models/Exhibition');
 
 router.get('/', async (req, res) => {
   const pageTitle = 'Exhibitions';
+  const limit = 10;
+  const page = req.query.page || 0;
 
+  try {
+    const count = await Exhibition.count().exec();
+    const exhibitions = await Exhibition.find().sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
+    const numberOfPages = Math.ceil(count / limit);
 
-
-  res.render('dashboard/exhibitions/index.njk', {
-    pageTitle: pageTitle,
-    pageId: pageTitle.toLowerCase(),
-    breadcrumbs: {
-      '/dashboard/exhibitions': pageTitle
-    }
-  });
+    res.render('dashboard/exhibitions/index.njk', {
+      pageTitle: pageTitle,
+      pageId: pageTitle.toLowerCase(),
+      exhibitions: exhibitions,
+      numberOfPages: numberOfPages,
+      page: page,
+      previousPage: page > 0 ? parseInt(page) - 1 : 0,
+      nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0,
+      breadcrumbs: {
+        '/dashboard/exhibitions': pageTitle
+      }
+    });
+  }
+  catch(error) {
+    errorHandling.returnError(error, res, req);
+  }
 });
 
 
@@ -44,6 +58,21 @@ router.get('/new/exhibition-template', (req, res) => {
 
   res.render(`dashboard/exhibitions/templates/${id}.njk`, {}, (error, html) => {
     return error ? res.status(404).send(error) : res.send(html);
+  });
+});
+
+
+
+router.get('/edit/:slug', (req, res) => {
+  const pageTitle = 'Create New Exhibition';
+
+  res.render('dashboard/exhibitions/edit.njk', {
+    pageTitle: pageTitle,
+    pageId: 'newExhibition',
+    breadcrumbs: {
+      '/dashboard/exhibitions': 'Exhibitions',
+      '/dashboard/exhibitions/new': pageTitle,
+    }
   });
 });
 

@@ -21,41 +21,45 @@
     <div class="uk-card-body">
       <table class="uk-table uk-table-middle uk-table-striped">
         <tbody>
-          <tr>
-            <td>
-              Exhibition A
-              <div class="uk-text-meta">A short preview of the first text with ellipsis done server-side.</div>
-            </td>
-            <td class="uk-text-right">
-              {% include "dashboard/components/itemEditButtons.njk" %}
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Exhibition B
-              <div class="uk-text-meta">A short preview of the first text with ellipsis done server-side.</div>
-            </td>
-            <td class="uk-text-right">
-              {% include "dashboard/components/itemEditButtons.njk" %}
-            </td>
-          </tr>
+          {% for exhibition in exhibitions %}
+            <tr>
+              <td>
+                {{ exhibition.name }}
+                <div class="uk-text-meta">{{ exhibition.description }}</div>
+              </td>
+              <td class="uk-text-right">
+                {% include "dashboard/components/itemEditButtons.njk" %}
+              </td>
+            </tr>
+          {% else %}
+            <tr>
+              <td>
+                <div class="uk-text-meta">There are no exhibitions.</div>
+              </td>
+              <td></td>
+            </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>
 
-    <div class="uk-card-footer">
-      <ul class="uk-pagination uk-flex-center" uk-margin>
-        <li><a href="#"><span uk-pagination-previous></span></a></li>
-        <li><a href="#">1</a></li>
-        <li class="uk-disabled"><span>...</span></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">6</a></li>
-        <li class="uk-active"><span>7</span></li>
-        <li><a href="#">8</a></li>
-        <li><a href="#"><span uk-pagination-next></span></a></li>
-      </ul>
-    </div>
-  </div>
+    {% if numberOfPages > 1 %}
+      <div class="uk-card-footer">
+        <ul class="uk-pagination uk-flex-center" uk-margin>
+          {% if page > 0 %}
+            <li><a href="?page={{ previousPage }}"><span uk-pagination-previous></span></a></li>
+          {% endif %}
 
+          {% for i in range(0, numberOfPages) %}
+            <li><a href="?page={{ i }}" {% if i == page %}class="uk-active"{% endif %}>{{ i + 1 }}</a></li>
+          {% endfor %}
+
+          {% if nextPage > 0 %}
+            <li><a href="?page={{ nextPage }}"><span uk-pagination-next></span></a></li>
+          {% endif %}
+        </ul>
+      </div>
+    {% endif %}
+  </div>
 
 {% endblock %}
