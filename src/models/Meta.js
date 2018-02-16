@@ -3,8 +3,6 @@
 const mongoose = require('mongoose');
 const db = require('../lib/mongo/connection');
 
-const slug = require('slug');
-
 const modelName = 'Meta';
 
 const schema = new mongoose.Schema({
@@ -17,10 +15,6 @@ const schema = new mongoose.Schema({
   versionKey: false,
   timestamps: true
 });
-
-schema.methods.createSlug = function(name) {
-  return slug(name).replace( /([a-z])([A-Z])/g, '$1-$2' ).toLowerCase();
-};
 
 const Model = db.model(modelName, schema);
 

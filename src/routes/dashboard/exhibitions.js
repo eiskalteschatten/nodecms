@@ -3,9 +3,12 @@
 const express = require('express');
 const router = express.Router();
 // const cache = require('apicache').middleware;
-// const errorHandling = require('../../lib/errorHandling');
+const marked = require('marked');
 
-// const Exhibition = require('../../models/Exhibition');
+const errorHandling = require('../../lib/errorHandling');
+const helper = require('../../lib/helper');
+
+const Exhibition = require('../../models/Exhibition');
 
 router.get('/', async (req, res) => {
   const pageTitle = 'Exhibitions';
@@ -45,36 +48,54 @@ router.get('/new/exhibition-template', (req, res) => {
 });
 
 
-// router.post('/', async (req, res) => {
-//   const body = req.body;
-//   const currentUserName = req.user.userName;
-//   const newUserName = body.userName;
-//   const setUser = {
-//     userName: newUserName,
-//     firstName: body.firstName,
-//     lastName: body.lastName,
-//     emailAddress: body.emailAddress
-//   };
+router.post('/edit', async (req, res) => {
+  const body = req.body;
+  let exhibitionId = body.exhibitionId;
+  const setExhibition = {
+    name: body.name,
+    description: body.description,
+    template: body.templateId,
+    texts: [],
+    media: [],
+    meta: [],
+    lastEditedBy: req.user.userName
+  };
 
-//   try {
-//     const user = await User.findOne({userName: newUserName}).exec();
+  body.texts.forEach(text => {
+    setExhibition.texts.push({
+      markdown: text,
+      html: marked(text)
+    });
+  });
 
-//     if (currentUserName !== newUserName && user) {
-//       const newError = {
-//         message: 'This username is already taken.',
-//         statusCode: 409
-//       };
+  try {
+    let exhibition;
 
-//       throw newError;
-//     }
+    if (exhibitionId) {
+      exhibition = await Exhibition.findById(exhibitionId).exec();
 
-//     await User.findOneAndUpdate({userName: currentUserName}, {$set: setUser}, {new: true}).exec();
+      if (exhibition) {
+        exhibition.set(setExhibition);
+      }
+    }
 
-//     res.send('Changes saved successfully.');
-//   }
-//   catch(error) {
-//     errorHandling.returnError(error, res, req);
-//   }
-// });
+    if (!exhibition) {
+      setExhibition.author = req.user.userName;
+      exhibition = new Exhibition(setExhibition);
+      exhibitionId = exhibition._id;
+    }
+
+    exhibition.slug = helper.createSlug(body.name);
+
+    await exhibition.save();
+
+    res.json({
+      exhibitionId: exhibitionId
+    });
+  }
+  catch(error) {
+    errorHandling.returnError(error, res, req);
+  }
+});
 
 module.exports = router;

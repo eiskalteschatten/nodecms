@@ -4,10 +4,8 @@ const nunjucks  = require('nunjucks');
 const nunjucksMarkdown  = require('nunjucks-markdown');
 const marked  = require('marked');
 const path = require('path');
-const slug = require('slug');
 
 const helper = require('../helper');
-
 
 module.exports = app => {
   // View engine setup
@@ -22,7 +20,7 @@ module.exports = app => {
   // Custom filters in Nunjucks
   nunjucksEnv.addFilter('cssClass', str => {
     if (str) {
-      return slug(str).replace( /([a-z])([A-Z])/g, '$1-$2' ).toLowerCase();
+      helper.createSlug(str);
     }
     return '';
   });

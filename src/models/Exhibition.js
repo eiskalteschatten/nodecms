@@ -14,6 +14,7 @@ const schema = new mongoose.Schema({
   name: String,
   description: String,
   template: String,
+  slug: String,
   texts: [texts],
   media: [],
   meta: [],

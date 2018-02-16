@@ -51,15 +51,51 @@ var _dashboardTemplates = {
   },
 
   save: function() {
-    if ($('#templateAnchor').is(':empty')) {
+    var templateId = $('#templateId').data('template-id');
+
+    if (typeof templateId === 'undefined' || templateId === '') {
       _messages.show('error', 'Please choose a template before saving.');
       return;
     }
 
-    if ($('templateAnchor').is(':empty')) {
-      _messages.show('error', 'Please choose a template before saving.');
+    var name = $('#exhibitionName').val();
+    var description = $('#exhibitionDescription').val();
+
+    if (name === '' || description === '') {
+      _messages.show('error', 'The exhibition needs a title and description.');
       return;
     }
+
+    _loader.open();
+
+    var texts = [];
+
+    _dashboard.simplemdes.forEach(function(editor) {
+      texts.push(editor.value());
+    });
+
+    $.ajax({
+        url: '/dashboard/exhibitions/edit',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          templateId: templateId,
+          name: name,
+          description: description,
+          texts: texts,
+          exhibitionId: $('#exhibitionId').val()
+        })
+      })
+      .done(function(exhibition) {
+        _messages.show('success', 'Saved successfully.', false);
+        $('#exhibitionId').val(exhibition.exhibitionId);
+      })
+      .fail(function(xhr, status, error) {
+        _messages.show('error', error);
+      })
+      .always(function() {
+        _loader.close();
+      });
   }
 };
 
