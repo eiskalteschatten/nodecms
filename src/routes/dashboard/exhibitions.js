@@ -117,18 +117,19 @@ router.post('/edit', async (req, res) => {
   });
 
   try {
-    const exhibitionWithSlug = await Exhibition.findOne({slug: slug}).exec();
-
-    if (exhibitionWithSlug) {
-      return errorHandling.returnError({
-        message: 'An exhibition with that name already exists. Please choose a new name.',
-        statusCode: 409
-      }, res, req);
-    }
-
     let exhibition;
 
-    if (exhibitionId) {
+    if (!exhibitionId) {
+      const exhibitionWithSlug = await Exhibition.findOne({slug: slug}).exec();
+
+      if (exhibitionWithSlug) {
+        return errorHandling.returnError({
+          message: 'An exhibition with that name already exists. Please choose a new name.',
+          statusCode: 409
+        }, res, req);
+      }
+    }
+    else {
       exhibition = await Exhibition.findById(exhibitionId).exec();
 
       if (exhibition) {
