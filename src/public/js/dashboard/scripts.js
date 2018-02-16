@@ -12,8 +12,7 @@ var _dashboard = {
       }
     }
 
-    var loadTemplateSpinner = $('#loadTemplateSpinner');
-    loadTemplateSpinner.removeClass('uk-hidden');
+    _loader.open();
 
     $.ajax('/dashboard/exhibitions/new/exhibition-template?id=' + id)
       .done(function(markup) {
@@ -25,7 +24,7 @@ var _dashboard = {
         _messages.show('error', error);
       })
       .always(function() {
-        loadTemplateSpinner.addClass('uk-hidden');
+        _loader.close();
       });
   },
 

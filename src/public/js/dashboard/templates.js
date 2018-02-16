@@ -51,7 +51,15 @@ var _dashboardTemplates = {
   },
 
   save: function() {
-    alert("save");
+    if ($('#templateAnchor').is(':empty')) {
+      _messages.show('error', 'Please choose a template before saving.');
+      return;
+    }
+
+    if ($('templateAnchor').is(':empty')) {
+      _messages.show('error', 'Please choose a template before saving.');
+      return;
+    }
   }
 };
 
