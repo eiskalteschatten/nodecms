@@ -16,25 +16,7 @@
 
           <table class="uk-table uk-table-middle uk-table-striped">
             <tbody>
-              {% for exhibition in exhibitions %}
-                <tr>
-                  <td>
-                    {{ exhibition.name }}
-                    <div class="uk-text-meta">{{ exhibition.description }}</div>
-                  </td>
-                  <td class="uk-text-right">
-                    {% set editLink = "/dashboard/exhibitions/edit/" + exhibition.slug %}
-                    {% include "dashboard/components/itemEditButtons.njk" %}
-                  </td>
-                </tr>
-              {% else %}
-                <tr>
-                  <td>
-                    <div class="uk-text-meta">There are no exhibitions.</div>
-                  </td>
-                  <td></td>
-                </tr>
-              {% endfor %}
+              {% include "dashboard/exhibitions/tableRows.njk" %}
             </tbody>
           </table>
         </div>
