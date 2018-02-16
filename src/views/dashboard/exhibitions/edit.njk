@@ -11,7 +11,7 @@
 
   <div class="uk-margin uk-card uk-card-default">
     <div class="uk-card-header">
-      <h2 class="uk-card-title"><i class="fas fa-edit text-icon-left"></i>Create New Exhibition</h2>
+      <h2 class="uk-card-title"><i class="fas fa-edit text-icon-left"></i>{{ pageTitle }}</h2>
     </div>
 
     <div class="uk-card-body">
@@ -35,10 +35,10 @@
       <div class="uk-child-width-1-2 uk-margin-bottom" uk-grid>
         <div>
           <div class="uk-margin">
-              <input class="uk-input" type="text" id="exhibitionName" placeholder="Exhibition Title">
+              <input class="uk-input" type="text" id="exhibitionName" placeholder="Exhibition Title" value="{{ exhibition.name }}">
           </div>
           <div class="uk-margin">
-              <textarea class="uk-textarea" rows="5" id="exhibitionDescription" placeholder="Exhibition Description"></textarea>
+              <textarea class="uk-textarea" rows="5" id="exhibitionDescription" placeholder="Exhibition Description">{{ exhibition.description }}</textarea>
           </div>
         </div>
         <div>
@@ -70,10 +70,23 @@
     </div>
   </div>
 
-  <input type="hidden" id="exhibitionId">
+  <input type="hidden" id="exhibitionId" value="{{ exhibition._id }}">
+
+  {% for text in exhibition.texts %}
+    <textarea class="uk-hidden js-editor-text">{{ text.markdown }}</textarea>
+  {% endfor %}
 {% endblock %}
 
 {% block javascripts %}
   {{ super() }}
+
   <script type="text/javascript" src="/js/dashboard/templates.js"></script>
+
+  {% if exhibition %}
+    <script type="text/javascript">
+      $(document).ready(function() {
+        _dashboardTemplates.loadExhibitionTemplate('{{ exhibition.template }}', true);
+      });
+    </script>
+  {% endif %}
 {% endblock %}

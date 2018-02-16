@@ -5,7 +5,7 @@
       <li {% if pageId == "dashboard" %}class="uk-active"{% endif %}>
         <a href="/dashboard"><i class="fas fa-tachometer-alt text-icon-left"></i>Dashboard</a>
       </li>
-      <li {% if pageId == "exhibitions" or pageId == "newExhibition" %}class="uk-active"{% endif %}>
+      <li {% if pageId == "exhibitions" or pageId == "newExhibition" or pageId == "editExhibition" %}class="uk-active"{% endif %}>
         <a href="/dashboard/exhibitions"><i class="fas fa-image text-icon-left"></i>Exhibitions</a>
         <div class="uk-navbar-dropdown">
           <ul class="uk-nav uk-navbar-dropdown-nav">

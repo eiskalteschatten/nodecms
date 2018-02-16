@@ -62,18 +62,36 @@ router.get('/new/exhibition-template', (req, res) => {
 });
 
 
+router.get('/edit/:slug', async (req, res) => {
+  const slug = req.params.slug;
 
-router.get('/edit/:slug', (req, res) => {
-  const pageTitle = 'Create New Exhibition';
+  try {
+    const exhibition = await Exhibition.findOne({slug: slug}).exec();
 
-  res.render('dashboard/exhibitions/edit.njk', {
-    pageTitle: pageTitle,
-    pageId: 'newExhibition',
-    breadcrumbs: {
-      '/dashboard/exhibitions': 'Exhibitions',
-      '/dashboard/exhibitions/new': pageTitle,
+    if (!exhibition) {
+      return errorHandling.returnError({
+        statusCode: 404,
+        message: 'Exhibition not found'
+      }, res, req);
     }
-  });
+
+    const pageTitle = `Edit "${exhibition.name}"`;
+    const breadcrumbs = {
+      '/dashboard/exhibitions': 'Exhibitions'
+    };
+
+    breadcrumbs[`/dashboard/exhibitions/edit/${slug}`] = pageTitle;
+
+    res.render('dashboard/exhibitions/edit.njk', {
+      pageTitle: pageTitle,
+      pageId: 'editExhibition',
+      exhibition: exhibition,
+      breadcrumbs: breadcrumbs
+    });
+  }
+  catch(error) {
+    errorHandling.returnError(error, res, req);
+  }
 });
 
 

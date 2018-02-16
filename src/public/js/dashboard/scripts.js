@@ -1,33 +1,6 @@
 var _dashboard = {
   simplemdes: [],
 
-  loadExhibitionTemplate: function(id) {
-
-    var dropdown = document.getElementById('exhibitionTemplatesDropdown');
-    UIkit.dropdown(dropdown).hide();
-
-    if ($('#templateAnchor').html() !== '') {
-      if (!confirm('Are you sure you would like to change the template? This will remove any content below.')) {
-        return;
-      }
-    }
-
-    _loader.open();
-
-    $.ajax('/dashboard/exhibitions/new/exhibition-template?id=' + id)
-      .done(function(markup) {
-        $('#templateAnchor').html(markup);
-        _dashboard.simplemdes = [];
-        _dashboard.loadMarkdownEditors();
-      })
-      .fail(function(xhr, status, error) {
-        _messages.show('error', xhr.responseText);
-      })
-      .always(function() {
-        _loader.close();
-      });
-  },
-
   loadMarkdownEditors: function() {
     var $editorElement = $('.js-markdown-editor');
 
@@ -74,13 +47,5 @@ var _dashboard = {
 };
 
 $(document).ready(function() {
-  $('.js-exhibition-template-button').click(function(e) {
-    e.preventDefault();
-    _dashboard.loadExhibitionTemplate($(this).data('template-id'));
-  });
 
-  $('#markdownGuide').click(function(e) {
-    e.preventDefault();
-    window.open('/dashboard/markdown-guide', 'markdownGuide', 'resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no, width=900, height=1000');
-  });
 });
