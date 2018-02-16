@@ -20,7 +20,7 @@ module.exports = app => {
   // Custom filters in Nunjucks
   nunjucksEnv.addFilter('cssClass', str => {
     if (str) {
-      helper.createSlug(str);
+      return helper.createSlug(str);
     }
     return '';
   });
