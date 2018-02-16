@@ -156,4 +156,15 @@ router.post('/edit', async (req, res) => {
   }
 });
 
+
+router.delete('/edit', async (req, res) => {
+  try {
+    await Exhibition.findOneAndRemove({_id: req.body.exhibitionId}).exec();
+    res.send('ok');
+  }
+  catch(error) {
+    errorHandling.returnError(error, res, req);
+  }
+});
+
 module.exports = router;

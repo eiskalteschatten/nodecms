@@ -77,6 +77,28 @@ var _dashboardTemplates = {
     });
   },
 
+  delete: function() {
+    if (confirm('Are you sure you want to delete this exhibition? It cannot be undone.')) {
+      _loader.open();
+
+      $.ajax({
+        url: '/dashboard/exhibitions/edit',
+        method: 'DELETE',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          exhibitionId: $('#exhibitionId').val()
+        })
+      })
+      .done(function() {
+        window.location = '/dashboard/exhibitions/';
+      })
+      .fail(function(xhr, status, error) {
+        _loader.close();
+        _messages.show('error', xhr.responseText);
+      });
+    }
+  },
+
   article: {
     loadContent: function() {
       var markdown = $('.js-editor-text').val();
@@ -176,7 +198,7 @@ $(document).ready(function() {
 
   $('#toolbarDeleteButtton').click(function(e) {
     e.preventDefault();
-    //_dashboardTemplates.save();
+    _dashboardTemplates.delete();
   });
 
   $(document).on('click', '#addSection', function() {
