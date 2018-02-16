@@ -28,6 +28,7 @@
                 <div class="uk-text-meta">{{ exhibition.description }}</div>
               </td>
               <td class="uk-text-right">
+                {% set editLink = "/dashboard/exhibitions/edit/" + exhibition.slug %}
                 {% include "dashboard/components/itemEditButtons.njk" %}
               </td>
             </tr>
