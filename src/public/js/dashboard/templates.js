@@ -67,7 +67,7 @@ var _dashboardTemplates = {
     })
     .done(function(exhibition) {
       _messages.show('success', 'Saved successfully.', false);
-      $('#exhibitionId').val(exhibition.exhibitionId);
+      window.location = '/dashboard/exhibitions/edit/' + exhibition.slug;
     })
     .fail(function(xhr, status, error) {
       _messages.show('error', xhr.responseText);

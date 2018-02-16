@@ -147,7 +147,7 @@ router.post('/edit', async (req, res) => {
     await exhibition.save();
 
     res.json({
-      exhibitionId: exhibitionId
+      slug: slug
     });
   }
   catch(error) {
