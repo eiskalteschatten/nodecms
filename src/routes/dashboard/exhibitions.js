@@ -51,6 +51,7 @@ router.get('/new/exhibition-template', (req, res) => {
 router.post('/edit', async (req, res) => {
   const body = req.body;
   let exhibitionId = body.exhibitionId;
+  const slug = helper.createSlug(body.name);
   const setExhibition = {
     name: body.name,
     description: body.description,
@@ -69,6 +70,15 @@ router.post('/edit', async (req, res) => {
   });
 
   try {
+    const exhibitionWithSlug = await Exhibition.findOne({slug: slug}).exec();
+
+    if (exhibitionWithSlug) {
+      return errorHandling.returnError({
+        message: 'An exhibition with that name already exists. Please choose a new name.',
+        statusCode: 409
+      }, res, req);
+    }
+
     let exhibition;
 
     if (exhibitionId) {
@@ -85,7 +95,7 @@ router.post('/edit', async (req, res) => {
       exhibitionId = exhibition._id;
     }
 
-    exhibition.slug = helper.createSlug(body.name);
+    exhibition.slug = slug;
 
     await exhibition.save();
 

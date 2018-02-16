@@ -91,7 +91,7 @@ var _dashboardTemplates = {
         $('#exhibitionId').val(exhibition.exhibitionId);
       })
       .fail(function(xhr, status, error) {
-        _messages.show('error', error);
+        _messages.show('error', xhr.responseText);
       })
       .always(function() {
         _loader.close();
