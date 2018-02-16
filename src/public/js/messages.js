@@ -6,5 +6,6 @@ var _messages = {
       message: message
     });
     $('#messageAnchor').html(html).removeClass('uk-hidden');
+    $('html, body').animate({ scrollTop: 0 }, 600);
   }
 };
