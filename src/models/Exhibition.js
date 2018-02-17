@@ -27,6 +27,10 @@ const schema = new mongoose.Schema({
   timestamps: true
 });
 
+schema.statics.getLatest = function(limit) {
+  return this.find().sort({updatedAt: 'desc'}).limit(limit).exec();
+};
+
 const Model = db.model(modelName, schema);
 
 if (Model.on) {

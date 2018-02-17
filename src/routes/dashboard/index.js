@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
   const itemLimit = 5;
 
   try {
-    const exhibitions = await Exhibition.find().sort({updatedAt: 'desc'}).limit(itemLimit).exec();
+    const exhibitions = await Exhibition.getLatest(itemLimit);
 
     res.render('dashboard/index.njk', {
       pageTitle: pageTitle,
