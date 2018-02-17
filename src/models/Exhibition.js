@@ -15,6 +15,7 @@ const schema = new mongoose.Schema({
   description: String,
   template: String,
   slug: String,
+  status: String,
   texts: [texts],
   media: [],
   meta: [],
@@ -29,6 +30,10 @@ const schema = new mongoose.Schema({
 
 schema.statics.getLatest = function(limit) {
   return this.find().sort({updatedAt: 'desc'}).limit(limit).exec();
+};
+
+schema.statics.getLatestPublished = function(limit) {
+  return this.find({status: 'published'}).sort({updatedAt: 'desc'}).limit(limit).exec();
 };
 
 const Model = db.model(modelName, schema);

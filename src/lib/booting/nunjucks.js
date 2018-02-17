@@ -30,7 +30,7 @@ module.exports = app => {
     return new Date().getFullYear();
   });
 
-  nunjucksEnv.addGlobal('appLocals', app.locals);
+  //nunjucksEnv.addGlobal('appLocals', app.locals);
 
 
   // Setup Nunjucks Markdown
