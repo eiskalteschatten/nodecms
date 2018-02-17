@@ -19,9 +19,9 @@
                   <a href="/exhibitions/new" class="uk-position-cover uk-flex uk-flex-center uk-flex-middle overlay-link">New</a>
                 </div>
                 <ul class="uk-nav uk-dropdown-nav">
-                  <li><a href="/exhibitions/e/the-home-in-the-wild-west">The Home in the Wild West</a></li>
-                  <li><a href="/exhibitions/e/bavarian-kings">Bavarian Kings</a></li>
-                  <li><a href="/exhibitions/e/mining-towns-in-the-rocky-mountains">Mining Towns in the Rocky Mountains</a></li>
+                  {% for exhibition in mainMenu.newExhibitions %}
+                    <li><a href="/exhibitions/e/{{ exhibition.slug }}">{{ exhibition.name }}</a></li>
+                  {% endfor %}
                 </ul>
               </div>
               <div class="uk-width-medium">

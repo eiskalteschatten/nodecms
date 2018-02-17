@@ -25,6 +25,7 @@ module.exports = app => {
     return '';
   });
 
+
   // Globals
   nunjucksEnv.addGlobal('getCurrentYear', () => {
     return new Date().getFullYear();
@@ -39,6 +40,7 @@ module.exports = app => {
 
   // Set the app's engine to Nunjucks
   app.set('engine', nunjucksEnv);
+
 
   // Add the Express request globally to Nunjucks
   app.use((req, res, next) => {
