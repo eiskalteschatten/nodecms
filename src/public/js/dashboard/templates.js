@@ -191,7 +191,7 @@ $(document).ready(function() {
     //_dashboardTemplates.save();
   });
 
-  $('#toolbarUploadButtton').click(function(e) {
+  $('#toolbarInventoryButtton').click(function(e) {
     e.preventDefault();
     //_dashboardTemplates.save();
   });
