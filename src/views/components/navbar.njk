@@ -20,7 +20,7 @@
                 </div>
                 <ul class="uk-nav uk-dropdown-nav">
                   {% for exhibition in mainMenu.newExhibitions %}
-                    <li><a href="/exhibitions/e/{{ exhibition.slug }}">{{ exhibition.name }}</a></li>
+                    <li><a href="/exhibitions/e/{{ exhibition.slug }}"><i class="fas fa-caret-right text-icon-left"></i>{{ exhibition.name }}</a></li>
                   {% endfor %}
                 </ul>
               </div>

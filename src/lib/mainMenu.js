@@ -2,7 +2,7 @@
 
 const Exhibition = require('../models/Exhibition');
 
-const itemLimit = 3;
+const itemLimit = 4;
 
 module.exports = async () => {
   const newExhibitions = await Exhibition.getLatest(itemLimit);
