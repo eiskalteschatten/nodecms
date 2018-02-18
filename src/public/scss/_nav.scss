@@ -8,14 +8,35 @@
   .nav-links {
     a {
       &.main {
-        color: #000000;
+        color: #ffffff;
         display: inline-block;
         font-weight: bold;
         margin: 9px 15px;
+        position: relative;
+
+        &:after {
+          background-color: #ffffff;
+          bottom: -5px;
+          content: "";
+          height: 3px;
+          left: 0;
+          position: absolute;
+          transition: all 0.4s;
+          width: 0;
+        }
 
         &:hover {
-          color: $metaColor;
           text-decoration: none;
+
+          &:after {
+            width: 100%;
+          }
+        }
+
+        &.uk-open {
+          &:after {
+            width: 100%;
+          }
         }
       }
 
@@ -36,9 +57,10 @@
     padding: 10px 0;
 
     .burger-menu {
-      color: #000000;
+      display: block;
+      font-size: 1.2em;
+      margin-top: 5px;
     }
-
   }
 }
 
