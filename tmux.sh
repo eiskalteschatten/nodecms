@@ -8,7 +8,7 @@ $tmux has-session -t $SESSION
 if [ $? -eq 0 ]; then
   echo "Session $SESSION already exists. Attaching."
   sleep 1
-  $tmux attach -t $SESSION
+  $tmux -CC attach -t $SESSION
   exit 0;
 fi
 
@@ -24,4 +24,4 @@ $tmux send-keys "git pull origin master && npm run docker:rebuild" C-m
 $tmux select-window -t $SESSION:0
 $tmux select-pane -t 1
 $tmux select-pane -t 0
-$tmux attach -t $SESSION
+$tmux -CC attach -t $SESSION
