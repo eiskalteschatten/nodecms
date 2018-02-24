@@ -4,7 +4,7 @@ const config = require(`../../config/envs/${process.env.NODE_ENV}.json`).mongo;
 
 const mongoose = require('mongoose');
 
-mongoose.connect(`mongodb://${config.host}/${config.database}`);
+mongoose.connect(`mongodb://${config.host}:${config.port}/${config.database}`);
 mongoose.Promise = global.Promise;
 
 const db = mongoose.connection;
