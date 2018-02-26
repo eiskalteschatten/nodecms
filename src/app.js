@@ -19,14 +19,6 @@ const MongoStore = require('connect-mongo')(session);
 const db = require('./lib/mongo/connection');
 
 module.exports = async () => {
-  // Nunjucks
-  app = require('./lib/booting/nunjucks.js')(app);
-
-
-  // Defaults
-  app.locals = require('./config/locals');
-
-
   // Express setup
   //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
   app.use(logger('dev'));
@@ -36,6 +28,7 @@ module.exports = async () => {
   app.use(cookieParser());
   app.use(express.static(path.join(__dirname, 'public')));
   app.disable('x-powered-by');
+
 
   // Session setup
   app.use(session({
@@ -49,6 +42,15 @@ module.exports = async () => {
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(flash());
+
+
+  // Nunjucks
+  app = require('./lib/booting/nunjucks.js')(app);
+
+
+  // Defaults
+  app.locals = require('./config/locals');
+
 
   // Setup Passport authentication
   require('./lib/authentication/setupPassport')();
