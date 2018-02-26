@@ -32,7 +32,6 @@
     "matomo-tracker": "^2.1.0",
     "mongoose": "^5.0.4",
     "morgan": "~1.7.0",
-    "node-sass": "^4.7.2",
     "nunjucks": "^2.5.2",
     "nunjucks-markdown": "^2.0.1",
     "passport": "^0.4.0",
