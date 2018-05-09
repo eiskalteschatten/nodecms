@@ -1,5 +1,5 @@
 #!/bin/bash
-SESSION=historymuseum
+SESSION=nodecms
 #tmux="tmux -2 -f tmux.conf"
 tmux="tmux"
 
