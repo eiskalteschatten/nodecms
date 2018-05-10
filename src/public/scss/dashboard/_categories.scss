@@ -1,0 +1,13 @@
+.categories {
+  .category-row {
+    cursor: pointer;
+
+    &.new-row {
+      background: #ffd !important;
+    }
+
+    &.selected {
+      background: lighten(#34495e, 60%) !important;
+    }
+  }
+}

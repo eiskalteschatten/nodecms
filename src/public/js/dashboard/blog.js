@@ -7,6 +7,31 @@ var _dashboardBlog = {
     var html = _dashboard.convertMarkdownToHtml(markdown);
 
     $('.js-markdown-preview').html(html);
+
+    $('#markdownGuide').click(function(e) {
+      e.preventDefault();
+      window.open('/dashboard/markdown-guide', 'markdownGuide', 'resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no, width=900, height=1000');
+    });
+
+    $('#toolbarSaveButtton').click(function(e) {
+      e.preventDefault();
+      _dashboardBlog.save();
+    });
+
+    $('#toolbarPreviewButtton').click(function(e) {
+      e.preventDefault();
+      //_dashboardBlog.save();
+    });
+
+    $('#toolbarMediaButtton').click(function(e) {
+      e.preventDefault();
+      //_dashboardBlog.save();
+    });
+
+    $('#toolbarDeleteButtton').click(function(e) {
+      e.preventDefault();
+      _dashboardBlog.delete();
+    });
   },
 
   save: function() {
@@ -75,29 +100,4 @@ var _dashboardBlog = {
 
 $(document).ready(function() {
   _dashboardBlog.init();
-
-  $('#markdownGuide').click(function(e) {
-    e.preventDefault();
-    window.open('/dashboard/markdown-guide', 'markdownGuide', 'resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no, width=900, height=1000');
-  });
-
-  $('#toolbarSaveButtton').click(function(e) {
-    e.preventDefault();
-    _dashboardBlog.save();
-  });
-
-  $('#toolbarPreviewButtton').click(function(e) {
-    e.preventDefault();
-    //_dashboardBlog.save();
-  });
-
-  $('#toolbarMediaButtton').click(function(e) {
-    e.preventDefault();
-    //_dashboardBlog.save();
-  });
-
-  $('#toolbarDeleteButtton').click(function(e) {
-    e.preventDefault();
-    _dashboardBlog.delete();
-  });
 });

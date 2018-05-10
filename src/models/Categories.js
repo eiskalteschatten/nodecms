@@ -6,12 +6,9 @@ const db = require('../lib/mongo/connection');
 const modelName = 'Categories';
 
 const schema = new mongoose.Schema({
-  name: {},
-  slug: {},
-  description: {},
-  parentCategory: String,
-  childrenCategories: [],
-  type: String
+  name: String,
+  slug: String,
+  description: String
 },
 {
   collection: 'categories',

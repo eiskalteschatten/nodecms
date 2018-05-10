@@ -18,11 +18,11 @@
           </ul>
         </div>
       </li>
+      <li {% if pageId == "categories" %}class="uk-active"{% endif %}>
+        <a href="/dashboard/categories"><i class="fas fa-tags text-icon-left"></i>Categories</a>
+      </li>
       <li {% if pageId == "media" %}class="uk-active"{% endif %}>
         <a href="/dashboard/media"><i class="fas fa-image text-icon-left"></i>Media</a>
-      </li>
-      <li {% if pageId == "meta" %}class="uk-active"{% endif %}>
-        <a href="/dashboard/meta"><i class="fas fa-tags text-icon-left"></i>Meta</a>
       </li>
     </ul>
   </div>
