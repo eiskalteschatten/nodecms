@@ -8,11 +8,6 @@ const helper = require('../../lib/helper');
 
 const Categories = require('../../models/Categories');
 
-const slug = require('slug');
-const path = require('path');
-const fs = require('fs');
-
-
 router.get('/', async (req, res) => {
   const pageTitle = 'Categories';
 
@@ -45,7 +40,7 @@ router.post('/', async (req, res) => {
   });
 
   try {
-    newCategory.save();
+    await newCategory.save();
     res.redirect('/dashboard/categories');
   }
   catch(error) {
@@ -54,55 +49,24 @@ router.post('/', async (req, res) => {
 });
 
 
-router.patch('/', (req, res) => {
+// Use POST instead of PATCH because submitting a normal HTML form doesn't support method="patch"
+router.post('/save', async (req, res) => {
   const body = req.body;
-  const organizationId = req.session.organizationId;
-  const languages = req.session.settings.languages;
-  const newCategoryNames = {};
-  const newCategorySlugs = {};
-  const newCategoryDescriptions = {};
-  let category;
-
-  languages.forEach(language => {
-    newCategoryNames[language] = body[language + 'Name'];
-    newCategorySlugs[language] = slug(body[language + 'Name']).toLowerCase();
-    newCategoryDescriptions[language] = body[language + 'Description'];
-  });
+  const categoryName = body.categoryName;
 
   const setCategory = {
-    name: newCategoryNames,
-    slug: newCategorySlugs,
-    description: newCategoryDescriptions,
-    organizationId: organizationId
+    name: categoryName,
+    slug: helper.createSlug(categoryName),
+    description: body.categoryDescription
   };
 
-  Categories.findOneAndUpdate({_id: body.id, organizationId: organizationId}, {$set: setCategory}, {new: true}).exec().then(savedCategory => {
-    category = savedCategory;
-    return new Promise((resolve, reject) => {
-      fs.readFile(path.join(__dirname, '../../views/blog/components/categoryRow.njk'), 'utf8', (error, template) => {
-        if (error) {
-          return reject(error);
-        }
-
-        resolve(template);
-      });
-    });
-  }).then(template => {
-    const response = {
-      message: 'changesSavedSuccessfully',
-      object: {
-        category: category,
-        template: template,
-        actionType: 'replace',
-        languages: req.session.settings.languages
-      },
-      callback: true
-    };
-
-    res.send(response);
-  }).catch(error => {
+  try {
+    await Categories.findOneAndUpdate({_id: body.id}, {$set: setCategory}, {new: true}).exec();
+    res.redirect('/dashboard/categories');
+  }
+  catch(error) {
     errorHandling.returnError(error, res, req);
-  });
+  }
 });
 
 
