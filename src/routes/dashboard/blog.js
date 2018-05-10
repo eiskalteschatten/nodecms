@@ -40,24 +40,15 @@ router.get('/', async (req, res) => {
 
 
 router.get('/new', (req, res) => {
-  const pageTitle = 'Create New Exhibition';
+  const pageTitle = 'Create New Blog Post';
 
   res.render('dashboard/blog/edit.njk', {
     pageTitle: pageTitle,
-    pageId: 'newExhibition',
+    pageId: 'newBlogPost',
     breadcrumbs: {
-      '/dashboard/exhibitions': 'Exhibitions',
+      '/dashboard/blog': 'Blog Posts',
       '/dashboard/blog/new': pageTitle,
     }
-  });
-});
-
-
-router.get('/new/exhibition-template', (req, res) => {
-  const id = req.query.id;
-
-  res.render(`dashboard/blog/templates/${id}.njk`, {}, (error, html) => {
-    return error ? res.status(404).send(error) : res.send(html);
   });
 });
 
@@ -66,18 +57,18 @@ router.get('/edit/:slug', async (req, res) => {
   const slug = req.params.slug;
 
   try {
-    const exhibition = await BlogPost.findOne({slug: slug}).exec();
+    const blogPost = await BlogPost.findOne({slug: slug}).exec();
 
-    if (!exhibition) {
+    if (!blogPost) {
       return errorHandling.returnError({
         statusCode: 404,
-        message: 'Exhibition not found'
+        message: 'Blog post not found'
       }, res, req);
     }
 
-    const pageTitle = `Edit "${exhibition.name}"`;
+    const pageTitle = 'Edit blog post';
     const breadcrumbs = {
-      '/dashboard/exhibitions': 'Exhibitions'
+      '/dashboard/blog': 'Blog Posts'
     };
 
     breadcrumbs[`/dashboard/blog/edit/${slug}`] = pageTitle;
@@ -85,7 +76,7 @@ router.get('/edit/:slug', async (req, res) => {
     res.render('dashboard/blog/edit.njk', {
       pageTitle: pageTitle,
       pageId: 'editExhibition',
-      exhibition: exhibition,
+      blogPost: blogPost,
       breadcrumbs: breadcrumbs
     });
   }
@@ -97,55 +88,58 @@ router.get('/edit/:slug', async (req, res) => {
 
 router.post('/edit', async (req, res) => {
   const body = req.body;
-  let exhibitionId = body.exhibitionId;
+  let blogPostId = body.blogPostId;
   const slug = helper.createSlug(body.name);
-  const setExhibition = {
+  const markdown = body.markdown;
+  const status = 'draft';
+  const currentUser = req.user.userName;
+
+  const setBlogPost = {
     name: body.name,
-    description: body.description,
-    template: body.templateId,
-    texts: [],
-    media: [],
-    meta: [],
-    lastEditedBy: req.user.userName
+    slug: slug,
+    excerpt: body.excerpt,
+    markdown: markdown,
+    html: marked(markdown),
+    tags: [],
+    categories: [],
+    lastEditedBy: currentUser,
+    status: status,
   };
 
-  body.texts.forEach(text => {
-    setExhibition.texts.push({
-      markdown: text,
-      html: marked(text)
-    });
-  });
+  if (status === 'published') {
+    setBlogPost.published = new Date();
+  }
 
   try {
-    let exhibition;
+    let blogPost;
 
-    if (!exhibitionId) {
-      const exhibitionWithSlug = await BlogPost.findOne({slug: slug}).exec();
+    if (!blogPostId) {
+      const blogPostWithSlug = await BlogPost.findOne({slug: slug}).exec();
 
-      if (exhibitionWithSlug) {
+      if (blogPostWithSlug) {
         return errorHandling.returnError({
-          message: 'An exhibition with that name already exists. Please choose a new name.',
+          message: 'A blog post with that title already exists. Please choose a new title.',
           statusCode: 409
         }, res, req);
       }
     }
     else {
-      exhibition = await BlogPost.findById(exhibitionId).exec();
+      blogPost = await BlogPost.findById(blogPostId).exec();
 
-      if (exhibition) {
-        exhibition.set(setExhibition);
+      if (blogPost) {
+        blogPost.set(setBlogPost);
       }
     }
 
-    if (!exhibition) {
-      setExhibition.author = req.user.userName;
-      exhibition = new BlogPost(setExhibition);
-      exhibitionId = exhibition._id;
+    if (!blogPost) {
+      setBlogPost.author = currentUser;
+      blogPost = new BlogPost(setBlogPost);
+      blogPostId = blogPost._id;
     }
 
-    exhibition.slug = slug;
+    blogPost.slug = slug;
 
-    await exhibition.save();
+    await blogPost.save();
 
     res.json({
       slug: slug
@@ -159,7 +153,7 @@ router.post('/edit', async (req, res) => {
 
 router.delete('/edit', async (req, res) => {
   try {
-    await BlogPost.findOneAndRemove({_id: req.body.postId}).exec();
+    await BlogPost.findOneAndRemove({_id: req.body.blogPostId}).exec();
     res.send('ok');
   }
   catch(error) {

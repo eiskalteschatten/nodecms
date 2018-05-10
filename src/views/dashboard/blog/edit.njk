@@ -22,7 +22,7 @@
               <li><a href="#" id="toolbarSaveButtton"><i class="fas fa-save"></i></a></li>
               <li><a href="#" id="toolbarPreviewButtton"><i class="fas fa-eye"></i></a></li>
               <li><a href="#" id="toolbarInventoryButtton"><i class="fas fa-archive"></i></a></li>
-              {% if exhibition %}
+              {% if blogPost %}
                 <li><a href="#" id="toolbarDeleteButtton"><i class="fas fa-trash"></i></a></li>
               {% endif %}
             </ul>
@@ -37,44 +37,31 @@
       <div class="uk-child-width-1-2 uk-margin-bottom" uk-grid>
         <div>
           <div class="uk-margin">
-              <input class="uk-input" type="text" id="exhibitionName" placeholder="Exhibition Title" value="{{ exhibition.name }}">
+              <input class="uk-input" type="text" id="blogPostName" placeholder="Title" value="{{ blogPost.name }}">
           </div>
           <div class="uk-margin">
-              <textarea class="uk-textarea" rows="5" id="exhibitionDescription" placeholder="Exhibition Description">{{ exhibition.description }}</textarea>
+              <textarea class="uk-textarea" rows="5" id="blogPostExcerpt" placeholder="Excerpt">{{ blogPost.excerpt }}</textarea>
           </div>
         </div>
         <div>
-          add meta tags<br>
+          add categories and tags<br>
           add status (draft, published, etc)<br>
           add featured image
         </div>
       </div>
 
-      <div class="uk-inline exhibition-templates-menu uk-margin-bottom">
-        <button class="uk-button uk-button-default">Choose a template<i class="fas fa-caret-down text-icon-right"></i></button>
-        <div uk-dropdown="mode: click" id="exhibitionTemplatesDropdown">
-          <div class="uk-column-1-2">
-            <div class="uk-width-medium">
-              <a href="#" class="image-link uk-padding-small js-exhibition-template-button" data-template-id="article">
-                <span>Article</span>
-                <img src="/img/exhibition-templates/article.svg" alt="Article">
-              </a>
-            </div>
-            <div class="uk-width-medium">
-              <a href="#" class="image-link uk-padding-small js-exhibition-template-button" data-template-id="sections">
-                <span>Sections</span>
-                <img src="/img/exhibition-templates/sections.svg" alt="Sections">
-              </a>
-            </div>
-          </div>
+      <div class="uk-child-width-1-2 js-markdown-wrapper" uk-grid>
+        <div>
+          <textarea class="js-markdown-editor">{{ blogPost.markdown }}</textarea>
+        </div>
+        <div>
+          <div class="js-markdown-preview"></div>
         </div>
       </div>
-
-      <div id="templateAnchor"></div>
     </div>
   </div>
 
-  <input type="hidden" id="exhibitionId" value="{{ exhibition._id }}">
+  <input type="hidden" id="blogPostId" value="{{ blogPost._id }}">
 
   {% for text in exhibition.texts %}
     <textarea class="uk-hidden js-editor-text">{{ text.markdown }}</textarea>
@@ -83,14 +70,5 @@
 
 {% block javascripts %}
   {{ super() }}
-
-  <script type="text/javascript" src="/js/dashboard/templates.js"></script>
-
-  {% if exhibition %}
-    <script type="text/javascript">
-      $(document).ready(function() {
-        _dashboardTemplates.loadExhibitionTemplate('{{ exhibition.template }}', true);
-      });
-    </script>
-  {% endif %}
+  <script type="text/javascript" src="/js/dashboard/blog.js"></script>
 {% endblock %}

@@ -8,12 +8,13 @@ const modelName = 'BlogPost';
 const schema = new mongoose.Schema({
   name: String,
   slug: String,
+  excerpt: String,
   markdown: String,
   html: String,
-  excerpt: String,
-  tags: {},
+  tags: [],
   categories: [],
   author: String,
+  lastEditedBy: String,
   status: String,
   published: Date
 },

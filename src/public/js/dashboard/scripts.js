@@ -16,7 +16,7 @@ var _dashboard = {
 
       simplemde.codemirror.on('change', function() {
         var html = _dashboard.convertMarkdownToHtml(simplemde.value());
-        $editorElement.closest('.js-exhibition-template').find('.markdown-preview').html(html);
+        $editorElement.closest('.js-markdown-wrapper').find('.js-markdown-preview').html(html);
       });
 
       _dashboard.simplemdes.push(simplemde);
@@ -35,7 +35,7 @@ var _dashboard = {
 
     simplemde.codemirror.on('change', function() {
       var html = _dashboard.convertMarkdownToHtml(simplemde.value());
-      $editorElement.closest('.js-exhibition-template').find('.markdown-preview').html(html);
+      $editorElement.closest('.js-markdown-wrapper').find('.js-markdown-preview').html(html);
     });
 
     _dashboard.simplemdes.push(simplemde);
