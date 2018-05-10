@@ -1,0 +1,31 @@
+{% extends "dashboard/mainBody.njk" %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block content %}
+
+<div class="uk-margin uk-card uk-card-default">
+    <div class="uk-card-header">
+      <div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid>
+        <div>
+          <h2 class="uk-card-title"><i class="fas fa-image text-icon-left"></i>{{ pageTitle }}</h2>
+        </div>
+        <div>
+          <div class="uk-text-right">
+            <a href="/dashboard/media/upload" class="uk-button uk-button-secondary"><i class="fas fa-upload text-icon-left"></i>Upload new file</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="uk-card-body">
+
+    </div>
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ super() }}
+
+  <script type="text/javascript" src="/js/dashboard/media.js"></script>
+{% endblock %}

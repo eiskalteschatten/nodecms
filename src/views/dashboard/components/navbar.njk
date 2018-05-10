@@ -2,9 +2,11 @@
   <div class="uk-navbar-left">
     <a href="/dashboard" class="uk-navbar-item uk-logo">Node CMS Dashboard</a>
     <ul class="uk-navbar-nav">
+
       <li {% if pageId == "dashboard" %}class="uk-active"{% endif %}>
         <a href="/dashboard"><i class="fas fa-tachometer-alt text-icon-left"></i>Dashboard</a>
       </li>
+
       <li {% if pageId == "blog" %}class="uk-active"{% endif %}>
         <a href="/dashboard/blog"><i class="fas fa-newspaper text-icon-left"></i>Blog</a>
         <div class="uk-navbar-dropdown">
@@ -18,12 +20,25 @@
           </ul>
         </div>
       </li>
+
       <li {% if pageId == "categories" %}class="uk-active"{% endif %}>
         <a href="/dashboard/categories"><i class="fas fa-tags text-icon-left"></i>Categories</a>
       </li>
+
       <li {% if pageId == "media" %}class="uk-active"{% endif %}>
         <a href="/dashboard/media"><i class="fas fa-image text-icon-left"></i>Media</a>
+        <div class="uk-navbar-dropdown">
+          <ul class="uk-nav uk-navbar-dropdown-nav">
+            <li {% if pageId == "media" %}class="uk-active"{% endif %}>
+              <a href="/dashboard/media"><i class="fas fa-eye text-icon-left"></i>All media</a>
+            </li>
+            <li {% if pageId == "uploadMediaFile" %}class="uk-active"{% endif %}>
+              <a href="/dashboard/media/upload"><i class="fas fa-upload text-icon-left"></i>Upload new file</a>
+            </li>
+          </ul>
+        </div>
       </li>
+
     </ul>
   </div>
   <div class="uk-navbar-right">

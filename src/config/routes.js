@@ -16,6 +16,7 @@ module.exports = {
       '/dashboard/account': './routes/dashboard/account',
       '/dashboard/blog': './routes/dashboard/blog',
       '/dashboard/categories': './routes/dashboard/categories',
+      '/dashboard/media': './routes/dashboard/media',
     }
   }
 };
