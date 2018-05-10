@@ -11,8 +11,8 @@ var _dashboardBlog = {
 
   save: function() {
     var name = $('#blogPostName').val();
-    var excerpt = $('#blogPostExcerpt').val();
     var blogPostId = $('#blogPostId').val();
+    var currentStatus = $('#blogPostStatus').data('status');
 
     if (name === '') {
       _messages.show('error', 'A title is required.');
@@ -27,15 +27,17 @@ var _dashboardBlog = {
       contentType: 'application/json',
       data: JSON.stringify({
         name: name,
-        excerpt: excerpt,
+        excerpt: $('#blogPostExcerpt').val(),
         markdown: _dashboard.simplemdes[0].value(),
+        status: $('#blogPostStatus').val(),
+        currentStatus: currentStatus,
         blogPostId: blogPostId
       })
     })
     .done(function(post) {
       _messages.show('success', 'Saved successfully.', false);
 
-      if (!blogPostId) {
+      if (!blogPostId || currentStatus != post.status) {
         window.location = '/dashboard/blog/edit/' + post.slug;
       }
     })
@@ -74,11 +76,6 @@ var _dashboardBlog = {
 $(document).ready(function() {
   _dashboardBlog.init();
 
-  $('.js-exhibition-template-button').click(function(e) {
-    e.preventDefault();
-    _dashboardBlog.loadExhibitionTemplate($(this).data('template-id'));
-  });
-
   $('#markdownGuide').click(function(e) {
     e.preventDefault();
     window.open('/dashboard/markdown-guide', 'markdownGuide', 'resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no, width=900, height=1000');
@@ -102,13 +99,5 @@ $(document).ready(function() {
   $('#toolbarDeleteButtton').click(function(e) {
     e.preventDefault();
     _dashboardBlog.delete();
-  });
-
-  $(document).on('click', '#addSection', function() {
-    _dashboardBlog.sections.addSection();
-  });
-
-  $(document).on('click', '.js-delete-section', function() {
-    _dashboardBlog.sections.deleteSection($(this));
   });
 });

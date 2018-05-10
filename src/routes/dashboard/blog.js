@@ -58,6 +58,7 @@ router.get('/edit/:slug', async (req, res) => {
 
   try {
     const blogPost = await BlogPost.findOne({slug: slug}).exec();
+    let publishedDate;
 
     if (!blogPost) {
       return errorHandling.returnError({
@@ -73,10 +74,15 @@ router.get('/edit/:slug', async (req, res) => {
 
     breadcrumbs[`/dashboard/blog/edit/${slug}`] = pageTitle;
 
+    if (blogPost.published) {
+      publishedDate = helper.formatDate(blogPost.published, 'LLL');
+    }
+
     res.render('dashboard/blog/edit.njk', {
       pageTitle: pageTitle,
-      pageId: 'editExhibition',
+      pageId: 'editBlogPost',
       blogPost: blogPost,
+      publishedDate: publishedDate,
       breadcrumbs: breadcrumbs
     });
   }
@@ -91,8 +97,9 @@ router.post('/edit', async (req, res) => {
   let blogPostId = body.blogPostId;
   const slug = helper.createSlug(body.name);
   const markdown = body.markdown;
-  const status = 'draft';
+  const status = body.status;
   const currentUser = req.user.userName;
+  const isBeingPublished = status === 'published' && body.currentStatus !== 'published';
 
   const setBlogPost = {
     name: body.name,
@@ -103,10 +110,10 @@ router.post('/edit', async (req, res) => {
     tags: [],
     categories: [],
     lastEditedBy: currentUser,
-    status: status,
+    status: status
   };
 
-  if (status === 'published') {
+  if (isBeingPublished) {
     setBlogPost.published = new Date();
   }
 
@@ -142,7 +149,8 @@ router.post('/edit', async (req, res) => {
     await blogPost.save();
 
     res.json({
-      slug: slug
+      slug: slug,
+      status: blogPost.status
     });
   }
   catch(error) {

@@ -1,10 +1,12 @@
 'use strict';
 
 const slug = require('slug');
+const moment = require('moment');
 
 module.exports = {
   parseRoute,
-  createSlug
+  createSlug,
+  formatDate
 };
 
 function parseRoute(origRoute) {
@@ -15,4 +17,8 @@ function parseRoute(origRoute) {
 
 function createSlug(value) {
   return slug(value).replace( /([a-z])([A-Z])/g, '$1-$2' ).toLowerCase();
+}
+
+function formatDate(date, formatType) {
+  return moment(date).locale('en-GB').format(formatType);
 }

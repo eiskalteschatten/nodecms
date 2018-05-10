@@ -30,6 +30,7 @@
     "jquery": "^3.3.1",
     "marked": "^0.3.12",
     "matomo-tracker": "^2.1.0",
+    "moment": "^2.22.1",
     "mongoose": "^5.0.4",
     "morgan": "~1.7.0",
     "nunjucks": "^2.5.2",

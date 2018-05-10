@@ -28,6 +28,19 @@
             </ul>
           </div>
 
+          <div>
+            <select id="blogPostStatus" class="uk-select uk-form-small uk-form-width-small" data-status="{{ blogPost.status }}">
+              <option value="draft" {% if blogPost.status == 'draft' %}selected{% endif %}>Draft</option>
+              <option value="published" {% if blogPost.status == 'published' %}selected{% endif %}>Published</option>
+            </select>
+          </div>
+
+          {% if blogPost.status == 'published' and publishedDate %}
+            <div class="uk-text-small uk-text-muted">
+              <strong>Published:</strong> {{ publishedDate }}
+            </div>
+          {% endif %}
+
           <div class="uk-width-expand uk-text-right uk-text-small">
             <a href="#" id="markdownGuide">Markdown Guide</a>
           </div>
@@ -44,9 +57,14 @@
           </div>
         </div>
         <div>
-          add categories and tags<br>
-          add status (draft, published, etc)<br>
-          add featured image
+          <div class="uk-child-width-1-2 uk-margin-bottom" uk-grid>
+            <div>
+              add categories and tags
+            </div>
+            <div>
+              add featured image
+            </div>
+          </div>
         </div>
       </div>
 
@@ -62,10 +80,6 @@
   </div>
 
   <input type="hidden" id="blogPostId" value="{{ blogPost._id }}">
-
-  {% for text in exhibition.texts %}
-    <textarea class="uk-hidden js-editor-text">{{ text.markdown }}</textarea>
-  {% endfor %}
 {% endblock %}
 
 {% block javascripts %}
