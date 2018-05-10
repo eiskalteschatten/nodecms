@@ -91,7 +91,7 @@ $(document).ready(function() {
     //_dashboardBlog.save();
   });
 
-  $('#toolbarInventoryButtton').click(function(e) {
+  $('#toolbarMediaButtton').click(function(e) {
     e.preventDefault();
     //_dashboardBlog.save();
   });
