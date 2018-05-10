@@ -48,7 +48,7 @@
       <div class="uk-card uk-card-secondary">
         <form id="editCategoryForm" action="/dashboard/categories/" method="patch">
           <div class="uk-card-body">
-            <button class="uk-card-badge cursor-pointer" uk-close></button>
+            <button class="uk-card-badge cursor-pointer js-edit-category-cancel-button" uk-close></button>
 
             <h3 class="uk-card-title">Update Category</h3>
 
@@ -67,7 +67,9 @@
               <button class="uk-button uk-button-primary">Save</button>
               {#<button class="uk-button uk-button-danger" id="deleteCategoryButton">Delete</button>#}
               <button class="uk-button uk-button-default js-edit-category-cancel-button">Cancel</button>
-              <div class="uk-align-right uk-text-large"><a href="#" id="deleteCategoryButton" title="Delete"><i class="fa fa-trash-o uk-text-danger"></i></a></div>
+              <div class="uk-align-right uk-text-large">
+                <a href="#" id="deleteCategoryButton" title="Delete"><i class="far fa-trash-alt uk-text-danger"></i></a>
+              </div>
             </div>
           </div>
         </form>

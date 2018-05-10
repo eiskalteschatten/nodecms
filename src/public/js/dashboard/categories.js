@@ -17,26 +17,16 @@ var _dashboardCategories = {
   editCategory: function($row) {
     var $form = $('#editCategoryForm');
     var id = $row.data('id');
-    var $rowsWithId = $('[data-id="' + id + '"]');
 
     $('tr.selected').removeClass('selected');
-    $rowsWithId.addClass('selected');
+    $row.addClass('selected');
 
     $form.find('[name="id"]').val(id);
-
-    $rowsWithId.each(function() {
-      var lang = $(this).data('lang');
-      $form.find('[name="' + lang + 'Name"]').val($(this).find('.name').text());
-      $form.find('[name="' + lang + 'Description"]').val($(this).find('.description').text());
-    });
+    $form.find('[name="categoryName"]').val($row.find('#name').text());
+    $form.find('[name="categoryDescription"]').val($row.find('#description').text());
 
     $('#addNewCategoryFormContainer').addClass('uk-hidden');
     $('#editCategoryFormContainer').removeClass('uk-hidden');
-
-    if (pp.mobile.isMobile()) {
-      var formTop = $('#editCategoryFormContainer').offset().top;
-      $('html,body').animate({scrollTop: formTop}, 'slow');
-    }
   },
 
   cancelEditCategory: function(e) {
