@@ -51,9 +51,11 @@ router.post('/', upload.array('files'), async (req, res) => {
 
   files.forEach(file => {
     const fileName = file.filename;
+    const name = fileName.replace(/\.[^/.]+$/, '');
+
     const newMediaFile = {
-      name: fileName,
-      slug: helper.createSlug(fileName),
+      name: name,
+      slug: helper.createSlug(name),
       fileName: fileName,
       mimeType: file.mimetype
     };
