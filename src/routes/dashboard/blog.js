@@ -118,7 +118,7 @@ router.post('/edit', async (req, res) => {
     excerpt: body.excerpt,
     markdown: markdown,
     html: marked(markdown),
-    tags: [],
+    tags: body.tags,
     categories: body.categories,
     lastEditedBy: currentUser,
     status: status
