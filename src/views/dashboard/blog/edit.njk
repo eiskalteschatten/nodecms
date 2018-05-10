@@ -59,7 +59,27 @@
         <div>
           <div class="uk-child-width-1-2 uk-margin-bottom" uk-grid>
             <div>
-              add categories and tags
+              <ul uk-tab>
+                <li class="uk-active"><a href="#">Categories</a></li>
+                <li><a href="#">Tags</a></li>
+              </ul>
+
+              <ul class="uk-switcher uk-margin">
+                <li>
+                  <div class="uk-panel-scrollable uk-height-small">
+                    {% for category in categories %}
+                      <div class="category">
+                        {% set id = category["_id"] | string %}
+                        <input type="checkbox" class="uk-checkbox js-category-checkbox" id="{{ id }}Checkbox" name="categories" value="{{ id }}" {% if blogPost.categories and id in blogPost.categories %}checked{% endif %}>
+                        <label for="{{ category["_id"] }}Checkbox">{{ category.name }}</label>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </li>
+                <li>
+                  tags
+                </li>
+              </ul>
             </div>
             <div>
               add featured image

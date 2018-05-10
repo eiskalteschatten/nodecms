@@ -38,6 +38,7 @@ var _dashboardBlog = {
     var name = $('#blogPostName').val();
     var blogPostId = $('#blogPostId').val();
     var currentStatus = $('#blogPostStatus').data('status');
+    var categories = [];
 
     if (name === '') {
       _messages.show('error', 'A title is required.');
@@ -45,6 +46,10 @@ var _dashboardBlog = {
     }
 
     _loader.open();
+
+    $('.js-category-checkbox:checked').each(function() {
+      categories.push($(this).val());
+    });
 
     $.ajax({
       url: '/dashboard/blog/edit',
@@ -56,6 +61,7 @@ var _dashboardBlog = {
         markdown: _dashboard.simplemdes[0].value(),
         status: $('#blogPostStatus').val(),
         currentStatus: currentStatus,
+        categories: categories,
         blogPostId: blogPostId
       })
     })

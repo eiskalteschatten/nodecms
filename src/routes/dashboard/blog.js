@@ -9,6 +9,7 @@ const errorHandling = require('../../lib/errorHandling');
 const helper = require('../../lib/helper');
 
 const BlogPost = require('../../models/BlogPost');
+const Categories = require('../../models/Categories');
 
 router.get('/', async (req, res) => {
   const pageTitle = 'Blog Posts';
@@ -39,17 +40,25 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/new', (req, res) => {
+router.get('/new', async (req, res) => {
   const pageTitle = 'Create New Blog Post';
 
-  res.render('dashboard/blog/edit.njk', {
-    pageTitle: pageTitle,
-    pageId: 'newBlogPost',
-    breadcrumbs: {
-      '/dashboard/blog': 'Blog Posts',
-      '/dashboard/blog/new': pageTitle,
-    }
-  });
+  try {
+    const categories = await Categories.find({}).exec();
+
+    res.render('dashboard/blog/edit.njk', {
+      pageTitle: pageTitle,
+      pageId: 'newBlogPost',
+      categories: categories,
+      breadcrumbs: {
+        '/dashboard/blog': 'Blog Posts',
+        '/dashboard/blog/new': pageTitle,
+      }
+    });
+  }
+  catch(error) {
+    errorHandling.returnError(error, res, req);
+  }
 });
 
 
@@ -58,6 +67,7 @@ router.get('/edit/:slug', async (req, res) => {
 
   try {
     const blogPost = await BlogPost.findOne({slug: slug}).exec();
+    const categories = await Categories.find({}).exec();
     let publishedDate;
 
     if (!blogPost) {
@@ -82,6 +92,7 @@ router.get('/edit/:slug', async (req, res) => {
       pageTitle: pageTitle,
       pageId: 'editBlogPost',
       blogPost: blogPost,
+      categories: categories,
       publishedDate: publishedDate,
       breadcrumbs: breadcrumbs
     });
@@ -108,7 +119,7 @@ router.post('/edit', async (req, res) => {
     markdown: markdown,
     html: marked(markdown),
     tags: [],
-    categories: [],
+    categories: body.categories,
     lastEditedBy: currentUser,
     status: status
   };
