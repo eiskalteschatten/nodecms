@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   const pageTitle = 'Categories';
 
   try {
-    const categories = await Categories.find({}).exec();
+    const categories = await Categories.find().exec();
 
     res.render('dashboard/categories/index.njk', {
       pageTitle: pageTitle,

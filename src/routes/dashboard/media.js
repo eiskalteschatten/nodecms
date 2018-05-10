@@ -2,19 +2,31 @@
 
 const express = require('express');
 const router = express.Router();
-//const errorHandling = require('../../lib/errorHandling');
+//const path = require('path');
+const errorHandling = require('../../lib/errorHandling');
 
+const MediaFile = require('../../models/MediaFile');
 
-router.get('/', (req, res) => {
+//const pathToUploadDir = path.join(__dirname, '../../public/uploads');
+
+router.get('/', async (req, res) => {
   const pageTitle = 'Media';
 
-  res.render('dashboard/media/index.njk', {
-    pageTitle: pageTitle,
-    pageId: pageTitle.toLowerCase(),
-    breadcrumbs: {
-      '/dashboard/media': pageTitle
-    }
-  });
+  try {
+    const mediaFiles = await MediaFile.find().sort({updatedAt: 'desc'}).exec();
+
+    res.render('dashboard/media/index.njk', {
+      pageTitle: pageTitle,
+      pageId: pageTitle.toLowerCase(),
+      mediaFiles: mediaFiles,
+      breadcrumbs: {
+        '/dashboard/media': pageTitle
+      }
+    });
+  }
+  catch(error) {
+    errorHandling.returnError(error, res, req);
+  }
 });
 
 
