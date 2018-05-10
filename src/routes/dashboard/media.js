@@ -6,6 +6,7 @@ const router = express.Router();
 const errorHandling = require('../../lib/errorHandling');
 
 const MediaFile = require('../../models/MediaFile');
+const Categories = require('../../models/Categories');
 
 //const pathToUploadDir = path.join(__dirname, '../../public/uploads');
 
@@ -30,17 +31,36 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/upload', (req, res) => {
+router.get('/upload', async (req, res) => {
   const pageTitle = 'Upload New File';
 
-  res.render('dashboard/media/upload.njk', {
-    pageTitle: pageTitle,
-    pageId: 'uploadNewMediaFile',
-    breadcrumbs: {
-      '/dashboard/media': 'Media',
-      '/dashboard/media/upload': pageTitle
-    }
-  });
+  try {
+    const categories = await Categories.find({}).exec();
+
+    res.render('dashboard/media/upload.njk', {
+      pageTitle: pageTitle,
+      pageId: 'uploadNewMediaFile',
+      categories: categories,
+      breadcrumbs: {
+        '/dashboard/media': 'Media',
+        '/dashboard/media/upload': pageTitle
+      }
+    });
+  }
+  catch(error) {
+    errorHandling.returnError(error, res, req);
+  }
+});
+
+
+router.post('/upload', async (req, res) => {
+  try {
+    const id = '';
+    res.redirect(`/dashboard/media/edit/${id}`);
+  }
+  catch(error) {
+    errorHandling.returnError(error, res, req);
+  }
 });
 
 

@@ -4,13 +4,17 @@
 
 {% block content %}
 
-<div class="uk-margin uk-card uk-card-default">
+<div class="uk-margin uk-card uk-card-default js-media-file-drop">
     <div class="uk-card-header">
       <h2 class="uk-card-title"><i class="fas fa-upload text-icon-left"></i>{{ pageTitle }}</h2>
     </div>
 
     <div class="uk-card-body">
-
+      <div class="uk-h4 uk-margin-bottom">
+        Drop a file anywhere to upload or
+      </div>
+      <input id="fileUpload" type="file" class="uk-hidden">
+      <button class="uk-button uk-button-primary js-media-file-upload-button"><i class="fas fa-upload text-icon-left"></i>Select a file...</button>
     </div>
   </div>
 {% endblock %}
