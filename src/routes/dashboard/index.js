@@ -6,19 +6,19 @@ const cache = require('apicache').middleware;
 
 const errorHandling = require('../../lib/errorHandling');
 
-const Exhibition = require('../../models/Exhibition');
+//const Exhibition = require('../../models/Exhibition');
 
 router.get('/', async (req, res) => {
   const pageTitle = 'Dashboard';
-  const itemLimit = 5;
+  //const itemLimit = 5;
 
   try {
-    const exhibitions = await Exhibition.getLatest(itemLimit);
+    //const exhibitions = await Exhibition.getLatest(itemLimit);
 
     res.render('dashboard/index.njk', {
       pageTitle: pageTitle,
       pageId: pageTitle.toLowerCase(),
-      exhibitions: exhibitions,
+      //exhibitions: exhibitions,
     });
   }
   catch(error) {

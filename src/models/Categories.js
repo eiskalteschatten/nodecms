@@ -3,18 +3,23 @@
 const mongoose = require('mongoose');
 const db = require('../lib/mongo/connection');
 
-const modelName = 'Meta';
+const modelName = 'Categories';
 
 const schema = new mongoose.Schema({
-  name: String,
-  slug: String,
-  types: []
+  name: {},
+  slug: {},
+  description: {},
+  parentCategory: String,
+  childrenCategories: [],
+  type: String
 },
 {
-  collection: 'meta',
+  collection: 'categories',
   versionKey: false,
   timestamps: true
 });
+
+// Can add methods to the schema (http://mongoosejs.com/docs/index.html)
 
 const Model = db.model(modelName, schema);
 

@@ -14,7 +14,7 @@ module.exports = {
     'auth': {
       '/dashboard/': './routes/dashboard/index',
       '/dashboard/account': './routes/dashboard/account',
-      '/dashboard/exhibitions': './routes/dashboard/exhibitions',
+      '/dashboard/blog': './routes/dashboard/blog',
     }
   }
 };

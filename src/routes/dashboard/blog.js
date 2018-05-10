@@ -11,7 +11,7 @@ const helper = require('../../lib/helper');
 const Exhibition = require('../../models/Exhibition');
 
 router.get('/', async (req, res) => {
-  const pageTitle = 'Exhibitions';
+  const pageTitle = 'Blog Posts';
   const limit = 10;
   const page = req.query.page || 0;
 
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
     const exhibitions = await Exhibition.find().sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
     const numberOfPages = Math.ceil(count / limit);
 
-    res.render('dashboard/exhibitions/index.njk', {
+    res.render('dashboard/blog/index.njk', {
       pageTitle: pageTitle,
       pageId: pageTitle.toLowerCase(),
       exhibitions: exhibitions,
@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
       previousPage: page > 0 ? parseInt(page) - 1 : 0,
       nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0,
       breadcrumbs: {
-        '/dashboard/exhibitions': pageTitle
+        '/dashboard/blog': pageTitle
       }
     });
   }
@@ -42,12 +42,12 @@ router.get('/', async (req, res) => {
 router.get('/new', (req, res) => {
   const pageTitle = 'Create New Exhibition';
 
-  res.render('dashboard/exhibitions/edit.njk', {
+  res.render('dashboard/blog/edit.njk', {
     pageTitle: pageTitle,
     pageId: 'newExhibition',
     breadcrumbs: {
       '/dashboard/exhibitions': 'Exhibitions',
-      '/dashboard/exhibitions/new': pageTitle,
+      '/dashboard/blog/new': pageTitle,
     }
   });
 });
@@ -56,7 +56,7 @@ router.get('/new', (req, res) => {
 router.get('/new/exhibition-template', (req, res) => {
   const id = req.query.id;
 
-  res.render(`dashboard/exhibitions/templates/${id}.njk`, {}, (error, html) => {
+  res.render(`dashboard/blog/templates/${id}.njk`, {}, (error, html) => {
     return error ? res.status(404).send(error) : res.send(html);
   });
 });
@@ -80,9 +80,9 @@ router.get('/edit/:slug', async (req, res) => {
       '/dashboard/exhibitions': 'Exhibitions'
     };
 
-    breadcrumbs[`/dashboard/exhibitions/edit/${slug}`] = pageTitle;
+    breadcrumbs[`/dashboard/blog/edit/${slug}`] = pageTitle;
 
-    res.render('dashboard/exhibitions/edit.njk', {
+    res.render('dashboard/blog/edit.njk', {
       pageTitle: pageTitle,
       pageId: 'editExhibition',
       exhibition: exhibition,
