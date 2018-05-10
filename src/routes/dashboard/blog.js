@@ -12,7 +12,7 @@ const BlogPost = require('../../models/BlogPost');
 const Categories = require('../../models/Categories');
 
 router.get('/', async (req, res) => {
-  const pageTitle = 'Blog Posts';
+  const pageTitle = 'Blog';
   const limit = 10;
   const page = req.query.page || 0;
 
@@ -51,7 +51,7 @@ router.get('/new', async (req, res) => {
       pageId: 'newBlogPost',
       categories: categories,
       breadcrumbs: {
-        '/dashboard/blog': 'Blog Posts',
+        '/dashboard/blog': 'Blog',
         '/dashboard/blog/new': pageTitle,
       }
     });
@@ -79,7 +79,7 @@ router.get('/edit/:slug', async (req, res) => {
 
     const pageTitle = 'Edit blog post';
     const breadcrumbs = {
-      '/dashboard/blog': 'Blog Posts'
+      '/dashboard/blog': 'Blog'
     };
 
     breadcrumbs[`/dashboard/blog/edit/${slug}`] = pageTitle;
