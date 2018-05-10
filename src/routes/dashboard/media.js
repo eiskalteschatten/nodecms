@@ -47,22 +47,29 @@ router.get('/', async (req, res) => {
 
 router.post('/', upload.array('files'), async (req, res) => {
   const files = req.files;
+  const newMediaFiles = [];
 
-  // TODO: loop through for all of them
-  const file = files[0];
-  const fileName = file.filename;
-  const slug = helper.createSlug(fileName);
+  files.forEach(file => {
+    const fileName = file.filename;
+    const newMediaFile = {
+      name: fileName,
+      slug: helper.createSlug(fileName),
+      fileName: fileName,
+      mimeType: file.mimetype
+    };
 
-  const newMediaFile = new MediaFile({
-    name: fileName,
-    slug: slug,
-    fileName: fileName,
-    mimeType: file.mimetype
+    newMediaFiles.push(newMediaFile);
   });
 
   try {
-    await newMediaFile.save();
-    res.send(slug);
+    const savedMediaFiles = await MediaFile.insertMany(newMediaFiles);
+
+    if (savedMediaFiles.length > 1) {
+      res.send('/dashboard/media');
+    }
+    else {
+      res.send(`/dashboard/media/edit/${savedMediaFiles[0].slug}`);
+    }
   }
   catch(error) {
     errorHandling.returnError(error, res, req);

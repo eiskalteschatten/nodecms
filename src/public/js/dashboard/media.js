@@ -56,8 +56,8 @@ var _dashboardMedia = {
       contentType: false,
       processData: false
     })
-    .done(function(slug) {
-      window.location = '/dashboard/media/edit/' + slug;
+    .done(function(redirect) {
+      window.location = redirect;
     })
     .fail(function(xhr, status, error) {
       _loader.close();
