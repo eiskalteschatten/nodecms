@@ -16,7 +16,8 @@ const schema = new mongoose.Schema({
   author: String,
   lastEditedBy: String,
   status: String,
-  published: Date
+  published: Date,
+  featuredImage: String
 },
 {
   collection: 'blogPost',
