@@ -4,16 +4,19 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const multer = require('multer');
+
 const errorHandling = require('../../lib/errorHandling');
+const helper = require('../../lib/helper');
 
 const MediaFile = require('../../models/MediaFile');
 //const Categories = require('../../models/Categories');
 
-const pathToUploadDir = path.join(__dirname, '../../public/uploads');
+//const frontendPathToUploadDir = 'uploads';
+const fullPathToUploadDir = path.join(__dirname, '../../public/uploads');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, pathToUploadDir);
+    cb(null, fullPathToUploadDir);
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
@@ -43,11 +46,23 @@ router.get('/', async (req, res) => {
 
 
 router.post('/', upload.array('files'), async (req, res) => {
-  //const files = req.files;
+  const files = req.files;
+
+  // TODO: loop through for all of them
+  const file = files[0];
+  const fileName = file.filename;
+  const slug = helper.createSlug(fileName);
+
+  const newMediaFile = new MediaFile({
+    name: fileName,
+    slug: slug,
+    fileName: fileName,
+    mimeType: file.mimetype
+  });
 
   try {
-    const id = '';
-    res.send(id);
+    await newMediaFile.save();
+    res.send(slug);
   }
   catch(error) {
     errorHandling.returnError(error, res, req);

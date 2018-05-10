@@ -10,7 +10,7 @@ const schema = new mongoose.Schema({
   slug: String,
   caption: String,
   description: String,
-  path: String,
+  fileName: String,
   mimeType: String,
   categories: [],
   tags: []

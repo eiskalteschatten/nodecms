@@ -52,13 +52,12 @@ var _dashboardMedia = {
       url: $uploadForm.attr('action'),
       type: $uploadForm.attr('method'),
       data: ajaxData,
-      dataType: 'json',
       cache: false,
       contentType: false,
       processData: false
     })
-    .done(function(id) {
-      window.location = '/dashboard/media/edit/' + id;
+    .done(function(slug) {
+      window.location = '/dashboard/media/edit/' + slug;
     })
     .fail(function(xhr, status, error) {
       _loader.close();
