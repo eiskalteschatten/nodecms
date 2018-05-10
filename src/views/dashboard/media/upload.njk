@@ -1,0 +1,22 @@
+{% extends "dashboard/mainBody.njk" %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block content %}
+
+<div class="uk-margin uk-card uk-card-default">
+    <div class="uk-card-header">
+      <h2 class="uk-card-title"><i class="fas fa-upload text-icon-left"></i>{{ pageTitle }}</h2>
+    </div>
+
+    <div class="uk-card-body">
+
+    </div>
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ super() }}
+
+  <script type="text/javascript" src="/js/dashboard/media.js"></script>
+{% endblock %}

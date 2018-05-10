@@ -18,4 +18,18 @@ router.get('/', (req, res) => {
 });
 
 
+router.get('/upload', (req, res) => {
+  const pageTitle = 'Upload New File';
+
+  res.render('dashboard/media/upload.njk', {
+    pageTitle: pageTitle,
+    pageId: 'uploadNewMediaFile',
+    breadcrumbs: {
+      '/dashboard/media': 'Media',
+      '/dashboard/media/upload': pageTitle
+    }
+  });
+});
+
+
 module.exports = router;
