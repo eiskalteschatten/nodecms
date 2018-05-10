@@ -12,7 +12,9 @@
       </div>
       <div>
         <div class="uk-text-right">
-          <input id="fileUpload" type="file" class="uk-hidden">
+          <form action="/dashboard/media" method="post" id="uploadForm">
+            <input id="fileUpload" type="file" name="files" class="uk-hidden">
+          </form>
           <button class="uk-button uk-button-secondary js-media-file-upload-button"><i class="fas fa-upload text-icon-left"></i>Upload new file...</button>
         </div>
       </div>
