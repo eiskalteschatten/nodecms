@@ -8,7 +8,7 @@ const marked = require('marked');
 const errorHandling = require('../../lib/errorHandling');
 const helper = require('../../lib/helper');
 
-const Exhibition = require('../../models/Exhibition');
+const BlogPost = require('../../models/BlogPost');
 
 router.get('/', async (req, res) => {
   const pageTitle = 'Blog Posts';
@@ -16,14 +16,14 @@ router.get('/', async (req, res) => {
   const page = req.query.page || 0;
 
   try {
-    const count = await Exhibition.count().exec();
-    const exhibitions = await Exhibition.find().sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
+    const count = await BlogPost.count().exec();
+    const blogPosts = await BlogPost.find().sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
     const numberOfPages = Math.ceil(count / limit);
 
     res.render('dashboard/blog/index.njk', {
       pageTitle: pageTitle,
       pageId: pageTitle.toLowerCase(),
-      exhibitions: exhibitions,
+      blogPosts: blogPosts,
       numberOfPages: numberOfPages,
       page: page,
       previousPage: page > 0 ? parseInt(page) - 1 : 0,
@@ -66,7 +66,7 @@ router.get('/edit/:slug', async (req, res) => {
   const slug = req.params.slug;
 
   try {
-    const exhibition = await Exhibition.findOne({slug: slug}).exec();
+    const exhibition = await BlogPost.findOne({slug: slug}).exec();
 
     if (!exhibition) {
       return errorHandling.returnError({
@@ -120,7 +120,7 @@ router.post('/edit', async (req, res) => {
     let exhibition;
 
     if (!exhibitionId) {
-      const exhibitionWithSlug = await Exhibition.findOne({slug: slug}).exec();
+      const exhibitionWithSlug = await BlogPost.findOne({slug: slug}).exec();
 
       if (exhibitionWithSlug) {
         return errorHandling.returnError({
@@ -130,7 +130,7 @@ router.post('/edit', async (req, res) => {
       }
     }
     else {
-      exhibition = await Exhibition.findById(exhibitionId).exec();
+      exhibition = await BlogPost.findById(exhibitionId).exec();
 
       if (exhibition) {
         exhibition.set(setExhibition);
@@ -139,7 +139,7 @@ router.post('/edit', async (req, res) => {
 
     if (!exhibition) {
       setExhibition.author = req.user.userName;
-      exhibition = new Exhibition(setExhibition);
+      exhibition = new BlogPost(setExhibition);
       exhibitionId = exhibition._id;
     }
 
@@ -159,7 +159,7 @@ router.post('/edit', async (req, res) => {
 
 router.delete('/edit', async (req, res) => {
   try {
-    await Exhibition.findOneAndRemove({_id: req.body.exhibitionId}).exec();
+    await BlogPost.findOneAndRemove({_id: req.body.postId}).exec();
     res.send('ok');
   }
   catch(error) {

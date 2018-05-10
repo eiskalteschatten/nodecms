@@ -1,10 +1,10 @@
-{% for exhibition in exhibitions %}
-  {% set editLink = "/dashboard/exhibitions/edit/" + exhibition.slug %}
+{% for post in blogPosts %}
+  {% set editLink = "/dashboard/blog/edit/" + post.slug %}
 
   <tr>
     <td class="item-row js-item-row" data-edit-link="{{ editLink }}">
-      {{ exhibition.name }}
-      <div class="uk-text-meta">{{ exhibition.description }}</div>
+      {{ post.name }}
+      <div class="uk-text-meta">{{ post.excerpt }}</div>
     </td>
     <td class="uk-text-right">
       {% include "dashboard/components/itemEditButtons.njk" %}
@@ -13,7 +13,7 @@
 {% else %}
   <tr>
     <td>
-      <div class="uk-text-meta">There are no exhibitions.</div>
+      <div class="uk-text-meta">There are no blog posts.</div>
     </td>
     <td></td>
   </tr>

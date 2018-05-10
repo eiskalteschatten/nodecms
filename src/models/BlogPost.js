@@ -6,10 +6,11 @@ const db = require('../lib/mongo/connection');
 const modelName = 'BlogPost';
 
 const schema = new mongoose.Schema({
-  name: {},
-  slug: {},
-  markdown: {},
-  html: {},
+  name: String,
+  slug: String,
+  markdown: String,
+  html: String,
+  excerpt: String,
   tags: {},
   categories: [],
   author: String,
@@ -22,7 +23,13 @@ const schema = new mongoose.Schema({
   timestamps: true
 });
 
-// Can add methods to the schema (http://mongoosejs.com/docs/index.html)
+schema.statics.getLatest = function(limit) {
+  return this.find().sort({updatedAt: 'desc'}).limit(limit).exec();
+};
+
+schema.statics.getLatestPublished = function(limit) {
+  return this.find({status: 'published'}).sort({updatedAt: 'desc'}).limit(limit).exec();
+};
 
 const Model = db.model(modelName, schema);
 
