@@ -49,6 +49,8 @@ router.post('/', upload.array('files'), async (req, res) => {
   const files = req.files;
   const newMediaFiles = [];
 
+  // TODO: check if the the filename and/or slug already exists
+
   files.forEach(file => {
     const fileName = file.filename;
     const name = fileName.replace(/\.[^/.]+$/, '');

@@ -33,6 +33,8 @@ router.post('/', async (req, res) => {
   const body = req.body;
   const categoryName = body.categoryName;
 
+  // TODO: check if the the slug already exists
+
   const newCategory = new Categories({
     name: categoryName,
     slug: helper.createSlug(categoryName),
