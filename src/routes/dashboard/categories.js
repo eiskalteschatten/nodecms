@@ -71,10 +71,8 @@ router.post('/save', async (req, res) => {
 
 
 router.delete('/', async (req, res) => {
-  const body = req.body;
-
   try {
-    await Categories.findOneAndRemove({_id: body.id}).exec();
+    await Categories.findOneAndRemove({_id: req.body.id}).exec();
     res.send('ok');
   }
   catch(error) {
