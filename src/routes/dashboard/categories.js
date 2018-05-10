@@ -70,25 +70,16 @@ router.post('/save', async (req, res) => {
 });
 
 
-router.delete('/', (req, res) => {
+router.delete('/', async (req, res) => {
   const body = req.body;
-  const organizationId = req.session.organizationId;
 
-  Categories.findOneAndRemove({_id: body.id, organizationId: organizationId}).exec().then(() => {
-    const response = {
-      message: 'changesSavedSuccessfully',
-      object: {
-        id: body.id,
-        actionType: 'delete',
-        languages: req.session.settings.languages
-      },
-      callback: true
-    };
-
-    res.send(response);
-  }).catch(error => {
+  try {
+    await Categories.findOneAndRemove({_id: body.id}).exec();
+    res.send('ok');
+  }
+  catch(error) {
     errorHandling.returnError(error, res, req);
-  });
+  }
 });
 
 

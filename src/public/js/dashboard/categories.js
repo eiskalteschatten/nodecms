@@ -45,10 +45,24 @@ var _dashboardCategories = {
       e.preventDefault();
     }
 
-    var confirmed = confirm('Are you sure you want to delete this category? It cannot be undone.');
+    if (confirm('Are you sure you want to delete this category? It cannot be undone.')) {
+      _loader.open();
 
-    if (confirmed) {
-      pp.forms.submitForm($('#editCategoryForm'), 'delete');
+      $.ajax({
+        url: '/dashboard/categories',
+        method: 'DELETE',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          id: $('#editCategoryForm').find('[name="id"]').val()
+        })
+      })
+      .done(function() {
+        window.location = '/dashboard/categories/';
+      })
+      .fail(function(xhr, status, error) {
+        _loader.close();
+        _messages.show('error', xhr.responseText);
+      });
     }
   }
 };
