@@ -4,14 +4,15 @@ var _dashboardMedia = {
       $('#fileUpload').trigger('click');
     });
 
-    var $dropArea = $('.js-media-file-drop');
+    var $dropArea = $('html');
+    var $uploadOverlay = $('.js-file-upload-overlay');
 
     $dropArea.on('dragover', function() {
-      $(this).addClass('dragging');
+      $uploadOverlay.removeClass('uk-hidden');
     });
 
     $dropArea.on('dragleave', function() {
-      $(this).removeClass('dragging');
+      $uploadOverlay.addClass('uk-hidden');
     });
 
     $dropArea.on('drop', function() {

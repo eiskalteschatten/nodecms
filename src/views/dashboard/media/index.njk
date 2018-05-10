@@ -5,23 +5,33 @@
 {% block content %}
 
 <div class="uk-margin uk-card uk-card-default">
-    <div class="uk-card-header">
-      <div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid>
-        <div>
-          <h2 class="uk-card-title"><i class="fas fa-image text-icon-left"></i>{{ pageTitle }}</h2>
-        </div>
-        <div>
-          <div class="uk-text-right">
-            <a href="/dashboard/media/upload" class="uk-button uk-button-secondary"><i class="fas fa-upload text-icon-left"></i>Upload new file</a>
-          </div>
+  <div class="uk-card-header">
+    <div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid>
+      <div>
+        <h2 class="uk-card-title"><i class="fas fa-image text-icon-left"></i>{{ pageTitle }}</h2>
+      </div>
+      <div>
+        <div class="uk-text-right">
+          <input id="fileUpload" type="file" class="uk-hidden">
+          <button class="uk-button uk-button-secondary js-media-file-upload-button"><i class="fas fa-upload text-icon-left"></i>Upload new file...</button>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="uk-card-body">
+  <div class="uk-card-body">
 
+  </div>
+</div>
+
+<div class="file-upload-overlay js-file-upload-overlay uk-light uk-hidden">
+  <div class="uk-overlay-primary uk-position-cover">
+    <div class="uk-position-center">
+      <span uk-overlay-icon></span>
     </div>
   </div>
+</div>
+
 {% endblock %}
 
 {% block javascripts %}
