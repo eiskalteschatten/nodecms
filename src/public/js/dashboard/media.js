@@ -28,6 +28,10 @@ var _dashboardMedia = {
         $fileUpload.on('change', function() {
             _dashboardMedia.upload();
         });
+
+        $('.js-media-grid-thumbnail').click(function() {
+            window.location = $(this).data('edit-link');
+        });
     },
 
     upload: function(files = null) {

@@ -3,7 +3,7 @@
         {% set editLink = "/dashboard/media/edit/" + file.slug %}
 
         <div class="media-grid">
-            <div class="thumbnail">
+            <div class="thumbnail js-media-grid-thumbnail" data-edit-link="{{ editLink }}">
                 {% if file.display.thumbnail == "file" and file.fileType == "image" %}
                     <img src="{{ pathToFiles }}/{{ file.fileName }}" alt="{{ file.name }}">
                 {% elseif file.display.thumbnail == "fallbackImage" %}
