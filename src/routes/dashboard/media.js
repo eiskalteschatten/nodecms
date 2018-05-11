@@ -10,7 +10,7 @@ const helper = require('../../lib/helper');
 const uploadTypes = require('../../config/uploadTypes');
 
 const MediaFile = require('../../models/MediaFile');
-//const Categories = require('../../models/Categories');
+const Categories = require('../../models/Categories');
 
 const frontendPathToUploadDir = '/uploads';
 const fullPathToUploadDir = path.join(__dirname, '../../public/uploads');
@@ -30,27 +30,12 @@ router.get('/', async (req, res) => {
 
     try {
         const mediaFiles = await MediaFile.find().sort({updatedAt: 'desc'}).exec();
-        const mimeTypes = uploadTypes.mimeTypes;
         let i = 0;
 
         for (const file of mediaFiles) {
-            const mimeType = file.mimeType;
-            const mimeTypeParts = mimeType.split('/');
-            let type;
-
-            if (mimeTypes[mimeType]) {
-                type = mimeTypes[mimeType].type;
-            }
-            else if (mimeTypes[mimeTypeParts[0]]) {
-                type = mimeTypes[mimeTypeParts[0]].type;
-            }
-            else {
-                type = 'other';
-            }
-
+            const type = getFileType(file);
             mediaFiles[i].fileType = type;
             mediaFiles[i].display = uploadTypes.fileTypes[type];
-
             i++;
         }
 
@@ -117,5 +102,61 @@ router.post('/', upload.array('files'), async (req, res) => {
     }
 });
 
+
+router.get('/edit/:slug', async (req, res) => {
+    const slug = req.params.slug;
+
+    try {
+        const mediaFile = await MediaFile.findOne({slug: slug}).exec();
+        const categories = await Categories.find({}).exec();
+
+        if (!mediaFile) {
+            return errorHandling.returnError({
+                statusCode: 404,
+                message: 'Media file not found'
+            }, res, req);
+        }
+
+        const type = getFileType(mediaFile);
+        mediaFile.fileType = type;
+        mediaFile.display = uploadTypes.fileTypes[type];
+
+        const pageTitle = 'Edit media file';
+        const breadcrumbs = {
+            '/dashboard/media': 'Media'
+        };
+
+        breadcrumbs[`/dashboard/media/edit/${slug}`] = pageTitle;
+
+        res.render('dashboard/media/edit.njk', {
+            pageTitle: pageTitle,
+            pageId: 'editMediaFile',
+            mediaFile: mediaFile,
+            pathToFiles: frontendPathToUploadDir,
+            categories: categories,
+            breadcrumbs: breadcrumbs
+        });
+    }
+    catch(error) {
+        errorHandling.returnError(error, res, req);
+    }
+});
+
+
+function getFileType(file) {
+    const mimeTypes = uploadTypes.mimeTypes;
+    const mimeType = file.mimeType;
+    const mimeTypeParts = mimeType.split('/');
+
+    if (mimeTypes[mimeType]) {
+        return mimeTypes[mimeType].type;
+    }
+    else if (mimeTypes[mimeTypeParts[0]]) {
+        return mimeTypes[mimeTypeParts[0]].type;
+    }
+    else {
+        return 'other';
+    }
+}
 
 module.exports = router;

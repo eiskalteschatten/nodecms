@@ -1,0 +1,12 @@
+<div class="{% if not blogPost.tags %}uk-hidden{% endif %} uk-margin tag-cluster js-tag-cluster" id="tagCluster">
+    {% for tag in blogPost.tags %}
+        <span class="uk-badge uk-margin-small-right js-tag-badge"><span class="js-tag-text">{{ tag }}</span>&nbsp;<i class="fa fa-times cursor-pointer js-delete-tag"></i></span>
+    {% endfor %}
+</div>
+
+<input type="hidden" value="{{ blogPost.tags }}" class="tag-hidden js-tag-hidden" id="tagHidden">
+<input type="text" class="uk-input js-tag-input" placeholder="Type tags and press enter">
+
+<div class="uk-text-meta uk-margin-small">
+    Seperate tags with commas
+</div>

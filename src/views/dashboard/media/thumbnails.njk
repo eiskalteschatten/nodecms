@@ -1,16 +1,18 @@
 <div class="uk-child-width-1-2@s uk-child-width-1-4@m uk-child-width-1-6@l" uk-grid>
-    {% for file in mediaFiles %}
-        {% set editLink = "/dashboard/media/edit/" + file.slug %}
+    {% for mediaFile in mediaFiles %}
+        {% set editLink = "/dashboard/media/edit/" + mediaFile.slug %}
 
         <div class="media-grid">
             <div class="thumbnail js-media-grid-thumbnail" data-edit-link="{{ editLink }}">
-                {% if file.display.thumbnail == "file" and file.fileType == "image" %}
-                    <img src="{{ pathToFiles }}/{{ file.fileName }}" alt="{{ file.name }}">
-                {% elseif file.display.thumbnail == "fallbackImage" %}
-                    <img src="/img/{{ file.display.fallbackImage }}" alt="{{ file.name }}">
+                {% if mediaFile.display.thumbnail == "file" and mediaFile.fileType == "image" %}
+                    <img src="{{ pathToFiles }}/{{ mediaFile.fileName }}" alt="{{ mediaFile.name }}">
+
+                {% elseif mediaFile.display.thumbnail == "fallbackImage" %}
+                    <img src="/img/{{ mediaFile.display.fallbackImage }}" alt="{{ mediaFile.name }}">
+
                 {% else %}
                     <div class="uk-text-center">
-                        {{ file.name }}
+                        {{ mediaFile.name }}
                     </div>
                 {% endif %}
             </div>

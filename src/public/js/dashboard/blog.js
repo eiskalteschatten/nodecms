@@ -32,16 +32,6 @@ var _dashboardBlog = {
             e.preventDefault();
             _dashboardBlog.delete();
         });
-
-        $('.js-tag-input').keyup(function(e) {
-            if (e.keyCode === 13) {
-                _dashboardBlog.addTag($(this));
-            }
-        });
-
-        $(document).on('click', '.js-delete-tag', function() {
-            _dashboardBlog.deleteTag($(this));
-        });
     },
 
     save: function() {
@@ -111,45 +101,6 @@ var _dashboardBlog = {
                 _messages.show('error', xhr.responseText);
             });
         }
-    },
-
-    addTag: function($field) {
-        var inputValue = $field.val().trim();
-
-        if (inputValue !== '') {
-            var $tagCluster = $('#tagCluster');
-            var $tagHidden = $('#tagHidden');
-            var newTags = inputValue.split(',');
-
-            for (var i in newTags) {
-                var tag = newTags[i].trim();
-                var badge = '<span class="uk-badge uk-margin-small-right js-tag-badge"><span class="js-tag-text">' + tag + '</span>&nbsp;<i class="fas fa-times cursor-pointer js-delete-tag"></i></span>';
-                $tagCluster.append(badge);
-
-                var hiddenValue = $tagHidden.val();
-                var newValue = hiddenValue !== '' ? hiddenValue + ',' + tag : tag;
-                $tagHidden.val(newValue);
-            }
-
-            $tagCluster.removeClass('uk-hidden');
-
-            $field.val('');
-        }
-    },
-
-    deleteTag: function($field) {
-        var $badge = $field.closest('.js-tag-badge');
-        var $tagCluster = $field.closest('.js-tag-cluster');
-        var $tagHidden = $tagCluster.siblings('.js-tag-hidden');
-
-        var tagText = $field.siblings('.js-tag-text').text();
-        var tags = $tagHidden.val().split(',');
-        var newTags = tags.filter(function(tag) {
-            return tag !== tagText;
-        });
-
-        $tagHidden.val(newTags);
-        $badge.remove();
     }
 };
 
