@@ -7,7 +7,7 @@ const multer = require('multer');
 
 const errorHandling = require('../../lib/errorHandling');
 const helper = require('../../lib/helper');
-//const uploads = require('../../config/uploads');
+//const uploadTypes = require('../../config/uploadTypes');
 
 const MediaFile = require('../../models/MediaFile');
 //const Categories = require('../../models/Categories');
