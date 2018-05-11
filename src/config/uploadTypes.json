@@ -1,32 +1,32 @@
 {
     "fileTypes": {
         "image": {
-            "fallbackImage": "",
+            "fallbackImage": "/img/fallback-images/image.svg",
             "display": "file",
             "thumbnail": "file"
         },
         "pdf": {
-            "fallbackImage": "",
+            "fallbackImage": "/img/fallback-images/pdf.svg",
             "display": "iframe",
             "thumbnail": "fallbackImage"
         },
         "text": {
-            "fallbackImage": "",
+            "fallbackImage": "/img/fallback-images/file.svg",
             "display": "iframe",
             "thumbnail": "fallbackImage"
         },
         "audio": {
-            "fallbackImage": "",
+            "fallbackImage": "/img/fallback-images/multimedia.svg",
             "display": "file",
             "thumbnail": "fallbackImage"
         },
         "video": {
-            "fallbackImage": "",
+            "fallbackImage": "/img/fallback-images/multimedia.svg",
             "display": "file",
             "thumbnail": "fallbackImage"
         },
         "other": {
-            "fallbackImage": "",
+            "fallbackImage": "/img/fallback-images/file.svg",
             "display": "fallbackImage",
             "thumbnail": "fallbackImage"
         }
