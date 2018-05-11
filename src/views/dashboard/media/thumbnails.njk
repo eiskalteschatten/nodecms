@@ -8,6 +8,10 @@
                     <img src="{{ pathToFiles }}/{{ file.fileName }}" alt="{{ file.name }}">
                 {% elseif file.display.thumbnail == "fallbackImage" %}
                     <img src="/img/{{ file.display.fallbackImage }}" alt="{{ file.name }}">
+                {% else %}
+                    <div class="uk-text-center">
+                        {{ file.name }}
+                    </div>
                 {% endif %}
             </div>
         </div>
