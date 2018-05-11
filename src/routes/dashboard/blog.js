@@ -10,6 +10,10 @@ const helper = require('../../lib/helper');
 
 const BlogPost = require('../../models/BlogPost');
 const Categories = require('../../models/Categories');
+const MediaFile = require('../../models/MediaFile');
+
+const frontendPathToUploadDir = '/uploads';
+
 
 router.get('/', async (req, res) => {
     const pageTitle = 'Blog';
@@ -68,6 +72,7 @@ router.get('/edit/:slug', async (req, res) => {
     try {
         const blogPost = await BlogPost.findOne({slug: slug}).exec();
         const categories = await Categories.find({}).exec();
+        const featuredImage = await MediaFile.findOne({_id: blogPost.featuredImage}).exec();
         let publishedDate;
 
         if (!blogPost) {
@@ -94,6 +99,8 @@ router.get('/edit/:slug', async (req, res) => {
             post: blogPost,
             categories: categories,
             publishedDate: publishedDate,
+            featuredImage: featuredImage,
+            pathToFiles: frontendPathToUploadDir,
             breadcrumbs: breadcrumbs
         });
     }
