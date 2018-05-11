@@ -3,7 +3,7 @@
         {% set editLink = "/dashboard/media/edit/" + mediaFile.slug %}
 
         <div class="media-grid">
-            <div class="thumbnail js-media-grid-thumbnail" data-edit-link="{{ editLink }}" data-file-path="{{ pathToFiles }}/{{ mediaFile.fileName }}" data-file-name="{{ mediaFile.name }}" data-file-type="{{ mediaFile.fileType }}">
+            <div class="thumbnail js-media-grid-thumbnail" data-edit-link="{{ editLink }}" data-file-path="{{ pathToFiles }}/{{ mediaFile.fileName }}" data-file-name="{{ mediaFile.name }}" data-file-type="{{ mediaFile.fileType }}" data-file-id="{{ mediaFile._id }}">
                 {% if mediaFile.display.thumbnail == "file" and mediaFile.fileType == "image" %}
                     <img src="{{ pathToFiles }}/{{ mediaFile.fileName }}" alt="{{ mediaFile.name }}">
 

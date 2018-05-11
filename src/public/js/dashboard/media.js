@@ -37,7 +37,8 @@ var _dashboardMedia = {
             return {
                 name: $obj.data('file-name'),
                 path: $obj.data('file-path'),
-                type: $obj.data('file-type')
+                type: $obj.data('file-type'),
+                id: $obj.data('file-id')
             }
         };
 

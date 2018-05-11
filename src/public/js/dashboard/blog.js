@@ -67,6 +67,7 @@ var _dashboardBlog = {
                 currentStatus: currentStatus,
                 categories: categories,
                 tags: $('#tagHidden').val().split(','),
+                featuredImage: $('#featuredImageId').val(),
                 blogPostId: blogPostId
             })
         })
@@ -124,7 +125,9 @@ var _dashboardBlog = {
     },
 
     setFeaturedImage: function(file) {
-
+        var feautredImage = '<img src="' + file.path + '" alt="' + file.name + '">';
+        $('#featuredImagePreview').html(feautredImage);
+        $('#featuredImageId').val(file.id);
     }
 };
 

@@ -121,7 +121,8 @@ router.post('/edit', async (req, res) => {
         tags: body.tags,
         categories: body.categories,
         lastEditedBy: currentUser,
-        status: status
+        status: status,
+        featuredImage: body.featuredImage
     };
 
     if (isBeingPublished) {

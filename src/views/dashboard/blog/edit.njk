@@ -74,7 +74,10 @@
                             </ul>
                         </div>
                         <div>
-                            <button class="uk-button uk-button-default" id="selectFeaturedImageButton">
+                            <div class="uk-h4">Featured Image</div>
+                            <div id="featuredImagePreview"></div>
+                            <input type="hidden" value="{{ post.featuredImage }}" id="featuredImageId">
+                            <button class="uk-button uk-button-default uk-margin-top" id="selectFeaturedImageButton">
                                 <i class="fas fa-image text-icon-left"></i>Select featured image...
                             </button>
                         </div>
