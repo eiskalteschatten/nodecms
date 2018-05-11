@@ -10,14 +10,22 @@ const Categories = require('../../models/Categories');
 
 router.get('/', async (req, res) => {
     const pageTitle = 'Categories';
+    const limit = 10;
+    const page = req.query.page || 0;
 
     try {
-        const categories = await Categories.find().exec();
+        const categories = await Categories.find().skip(page * limit).limit(limit).exec();
+        const count = await Categories.count().exec();
+        const numberOfPages = Math.ceil(count / limit);
 
         res.render('dashboard/categories/index.njk', {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
             categories: categories,
+            numberOfPages: numberOfPages,
+            page: page,
+            previousPage: page > 0 ? parseInt(page) - 1 : 0,
+            nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0,
             breadcrumbs: {
                 '/dashboard/categories': pageTitle
             }
