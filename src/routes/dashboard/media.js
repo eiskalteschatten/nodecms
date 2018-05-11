@@ -4,7 +4,6 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const multer = require('multer');
-const async = require('async');
 
 const errorHandling = require('../../lib/errorHandling');
 const helper = require('../../lib/helper');
@@ -47,21 +46,23 @@ router.get('/', async (req, res) => {
 });
 
 
-router.post('/', upload.array('files'), (req, res) => {
+router.post('/', upload.array('files'), async (req, res) => {
     const files = req.files;
     const newMediaFiles = [];
 
-    async.each(files, (file, callback) => {
+    for (const file of files) {
         const fileName = file.filename;
         const name = fileName.replace(/\.[^/.]+$/, '');
         const slug = helper.createSlug(name);
 
-        MediaFile.findOne({slug: slug}).exec().then(mediaFile => {
+        try {
+            const mediaFile = await MediaFile.findOne({slug: slug}).exec();
+
             if (mediaFile) {
-                return callback({
+                return errorHandling.returnError({
                     statusCode: 409,
                     message: `A media file with the name "${fileName}" already exists.`
-                });
+                }, res, req);
             }
 
             const newMediaFile = {
@@ -72,30 +73,24 @@ router.post('/', upload.array('files'), (req, res) => {
             };
 
             newMediaFiles.push(newMediaFile);
-            callback();
-        }).catch(error => {
-            callback(error);
-        });
-    },
-    async error => {
-        if (error) {
-            return errorHandling.returnError(error, res, req);
-        }
-
-        try {
-            const savedMediaFiles = await MediaFile.insertMany(newMediaFiles);
-
-            if (savedMediaFiles.length > 1) {
-                res.send('/dashboard/media');
-            }
-            else {
-                res.send(`/dashboard/media/edit/${savedMediaFiles[0].slug}`);
-            }
         }
         catch(error) {
-            errorHandling.returnError(error, res, req);
+            return errorHandling.returnError(error, res, req);
         }
-    });
+    }
+    try {
+        const savedMediaFiles = await MediaFile.insertMany(newMediaFiles);
+
+        if (savedMediaFiles.length > 1) {
+            res.send('/dashboard/media');
+        }
+        else {
+            res.send(`/dashboard/media/edit/${savedMediaFiles[0].slug}`);
+        }
+    }
+    catch(error) {
+        errorHandling.returnError(error, res, req);
+    }
 });
 
 
