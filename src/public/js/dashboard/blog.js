@@ -42,6 +42,7 @@ var _dashboardBlog = {
         var name = $('#blogPostName').val();
         var blogPostId = $('#blogPostId').val();
         var currentStatus = $('#blogPostStatus').data('status');
+        var currentSlug = $('#blogPostSlug').val();
         var categories = [];
         var tags = $('#tagHidden').val().split(',');
 
@@ -75,7 +76,7 @@ var _dashboardBlog = {
         .done(function(post) {
             _messages.show('success', 'Saved successfully.', false);
 
-            if (!blogPostId || currentStatus != post.status) {
+            if (!blogPostId || currentStatus !== post.status || currentSlug !== post.slug) {
                 window.location = '/dashboard/blog/edit/' + post.slug;
             }
         })
