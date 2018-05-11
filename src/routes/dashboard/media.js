@@ -195,6 +195,36 @@ router.get('/select', async (req, res) => {
 });
 
 
+router.get('/select/featured', async (req, res) => {
+    const pageTitle = 'Select Featured Image';
+
+    try {
+        const mediaFilesResults = await MediaFile.find().sort({updatedAt: 'desc'}).exec();
+        const mediaFiles = [];
+
+        for (const file of mediaFilesResults) {
+            const type = getFileType(file);
+
+            if (type === 'image') {
+                file.fileType = type;
+                file.display = uploadTypes.fileTypes[type];
+                mediaFiles.push(file);
+            }
+        }
+
+        res.render('dashboard/media/select.njk', {
+            pageTitle: pageTitle,
+            pageId: pageTitle.toLowerCase(),
+            mediaFiles: mediaFiles,
+            pathToFiles: frontendPathToUploadDir
+        });
+    }
+    catch(error) {
+        errorHandling.returnError(error, res, req);
+    }
+});
+
+
 function getFileType(file) {
     const mimeTypes = uploadTypes.mimeTypes;
     const mimeType = file.mimeType;

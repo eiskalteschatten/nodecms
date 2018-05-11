@@ -33,12 +33,21 @@ var _dashboardMedia = {
             window.location = $(this).data('edit-link');
         });
 
+        var collectFileData = function($obj) {
+            return {
+                name: $obj.data('file-name'),
+                path: $obj.data('file-path'),
+                type: $obj.data('file-type')
+            }
+        };
+
         $('.select-media').find('.js-media-grid-thumbnail').click(function() {
-            opener._dashboardBlog.insertMediaFileIntoMarkdown({
-               name: $(this).data('file-name'),
-               path: $(this).data('file-path'),
-               type: $(this).data('file-type')
-            });
+            opener._dashboardBlog.insertMediaFileIntoMarkdown(collectFileData($(this)));
+            window.close();
+        });
+
+        $('.select-featured-image').find('.js-media-grid-thumbnail').click(function() {
+            opener._dashboardBlog.setFeaturedImage(collectFileData($(this)));
             window.close();
         });
 

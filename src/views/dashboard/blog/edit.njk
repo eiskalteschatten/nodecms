@@ -42,7 +42,7 @@
                     {% endif %}
 
                     <div class="uk-width-expand uk-text-right uk-text-small">
-                        <a href="#" id="markdownGuide">Markdown Guide</a>
+                        <a href="#" id="markdownGuide"><i class="fas fa-external-link-alt text-icon-left"></i>Markdown Guide</a>
                     </div>
                 </div>
             </div>
@@ -50,10 +50,10 @@
             <div class="uk-child-width-1-2 uk-margin-bottom" uk-grid>
                 <div>
                     <div class="uk-margin">
-                            <input class="uk-input" type="text" id="blogPostName" placeholder="Title" value="{{ post.name }}">
+                        <input class="uk-input" type="text" id="blogPostName" placeholder="Title" value="{{ post.name }}">
                     </div>
                     <div class="uk-margin">
-                            <textarea class="uk-textarea" rows="5" id="blogPostExcerpt" placeholder="Excerpt">{{ post.excerpt }}</textarea>
+                        <textarea class="uk-textarea" rows="5" id="blogPostExcerpt" placeholder="Excerpt">{{ post.excerpt }}</textarea>
                     </div>
                 </div>
                 <div>
@@ -74,7 +74,9 @@
                             </ul>
                         </div>
                         <div>
-                            add featured image
+                            <button class="uk-button uk-button-default" id="selectFeaturedImageButton">
+                                <i class="fas fa-image text-icon-left"></i>Select featured image...
+                            </button>
                         </div>
                     </div>
                 </div>

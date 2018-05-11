@@ -25,12 +25,16 @@ var _dashboardBlog = {
 
         $('#toolbarMediaButtton').click(function(e) {
             e.preventDefault();
-            _dashboardBlog.openMediaWindow();
+            window.open('/dashboard/media/select', 'mediaWindow', 'resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no, width=1200, height=800');
         });
 
         $('#toolbarDeleteButtton').click(function(e) {
             e.preventDefault();
             _dashboardBlog.delete();
+        });
+
+        $('#selectFeaturedImageButton').click(function() {
+            window.open('/dashboard/media/select/featured', 'mediaWindow', 'resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no, width=1200, height=800');
         });
     },
 
@@ -103,10 +107,6 @@ var _dashboardBlog = {
         }
     },
 
-    openMediaWindow: function() {
-        window.open('/dashboard/media/select', 'mediaWindow', 'resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no, width=1200, height=800');
-    },
-
     insertMediaFileIntoMarkdown: function(file) {
         var markdownToInsert;
 
@@ -121,6 +121,10 @@ var _dashboardBlog = {
         var position = editor.getCursor();
         editor.setSelection(position, position);
         editor.replaceSelection(markdownToInsert);
+    },
+
+    setFeaturedImage: function(file) {
+
     }
 };
 
