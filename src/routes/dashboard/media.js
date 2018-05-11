@@ -7,12 +7,12 @@ const multer = require('multer');
 
 const errorHandling = require('../../lib/errorHandling');
 const helper = require('../../lib/helper');
-//const uploadTypes = require('../../config/uploadTypes');
+const uploadTypes = require('../../config/uploadTypes');
 
 const MediaFile = require('../../models/MediaFile');
 //const Categories = require('../../models/Categories');
 
-//const frontendPathToUploadDir = 'uploads';
+const frontendPathToUploadDir = '/uploads';
 const fullPathToUploadDir = path.join(__dirname, '../../public/uploads');
 
 const storage = multer.diskStorage({
@@ -30,11 +30,35 @@ router.get('/', async (req, res) => {
 
     try {
         const mediaFiles = await MediaFile.find().sort({updatedAt: 'desc'}).exec();
+        const mimeTypes = uploadTypes.mimeTypes;
+        let i = 0;
+
+        for (const file of mediaFiles) {
+            const mimeType = file.mimeType;
+            const mimeTypeParts = mimeType.split('/');
+            let type;
+
+            if (mimeTypes[mimeType]) {
+                type = mimeTypes[mimeType].type;
+            }
+            else if (mimeTypes[mimeTypeParts[0]]) {
+                type = mimeTypes[mimeTypeParts[0]].type;
+            }
+            else {
+                type = 'other';
+            }
+
+            mediaFiles[i].fileType = type;
+            mediaFiles[i].display = uploadTypes.fileTypes[type];
+
+            i++;
+        }
 
         res.render('dashboard/media/index.njk', {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
             mediaFiles: mediaFiles,
+            pathToFiles: frontendPathToUploadDir,
             breadcrumbs: {
                 '/dashboard/media': pageTitle
             }

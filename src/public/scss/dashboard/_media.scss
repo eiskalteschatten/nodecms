@@ -1,0 +1,13 @@
+.media-grid {
+    .thumbnail {
+        cursor: pointer;
+        height: 200px;
+        overflow: hidden;
+        position: relative;
+        transition: box-shadow 250ms;
+
+        &:hover {
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+    }
+}

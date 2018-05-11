@@ -32,19 +32,19 @@
         }
     },
     "mimeTypes": {
-        "image/": {
+        "image": {
             "type": "image"
         },
         "application/pdf": {
             "type": "pdf"
         },
-        "text/": {
+        "text": {
             "type": "text"
         },
-        "audio/": {
+        "audio": {
             "type": "audio"
         },
-        "video/": {
+        "video": {
             "type": "video"
         }
     }

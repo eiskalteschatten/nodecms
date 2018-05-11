@@ -1,0 +1,17 @@
+<div class="uk-child-width-1-2@s uk-child-width-1-4@m uk-child-width-1-6@l" uk-grid>
+    {% for file in mediaFiles %}
+        {% set editLink = "/dashboard/media/edit/" + file.slug %}
+
+        <div class="media-grid">
+            <div class="thumbnail">
+                {% if file.display.thumbnail == "file" and file.fileType == "image" %}
+                    <img src="{{ pathToFiles }}/{{ file.fileName }}" alt="{{ file.name }}">
+                {% elseif file.display.thumbnail == "fallbackImage" %}
+                    <img src="/img/{{ file.display.fallbackImage }}" alt="{{ file.name }}">
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <div class="uk-text-meta">There are no media files at the moment.</div>
+    {% endfor %}
+</div>
