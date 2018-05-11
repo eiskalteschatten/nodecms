@@ -29,8 +29,17 @@ var _dashboardMedia = {
             _dashboardMedia.upload();
         });
 
-        $('.js-media-grid-thumbnail').click(function() {
+        $('.media').find('.js-media-grid-thumbnail').click(function() {
             window.location = $(this).data('edit-link');
+        });
+
+        $('.select-media').find('.js-media-grid-thumbnail').click(function() {
+            opener._dashboardBlog.insertMediaFileIntoMarkdown({
+               name: $(this).data('file-name'),
+               path: $(this).data('file-path'),
+               type: $(this).data('file-type')
+            });
+            window.close();
         });
 
         $('#saveMediaFileButton').click(_dashboardMedia.save);

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9, user-scalable=0"/>
+        <meta name="description" content="">
+        <meta name="robots" content="noindex,nofollow">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="Content-Language" content="en">
+        <meta name="author" content="Alex Seifert">
+        <meta name="copyright" content="Copyright (c) Alex Seifert">
+
+        <title>{{ pageTitle }}</title>
+
+        {% block stylesheets %}
+            <link rel="stylesheet" href="/css/libs.css" type="text/css">
+            <link rel="stylesheet" href="/css/main.css" type="text/css">
+            <link rel="stylesheet" href="/css/dashboard.css" type="text/css">
+        {% endblock %}
+    </head>
+    <body class="uk-padding-small {{ pageId | cssClass }}">
+        <div class="uk-margin uk-card uk-card-default">
+            <div class="uk-card-header">
+                <div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid>
+                    <div>
+                        <h2 class="uk-card-title"><i class="fas fa-image text-icon-left"></i>{{ pageTitle }}</h2>
+                    </div>
+                    <div>
+                        <div class="uk-text-right">
+                            <form action="/dashboard/media" method="post" id="uploadForm">
+                                <input id="fileUpload" type="file" name="files" class="uk-hidden">
+                            </form>
+                            <button class="uk-button uk-button-secondary js-media-file-upload-button"><i class="fas fa-upload text-icon-left"></i>Upload new file...</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-card-body">
+                {% include "dashboard/media/thumbnails.njk" %}
+            </div>
+        </div>
+
+        <div class="file-upload-overlay js-file-upload-overlay uk-light uk-hidden">
+            <div class="uk-overlay-primary uk-position-cover">
+                <div class="uk-position-center">
+                    <span uk-overlay-icon></span>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="/js/libs.js"></script>
+        <script type="text/javascript" src="/js/scripts.js"></script>
+        <script type="text/javascript" src="/js/dashboard.js"></script>
+        <script type="text/javascript" src="/js/dashboard/media.js"></script>
+    </body>
+</html>

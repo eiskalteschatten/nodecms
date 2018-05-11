@@ -25,7 +25,7 @@ var _dashboardBlog = {
 
         $('#toolbarMediaButtton').click(function(e) {
             e.preventDefault();
-            //_dashboardBlog.save();
+            _dashboardBlog.openMediaWindow();
         });
 
         $('#toolbarDeleteButtton').click(function(e) {
@@ -101,6 +101,26 @@ var _dashboardBlog = {
                 _messages.show('error', xhr.responseText);
             });
         }
+    },
+
+    openMediaWindow: function() {
+        window.open('/dashboard/media/select', 'mediaWindow', 'resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no, width=1200, height=800');
+    },
+
+    insertMediaFileIntoMarkdown: function(file) {
+        var markdownToInsert;
+
+        if (file.type === 'image') {
+            markdownToInsert = '![' +  file.name + '](' + file.path + ' "' + file.name + '")';
+        }
+        else {
+            markdownToInsert = '[' +  file.name + '](' + file.path + ')';
+        }
+
+        var editor = _dashboard.simplemdes[0].codemirror;
+        var position = editor.getCursor();
+        editor.setSelection(position, position);
+        editor.replaceSelection(markdownToInsert);
     }
 };
 

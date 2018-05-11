@@ -25,6 +25,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({storage: storage});
 
+
 router.get('/', async (req, res) => {
     const pageTitle = 'Media';
 
@@ -160,6 +161,33 @@ router.patch('/', async (req, res) => {
     try {
         await MediaFile.findOneAndUpdate({_id: body.id}, {$set: setMediaFile}, {new: true}).exec();
         res.send(slug);
+    }
+    catch(error) {
+        errorHandling.returnError(error, res, req);
+    }
+});
+
+
+router.get('/select', async (req, res) => {
+    const pageTitle = 'Select Media';
+
+    try {
+        const mediaFiles = await MediaFile.find().sort({updatedAt: 'desc'}).exec();
+        let i = 0;
+
+        for (const file of mediaFiles) {
+            const type = getFileType(file);
+            mediaFiles[i].fileType = type;
+            mediaFiles[i].display = uploadTypes.fileTypes[type];
+            i++;
+        }
+
+        res.render('dashboard/media/select.njk', {
+            pageTitle: pageTitle,
+            pageId: pageTitle.toLowerCase(),
+            mediaFiles: mediaFiles,
+            pathToFiles: frontendPathToUploadDir
+        });
     }
     catch(error) {
         errorHandling.returnError(error, res, req);
