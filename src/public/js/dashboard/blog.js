@@ -43,6 +43,7 @@ var _dashboardBlog = {
         var blogPostId = $('#blogPostId').val();
         var currentStatus = $('#blogPostStatus').data('status');
         var categories = [];
+        var tags = $('#tagHidden').val().split(',');
 
         if (name === '') {
             _messages.show('error', 'A title is required.');
@@ -66,7 +67,7 @@ var _dashboardBlog = {
                 status: $('#blogPostStatus').val(),
                 currentStatus: currentStatus,
                 categories: categories,
-                tags: $('#tagHidden').val().split(','),
+                tags: tags[0] !== '' ? tags : [],
                 featuredImage: $('#featuredImageId').val(),
                 blogPostId: blogPostId
             })

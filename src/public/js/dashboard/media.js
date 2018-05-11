@@ -106,6 +106,7 @@ var _dashboardMedia = {
         var mediaFileId = $('#mediaFileId').val();
         var currentSlug = $('#slug').text();
         var categories = [];
+        var tags = $('#tagHidden').val().split(',');
 
         if (name === '') {
             _messages.show('error', 'A name is required.');
@@ -127,7 +128,7 @@ var _dashboardMedia = {
                 caption: $('[name="caption"]').val(),
                 description: $('#description').val(),
                 categories: categories,
-                tags: $('#tagHidden').val().split(','),
+                tags: tags[0] !== '' ? tags : [],
                 id: mediaFileId
             })
         })
