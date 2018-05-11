@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const multer = require('multer');
+const async = require('async');
 
 const errorHandling = require('../../lib/errorHandling');
 const helper = require('../../lib/helper');
@@ -45,39 +46,55 @@ router.get('/', async (req, res) => {
 });
 
 
-router.post('/', upload.array('files'), async (req, res) => {
+router.post('/', upload.array('files'), (req, res) => {
   const files = req.files;
   const newMediaFiles = [];
 
-  // TODO: check if the the filename and/or slug already exists
-
-  files.forEach(file => {
+  async.each(files, (file, callback) => {
     const fileName = file.filename;
     const name = fileName.replace(/\.[^/.]+$/, '');
+    const slug = helper.createSlug(name);
 
-    const newMediaFile = {
-      name: name,
-      slug: helper.createSlug(name),
-      fileName: fileName,
-      mimeType: file.mimetype
-    };
+    MediaFile.findOne({slug: slug}).exec().then(mediaFile => {
+      if (mediaFile) {
+        return callback({
+          statusCode: 409,
+          message: `A media file with the name "${fileName}" already exists.`
+        });
+      }
 
-    newMediaFiles.push(newMediaFile);
+      const newMediaFile = {
+        name: name,
+        slug: slug,
+        fileName: fileName,
+        mimeType: file.mimetype
+      };
+
+      newMediaFiles.push(newMediaFile);
+      callback();
+    }).catch(error => {
+      callback(error);
+    });
+  },
+  async error => {
+    if (error) {
+      return errorHandling.returnError(error, res, req);
+    }
+
+    try {
+      const savedMediaFiles = await MediaFile.insertMany(newMediaFiles);
+
+      if (savedMediaFiles.length > 1) {
+        res.send('/dashboard/media');
+      }
+      else {
+        res.send(`/dashboard/media/edit/${savedMediaFiles[0].slug}`);
+      }
+    }
+    catch(error) {
+      errorHandling.returnError(error, res, req);
+    }
   });
-
-  try {
-    const savedMediaFiles = await MediaFile.insertMany(newMediaFiles);
-
-    if (savedMediaFiles.length > 1) {
-      res.send('/dashboard/media');
-    }
-    else {
-      res.send(`/dashboard/media/edit/${savedMediaFiles[0].slug}`);
-    }
-  }
-  catch(error) {
-    errorHandling.returnError(error, res, req);
-  }
 });
 
 
