@@ -1,4 +1,6 @@
-var _dashboardBlog = {
+var _dashboardBlogEditor = {
+    notSaved: false,
+
     init: function() {
         _dashboard.simplemdes = [];
         _dashboard.loadMarkdownEditors();
@@ -15,12 +17,12 @@ var _dashboardBlog = {
 
         $('#toolbarSaveButtton').click(function(e) {
             e.preventDefault();
-            _dashboardBlog.save();
+            _dashboardBlogEditor.save();
         });
 
         $('#toolbarPreviewButtton').click(function(e) {
             e.preventDefault();
-            //_dashboardBlog.save();
+            //_dashboardBlogEditor.save();
         });
 
         $('#toolbarMediaButtton').click(function(e) {
@@ -30,11 +32,19 @@ var _dashboardBlog = {
 
         $('#toolbarDeleteButtton').click(function(e) {
             e.preventDefault();
-            _dashboardBlog.delete();
+            _dashboardBlogEditor.delete();
         });
 
         $('#selectFeaturedImageButton').click(function() {
             window.open('/dashboard/media/select/featured', 'mediaWindow', 'resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no, width=1200, height=800');
+        });
+
+        $('input, select, textarea').on('change', function() {
+            _dashboardBlogEditor.notSaved = true;
+        });
+
+        _dashboard.simplemdes[0].codemirror.on("change", function(){
+            _dashboardBlogEditor.notSaved = true;
         });
     },
 
@@ -75,6 +85,7 @@ var _dashboardBlog = {
         })
         .done(function(post) {
             _messages.show('success', 'Saved successfully.', false);
+            _dashboardBlogEditor.notSaved = false;
 
             if (!blogPostId || currentStatus !== post.status || currentSlug !== post.slug) {
                 window.location = '/dashboard/blog/edit/' + post.slug;
@@ -142,10 +153,17 @@ var _dashboardBlog = {
         var feautredImage = '<img src="' + file.path + '" alt="' + file.name + '">';
         $('#featuredImagePreview').html(feautredImage);
         $('#featuredImageId').val(file.id);
+        _dashboardBlogEditor.notSaved = true;
     }
 };
 
 
 $(document).ready(function() {
-    _dashboardBlog.init();
+    _dashboardBlogEditor.init();
+});
+
+$(window).bind('beforeunload', function() {
+    if(_dashboardBlogEditor.notSaved){
+        return "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+    }
 });

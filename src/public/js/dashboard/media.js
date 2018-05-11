@@ -44,12 +44,12 @@ var _dashboardMedia = {
         };
 
         $('.select-media').find('.js-media-grid-thumbnail').click(function() {
-            opener._dashboardBlog.insertMediaFileIntoMarkdown(collectFileData($(this)));
+            opener._dashboardBlogEditor.insertMediaFileIntoMarkdown(collectFileData($(this)));
             window.close();
         });
 
         $('.select-featured-image').find('.js-media-grid-thumbnail').click(function() {
-            opener._dashboardBlog.setFeaturedImage(collectFileData($(this)));
+            opener._dashboardBlogEditor.setFeaturedImage(collectFileData($(this)));
             window.close();
         });
 
