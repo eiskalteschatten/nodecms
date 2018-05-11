@@ -12,35 +12,35 @@
     <div class="uk-card-body">
         <div uk-grid>
             <div class="uk-width-2-3@m media-preview">
-                {% if mediaFile.display.display == "file" and mediaFile.fileType == "image" %}
-                    <img src="{{ pathToFiles }}/{{ mediaFile.fileName }}" alt="{{ mediaFile.name }}">
+                {% if post.display.display == "file" and post.fileType == "image" %}
+                    <img src="{{ pathToFiles }}/{{ post.fileName }}" alt="{{ post.name }}">
 
-                {% elseif mediaFile.display.display == "iframe" %}
-                    <iframe src="{{ pathToFiles }}/{{ mediaFile.fileName }}"></iframe>
+                {% elseif post.display.display == "iframe" %}
+                    <iframe src="{{ pathToFiles }}/{{ post.fileName }}"></iframe>
 
-                {% elseif mediaFile.display.display == "file" and mediaFile.fileType == "audio" %}
+                {% elseif post.display.display == "file" and post.fileType == "audio" %}
                     <audio controls>
-                        <source src="{{ pathToFiles }}/{{ mediaFile.fileName }}" type="{{ mediaFile.mimeType }}">
+                        <source src="{{ pathToFiles }}/{{ post.fileName }}" type="{{ post.mimeType }}">
                         Could not load audio file.
                     </audio>
 
-                {% elseif mediaFile.display.display == "file" and mediaFile.fileType == "video" %}
+                {% elseif post.display.display == "file" and post.fileType == "video" %}
                     <video controls>
-                        <source src="{{ pathToFiles }}/{{ mediaFile.fileName }}" type="{{ mediaFile.mimeType }}">
+                        <source src="{{ pathToFiles }}/{{ post.fileName }}" type="{{ post.mimeType }}">
                         Could not load video file.
                     </video>
 
-                {% elseif mediaFile.display.display == "fallbackImage" %}
-                    <img src="/img/{{ mediaFile.display.fallbackImage }}" alt="{{ mediaFile.name }}">
+                {% elseif post.display.display == "fallbackImage" %}
+                    <img src="/img/{{ post.display.fallbackImage }}" alt="{{ post.name }}">
 
                 {% else %}
                     <div class="uk-text-center">
-                        {{ mediaFile.name }}
+                        {{ post.name }}
                     </div>
                 {% endif %}
 
                 <div class="uk-margin">
-                    <a href="{{ pathToFiles }}/{{ mediaFile.fileName }}" class="uk-button uk-button-default" target="_blank">
+                    <a href="{{ pathToFiles }}/{{ post.fileName }}" class="uk-button uk-button-default" target="_blank">
                         <i class="fas fa-external-link-square-alt text-icon-left"></i>Open file in new window
                     </a>
                 </div>
@@ -51,17 +51,17 @@
                     <div class="uk-card-body">
                         <div class="uk-margin">
                             <label class="uk-form-label">Name</label>
-                            <input type="text" value="{{ mediaFile.name }}" name="name" class="uk-input" placeholder="Name" required>
+                            <input type="text" value="{{ post.name }}" name="name" class="uk-input" placeholder="Name" required>
                         </div>
 
                         <div class="uk-margin">
                             <label class="uk-form-label">Caption</label>
-                            <input type="text" value="{{ mediaFile.caption }}" name="caption" class="uk-input" placeholder="Caption">
+                            <input type="text" value="{{ post.caption }}" name="caption" class="uk-input" placeholder="Caption">
                         </div>
 
                         <div class="uk-margin">
                             <label class="uk-form-label">Description</label>
-                            <textarea class="uk-textarea" name="description" placeholder="Description">{{ mediaFile.description }}</textarea>
+                            <textarea class="uk-textarea" id="description" placeholder="Description">{{ post.description }}</textarea>
                         </div>
 
                         <div class="uk-margin">
@@ -78,16 +78,18 @@
 
                         <div class="uk-margin uk-text-small">
                             <ul class="uk-list">
-                                <li><strong>Slug:</strong> /{{ mediaFile.slug }}</li>
-                                <li><strong>MIME Type:</strong> {{ mediaFile.mimeType }}</li>
-                                <li><strong>File name:</strong> {{ mediaFile.fileName }}</li>
+                                <li><strong>Slug:</strong> /<span id="slug">{{ post.slug }}</span></li>
+                                <li><strong>MIME Type:</strong> {{ post.mimeType }}</li>
+                                <li><strong>File name:</strong> {{ post.fileName }}</li>
                             </ul>
                         </div>
+
+                        <input type="hidden" id="mediaFileId" value="{{ post._id }}">
                     </div>
 
                     <div class="uk-card-footer">
                         <div class="uk-margin uk-text-right">
-                            <button class="uk-button uk-button-primary"><i class="fas fa-save text-icon-left"></i>Save</button>
+                            <button class="uk-button uk-button-primary" id="saveMediaFileButton"><i class="fas fa-save text-icon-left"></i>Save</button>
                         </div>
                     </div>
                 </div>

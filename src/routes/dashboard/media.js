@@ -131,11 +131,35 @@ router.get('/edit/:slug', async (req, res) => {
         res.render('dashboard/media/edit.njk', {
             pageTitle: pageTitle,
             pageId: 'editMediaFile',
-            mediaFile: mediaFile,
+            post: mediaFile,
             pathToFiles: frontendPathToUploadDir,
             categories: categories,
             breadcrumbs: breadcrumbs
         });
+    }
+    catch(error) {
+        errorHandling.returnError(error, res, req);
+    }
+});
+
+
+router.patch('/', async (req, res) => {
+    const body = req.body;
+    const name = body.name;
+    const slug = helper.createSlug(name);
+
+    const setMediaFile = {
+        name: name,
+        slug: slug,
+        caption: body.caption,
+        description: body.description,
+        categories: body.categories,
+        tags: body.tags
+    };
+
+    try {
+        await MediaFile.findOneAndUpdate({_id: body.id}, {$set: setMediaFile}, {new: true}).exec();
+        res.send(slug);
     }
     catch(error) {
         errorHandling.returnError(error, res, req);

@@ -22,20 +22,20 @@
                             <li><a href="#" id="toolbarSaveButtton"><i class="fas fa-save"></i></a></li>
                             <li><a href="#" id="toolbarPreviewButtton"><i class="fas fa-eye"></i></a></li>
                             <li><a href="#" id="toolbarMediaButtton"><i class="fas fa-image"></i></a></li>
-                            {% if blogPost %}
+                            {% if post %}
                                 <li><a href="#" id="toolbarDeleteButtton"><i class="fas fa-trash"></i></a></li>
                             {% endif %}
                         </ul>
                     </div>
 
                     <div>
-                        <select id="blogPostStatus" class="uk-select uk-form-small uk-form-width-small" data-status="{{ blogPost.status }}">
-                            <option value="draft" {% if blogPost.status == 'draft' %}selected{% endif %}>Draft</option>
-                            <option value="published" {% if blogPost.status == 'published' %}selected{% endif %}>Published</option>
+                        <select id="blogPostStatus" class="uk-select uk-form-small uk-form-width-small" data-status="{{ post.status }}">
+                            <option value="draft" {% if post.status == 'draft' %}selected{% endif %}>Draft</option>
+                            <option value="published" {% if post.status == 'published' %}selected{% endif %}>Published</option>
                         </select>
                     </div>
 
-                    {% if blogPost.status == 'published' and publishedDate %}
+                    {% if post.status == 'published' and publishedDate %}
                         <div class="uk-text-small uk-text-muted">
                             <strong>Published:</strong> {{ publishedDate }}
                         </div>
@@ -50,10 +50,10 @@
             <div class="uk-child-width-1-2 uk-margin-bottom" uk-grid>
                 <div>
                     <div class="uk-margin">
-                            <input class="uk-input" type="text" id="blogPostName" placeholder="Title" value="{{ blogPost.name }}">
+                            <input class="uk-input" type="text" id="blogPostName" placeholder="Title" value="{{ post.name }}">
                     </div>
                     <div class="uk-margin">
-                            <textarea class="uk-textarea" rows="5" id="blogPostExcerpt" placeholder="Excerpt">{{ blogPost.excerpt }}</textarea>
+                            <textarea class="uk-textarea" rows="5" id="blogPostExcerpt" placeholder="Excerpt">{{ post.excerpt }}</textarea>
                     </div>
                 </div>
                 <div>
@@ -82,7 +82,7 @@
 
             <div class="uk-child-width-1-2 js-markdown-wrapper" uk-grid>
                 <div>
-                    <textarea class="js-markdown-editor">{{ blogPost.markdown }}</textarea>
+                    <textarea class="js-markdown-editor">{{ post.markdown }}</textarea>
                 </div>
                 <div>
                     <div class="js-markdown-preview"></div>
@@ -91,7 +91,7 @@
         </div>
     </div>
 
-    <input type="hidden" id="blogPostId" value="{{ blogPost._id }}">
+    <input type="hidden" id="blogPostId" value="{{ post._id }}">
 {% endblock %}
 
 {% block javascripts %}

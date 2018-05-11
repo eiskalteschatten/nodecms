@@ -91,7 +91,7 @@ router.get('/edit/:slug', async (req, res) => {
         res.render('dashboard/blog/edit.njk', {
             pageTitle: pageTitle,
             pageId: 'editBlogPost',
-            blogPost: blogPost,
+            post: blogPost,
             categories: categories,
             publishedDate: publishedDate,
             breadcrumbs: breadcrumbs

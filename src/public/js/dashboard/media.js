@@ -32,6 +32,8 @@ var _dashboardMedia = {
         $('.js-media-grid-thumbnail').click(function() {
             window.location = $(this).data('edit-link');
         });
+
+        $('#saveMediaFileButton').click(_dashboardMedia.save);
     },
 
     upload: function(files = null) {
@@ -78,6 +80,51 @@ var _dashboardMedia = {
     closeUploadOverlay: function() {
         $uploadOverlay.addClass('uk-hidden');
     },
+
+    save: function() {
+        var name = $('[name="name"]').val();
+        var mediaFileId = $('#mediaFileId').val();
+        var currentSlug = $('#slug').text();
+        var categories = [];
+
+        if (name === '') {
+            _messages.show('error', 'A name is required.');
+            return;
+        }
+
+        _loader.open();
+
+        $('.js-category-checkbox:checked').each(function() {
+            categories.push($(this).val());
+        });
+
+        $.ajax({
+            url: '/dashboard/media',
+            method: 'PATCH',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                name: name,
+                caption: $('[name="caption"]').val(),
+                description: $('#description').val(),
+                categories: categories,
+                tags: $('#tagHidden').val().split(','),
+                id: mediaFileId
+            })
+        })
+        .done(function(slug) {
+            _messages.show('success', 'Saved successfully.', false);
+
+            if (currentSlug !== slug) {
+                window.location = '/dashboard/media/edit/' + slug;
+            }
+        })
+        .fail(function(xhr, status, error) {
+            _messages.show('error', xhr.responseText);
+        })
+        .always(function() {
+            _loader.close();
+        });
+    }
 };
 
 $(document).ready(function() {

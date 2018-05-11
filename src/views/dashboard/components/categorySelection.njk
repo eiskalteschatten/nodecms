@@ -2,7 +2,7 @@
     {% for category in categories %}
         <div class="category">
             {% set id = category["_id"] | string %}
-            <input type="checkbox" class="uk-checkbox js-category-checkbox" id="{{ id }}Checkbox" name="categories" value="{{ id }}" {% if blogPost.categories and id in blogPost.categories %}checked{% endif %}>
+            <input type="checkbox" class="uk-checkbox js-category-checkbox" id="{{ id }}Checkbox" name="categories" value="{{ id }}" {% if post.categories and id in post.categories %}checked{% endif %}>
             <label for="{{ category["_id"] }}Checkbox">{{ category.name }}</label>
         </div>
     {% endfor %}
