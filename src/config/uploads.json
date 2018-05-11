@@ -1,51 +1,51 @@
 {
-  "fileTypes": {
-    "image": {
-      "fallbackImage": "",
-      "display": "file",
-      "thumbnail": "file"
+    "fileTypes": {
+        "image": {
+            "fallbackImage": "",
+            "display": "file",
+            "thumbnail": "file"
+        },
+        "pdf": {
+            "fallbackImage": "",
+            "display": "iframe",
+            "thumbnail": "fallbackImage"
+        },
+        "text": {
+            "fallbackImage": "",
+            "display": "iframe",
+            "thumbnail": "fallbackImage"
+        },
+        "audio": {
+            "fallbackImage": "",
+            "display": "file",
+            "thumbnail": "fallbackImage"
+        },
+        "video": {
+            "fallbackImage": "",
+            "display": "file",
+            "thumbnail": "fallbackImage"
+        },
+        "other": {
+            "fallbackImage": "",
+            "display": "fallbackImage",
+            "thumbnail": "fallbackImage"
+        }
     },
-    "pdf": {
-      "fallbackImage": "",
-      "display": "iframe",
-      "thumbnail": "fallbackImage"
-    },
-    "text": {
-      "fallbackImage": "",
-      "display": "iframe",
-      "thumbnail": "fallbackImage"
-    },
-    "audio": {
-      "fallbackImage": "",
-      "display": "file",
-      "thumbnail": "fallbackImage"
-    },
-    "video": {
-      "fallbackImage": "",
-      "display": "file",
-      "thumbnail": "fallbackImage"
-    },
-    "other": {
-      "fallbackImage": "",
-      "display": "fallbackImage",
-      "thumbnail": "fallbackImage"
+    "mimeTypes": {
+        "image/": {
+            "type": "image"
+        },
+        "application/pdf": {
+            "type": "pdf"
+        },
+        "text/": {
+            "type": "text"
+        },
+        "audio/": {
+            "type": "audio"
+        },
+        "video/": {
+            "type": "video"
+        }
     }
-  },
-  "mimeTypes": {
-    "image/": {
-      "type": "image"
-    },
-    "application/pdf": {
-      "type": "pdf"
-    },
-    "text/": {
-      "type": "text"
-    },
-    "audio/": {
-      "type": "audio"
-    },
-    "video/": {
-      "type": "video"
-    }
-  }
 }

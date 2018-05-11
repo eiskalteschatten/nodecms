@@ -1,15 +1,15 @@
 {% for category in categories %}
-  <tr class="category-row {% if isNewRow %}new-row{% endif %}" data-id="{{ category["_id"] }}" data-lang="{{ lang }}">
-    <td id="name">{{ category.name }}</td>
-    <td id="description">{{ category.description }}</td>
-    <td id="slug">{{ category.slug }}</td>
-  </tr>
+    <tr class="category-row {% if isNewRow %}new-row{% endif %}" data-id="{{ category["_id"] }}" data-lang="{{ lang }}">
+        <td id="name">{{ category.name }}</td>
+        <td id="description">{{ category.description }}</td>
+        <td id="slug">{{ category.slug }}</td>
+    </tr>
 {% else %}
-  <tr>
-    <td>
-      <div class="uk-text-meta">There are no categories.</div>
-    </td>
-    <td></td>
-    <td></td>
-  </tr>
+    <tr>
+        <td>
+            <div class="uk-text-meta">There are no categories.</div>
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
 {% endfor %}

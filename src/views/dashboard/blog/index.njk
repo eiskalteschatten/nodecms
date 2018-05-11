@@ -4,45 +4,45 @@
 
 {% block content %}
 
-  <div class="uk-margin uk-card uk-card-default">
-    <div class="uk-card-header">
-      <div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid>
-        <div>
-          <h2 class="uk-card-title"><i class="fas fa-newspaper text-icon-left"></i>{{ pageTitle }}</h2>
+    <div class="uk-margin uk-card uk-card-default">
+        <div class="uk-card-header">
+            <div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid>
+                <div>
+                    <h2 class="uk-card-title"><i class="fas fa-newspaper text-icon-left"></i>{{ pageTitle }}</h2>
+                </div>
+                <div>
+                    <div class="uk-text-right">
+                        <a href="/dashboard/blog/new" class="uk-button uk-button-secondary"><i class="fas fa-edit text-icon-left"></i>Create new blog post</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-          <div class="uk-text-right">
-            <a href="/dashboard/blog/new" class="uk-button uk-button-secondary"><i class="fas fa-edit text-icon-left"></i>Create new blog post</a>
-          </div>
+
+        <div class="uk-card-body">
+            <table class="uk-table uk-table-middle uk-table-striped">
+                <tbody>
+                    {% include "dashboard/blog/tableRows.njk" %}
+                </tbody>
+            </table>
         </div>
-      </div>
+
+        {% if numberOfPages > 1 %}
+            <div class="uk-card-footer">
+                <ul class="uk-pagination uk-flex-center" uk-margin>
+                    {% if page > 0 %}
+                        <li><a href="?page={{ previousPage }}"><span uk-pagination-previous></span></a></li>
+                    {% endif %}
+
+                    {% for i in range(0, numberOfPages) %}
+                        <li><a href="?page={{ i }}" {% if i == page %}class="uk-active"{% endif %}>{{ i + 1 }}</a></li>
+                    {% endfor %}
+
+                    {% if nextPage > 0 %}
+                        <li><a href="?page={{ nextPage }}"><span uk-pagination-next></span></a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
     </div>
-
-    <div class="uk-card-body">
-      <table class="uk-table uk-table-middle uk-table-striped">
-        <tbody>
-          {% include "dashboard/blog/tableRows.njk" %}
-        </tbody>
-      </table>
-    </div>
-
-    {% if numberOfPages > 1 %}
-      <div class="uk-card-footer">
-        <ul class="uk-pagination uk-flex-center" uk-margin>
-          {% if page > 0 %}
-            <li><a href="?page={{ previousPage }}"><span uk-pagination-previous></span></a></li>
-          {% endif %}
-
-          {% for i in range(0, numberOfPages) %}
-            <li><a href="?page={{ i }}" {% if i == page %}class="uk-active"{% endif %}>{{ i + 1 }}</a></li>
-          {% endfor %}
-
-          {% if nextPage > 0 %}
-            <li><a href="?page={{ nextPage }}"><span uk-pagination-next></span></a></li>
-          {% endif %}
-        </ul>
-      </div>
-    {% endif %}
-  </div>
 
 {% endblock %}

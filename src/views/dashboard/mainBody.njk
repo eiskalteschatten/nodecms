@@ -1,29 +1,29 @@
 {% extends "dashboard/base.njk" %}
 
 {% block body %}
-  <div class="main-flex-container">
-    {% include "dashboard/components/navbar.njk" %}
+    <div class="main-flex-container">
+        {% include "dashboard/components/navbar.njk" %}
 
-    <main class="uk-container uk-container-expand {% if not breadcrumbs %}uk-margin-top{% endif %}">
-      {% if breadcrumbs %}
-        <ul class="uk-breadcrumb uk-margin-top">
-          <li>
-            <a href="/dashboard">Dashboard</a>
-          </li>
+        <main class="uk-container uk-container-expand {% if not breadcrumbs %}uk-margin-top{% endif %}">
+            {% if breadcrumbs %}
+                <ul class="uk-breadcrumb uk-margin-top">
+                    <li>
+                        <a href="/dashboard">Dashboard</a>
+                    </li>
 
-          {% for url, title in breadcrumbs %}
-            <li>
-                <a href="{{ url }}">{{ title }}</a>
-            </li>
-          {% endfor %}
-        </ul>
-      {% endif %}
+                    {% for url, title in breadcrumbs %}
+                        <li>
+                                <a href="{{ url }}">{{ title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
-      <div id="messageAnchor" class="uk-hidden"></div>
+            <div id="messageAnchor" class="uk-hidden"></div>
 
-      {% block content %}{% endblock %}
-    </main>
+            {% block content %}{% endblock %}
+        </main>
 
-    {% include "dashboard/components/footer.njk" %}
-  </div>
+        {% include "dashboard/components/footer.njk" %}
+    </div>
 {% endblock %}

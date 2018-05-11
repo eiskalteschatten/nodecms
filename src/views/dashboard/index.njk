@@ -4,30 +4,30 @@
 
 {% block content %}
 
-  <div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid>
-    <div>
-      <div class="uk-margin uk-card uk-card-default">
-        <div class="uk-card-header">
-          <h2 class="uk-card-title"><i class="fas fa-newspaper text-icon-left"></i>Blog</h2>
-        </div>
+    <div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid>
+        <div>
+            <div class="uk-margin uk-card uk-card-default">
+                <div class="uk-card-header">
+                    <h2 class="uk-card-title"><i class="fas fa-newspaper text-icon-left"></i>Blog</h2>
+                </div>
 
-        <div class="uk-card-body">
-          <h3>The latest five blog posts</h3>
+                <div class="uk-card-body">
+                    <h3>The latest five blog posts</h3>
 
-          <table class="uk-table uk-table-middle uk-table-striped">
-            <tbody>
-              {% include "dashboard/blog/tableRows.njk" %}
-            </tbody>
-          </table>
-        </div>
+                    <table class="uk-table uk-table-middle uk-table-striped">
+                        <tbody>
+                            {% include "dashboard/blog/tableRows.njk" %}
+                        </tbody>
+                    </table>
+                </div>
 
-        <div class="uk-card-footer uk-text-right">
-          <a href="/dashboard/blog" class="uk-button uk-button-default uk-margin-right">All blog posts</a>
-          <a href="/dashboard/blog/new" class="uk-button uk-button-secondary"><i class="fas fa-edit text-icon-left"></i>Create new blog post</a>
+                <div class="uk-card-footer uk-text-right">
+                    <a href="/dashboard/blog" class="uk-button uk-button-default uk-margin-right">All blog posts</a>
+                    <a href="/dashboard/blog/new" class="uk-button uk-button-secondary"><i class="fas fa-edit text-icon-left"></i>Create new blog post</a>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 
 
 {% endblock %}

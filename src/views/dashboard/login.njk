@@ -4,32 +4,32 @@
 
 {% block body %}
 
-  <div class="uk-flex uk-flex-center uk-margin-xlarge-top">
-    <div class="uk-margin uk-card uk-card-default">
-      <div class="uk-card-header">
-        <h2 class="uk-card-title">Login</h2>
-      </div>
-
-      <div class="uk-card-body">
-        <div id="messageAnchor" class="uk-hidden"></div>
-
-        <div class="text-center">
-          <form id="loginForm" action="/dashboard/login" method="post">
-            <input type="hidden" name="authToken" value="{{ authToken }}">
-
-            <div class="uk-margin">
-              <input type="text" value="" name="userName" class="uk-input uk-form-width-large" placeholder="Username" required>
+    <div class="uk-flex uk-flex-center uk-margin-xlarge-top">
+        <div class="uk-margin uk-card uk-card-default">
+            <div class="uk-card-header">
+                <h2 class="uk-card-title">Login</h2>
             </div>
-            <div class="uk-margin">
-              <input type="password" value="" name="password" class="uk-input uk-form-width-large" placeholder="Password" required>
+
+            <div class="uk-card-body">
+                <div id="messageAnchor" class="uk-hidden"></div>
+
+                <div class="text-center">
+                    <form id="loginForm" action="/dashboard/login" method="post">
+                        <input type="hidden" name="authToken" value="{{ authToken }}">
+
+                        <div class="uk-margin">
+                            <input type="text" value="" name="userName" class="uk-input uk-form-width-large" placeholder="Username" required>
+                        </div>
+                        <div class="uk-margin">
+                            <input type="password" value="" name="password" class="uk-input uk-form-width-large" placeholder="Password" required>
+                        </div>
+                        <div class="uk-margin">
+                            <button class="uk-button uk-button-primary">Login</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="uk-margin">
-              <button class="uk-button uk-button-primary">Login</button>
-            </div>
-          </form>
         </div>
-      </div>
     </div>
-  </div>
 
 {% endblock %}

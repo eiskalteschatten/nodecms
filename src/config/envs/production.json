@@ -1,13 +1,13 @@
 {
-  "mongo": {
-    "host": "localhost",
-    "port": "27017",
-    "database" : "nodeCms"
-  },
-  "tracking": {
-    "matomo": {
-      "url": "https://utilities.alexseifert.de/piwik/piwik.php",
-      "siteId": 14
+    "mongo": {
+        "host": "localhost",
+        "port": "27017",
+        "database" : "nodeCms"
+    },
+    "tracking": {
+        "matomo": {
+            "url": "https://utilities.alexseifert.de/piwik/piwik.php",
+            "siteId": 14
+        }
     }
-  }
 }

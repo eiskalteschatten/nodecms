@@ -1,10 +1,10 @@
 {
-  "defaultUser": {
-    "firstName": "Alex",
-    "lastName": "Seifert",
-    "userName": "alexseifert",
-    "password": "alexseifert",
-    "emailAddress": "alex@alexseifert.com",
-    "role": "admin"
-  }
+    "defaultUser": {
+        "firstName": "Alex",
+        "lastName": "Seifert",
+        "userName": "alexseifert",
+        "password": "alexseifert",
+        "emailAddress": "alex@alexseifert.com",
+        "role": "admin"
+    }
 }

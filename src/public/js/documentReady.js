@@ -1,4 +1,4 @@
 $(document).ready(function() {
-  _mainNav.init();
-  _loader.init();
+    _mainNav.init();
+    _loader.init();
 });

@@ -1,18 +1,18 @@
 <div id="message" class="uk-hidden">
-  {% raw %}
-    {% if type == "success" %}
-      {% set symbol = '<i class="far fa-check-circle text-icon-left"></i>' %}
-      {% set uikitClass = 'uk-alert-success' %}
-    {% else %}
-      {% set symbol = '<i class="fas fa-exclamation-triangle text-icon-left"></i>' %}
-      {% set uikitClass = 'uk-alert-danger' %}
-    {% endif %}
+    {% raw %}
+        {% if type == "success" %}
+            {% set symbol = '<i class="far fa-check-circle text-icon-left"></i>' %}
+            {% set uikitClass = 'uk-alert-success' %}
+        {% else %}
+            {% set symbol = '<i class="fas fa-exclamation-triangle text-icon-left"></i>' %}
+            {% set uikitClass = 'uk-alert-danger' %}
+        {% endif %}
 
-    <div class="col-sm-12">
-      <div class="{{ uikitClass }}" uk-alert>
-        <a class="uk-alert-close" uk-close></a>
-        <p>{{ symbol | safe }} {{ message }}</p>
-      </div>
-    </div>
-  {% endraw %}
+        <div class="col-sm-12">
+            <div class="{{ uikitClass }}" uk-alert>
+                <a class="uk-alert-close" uk-close></a>
+                <p>{{ symbol | safe }} {{ message }}</p>
+            </div>
+        </div>
+    {% endraw %}
 </div>

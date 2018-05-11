@@ -3,120 +3,120 @@
 {% block title %}{{ pageTitle }}{% endblock %}
 
 {% block stylesheets %}
-  {{ super() }}
-  <link rel="stylesheet" href="/libs/simplemde/simplemde.min.css" type="text/css">
+    {{ super() }}
+    <link rel="stylesheet" href="/libs/simplemde/simplemde.min.css" type="text/css">
 {% endblock %}
 
 {% block content %}
 
-  <div class="uk-margin uk-card uk-card-default">
-    <div class="uk-card-header">
-      <h2 class="uk-card-title"><i class="fas fa-edit text-icon-left"></i>{{ pageTitle }}</h2>
+    <div class="uk-margin uk-card uk-card-default">
+        <div class="uk-card-header">
+            <h2 class="uk-card-title"><i class="fas fa-edit text-icon-left"></i>{{ pageTitle }}</h2>
+        </div>
+
+        <div class="uk-card-body">
+            <div class="uk-background-default uk-padding-small uk-panel uk-margin-bottom" style="z-index: 980;" uk-sticky="bottom: #offset">
+                <div uk-grid>
+                    <div>
+                        <ul class="uk-iconnav">
+                            <li><a href="#" id="toolbarSaveButtton"><i class="fas fa-save"></i></a></li>
+                            <li><a href="#" id="toolbarPreviewButtton"><i class="fas fa-eye"></i></a></li>
+                            <li><a href="#" id="toolbarMediaButtton"><i class="fas fa-image"></i></a></li>
+                            {% if blogPost %}
+                                <li><a href="#" id="toolbarDeleteButtton"><i class="fas fa-trash"></i></a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+                    <div>
+                        <select id="blogPostStatus" class="uk-select uk-form-small uk-form-width-small" data-status="{{ blogPost.status }}">
+                            <option value="draft" {% if blogPost.status == 'draft' %}selected{% endif %}>Draft</option>
+                            <option value="published" {% if blogPost.status == 'published' %}selected{% endif %}>Published</option>
+                        </select>
+                    </div>
+
+                    {% if blogPost.status == 'published' and publishedDate %}
+                        <div class="uk-text-small uk-text-muted">
+                            <strong>Published:</strong> {{ publishedDate }}
+                        </div>
+                    {% endif %}
+
+                    <div class="uk-width-expand uk-text-right uk-text-small">
+                        <a href="#" id="markdownGuide">Markdown Guide</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-child-width-1-2 uk-margin-bottom" uk-grid>
+                <div>
+                    <div class="uk-margin">
+                            <input class="uk-input" type="text" id="blogPostName" placeholder="Title" value="{{ blogPost.name }}">
+                    </div>
+                    <div class="uk-margin">
+                            <textarea class="uk-textarea" rows="5" id="blogPostExcerpt" placeholder="Excerpt">{{ blogPost.excerpt }}</textarea>
+                    </div>
+                </div>
+                <div>
+                    <div class="uk-child-width-1-2 uk-margin-bottom" uk-grid>
+                        <div>
+                            <ul uk-tab>
+                                <li class="uk-active"><a href="#">Categories</a></li>
+                                <li><a href="#">Tags</a></li>
+                            </ul>
+
+                            <ul class="uk-switcher uk-margin">
+                                {# CATEGORIES #}
+                                <li>
+                                    <div class="uk-panel-scrollable uk-height-small">
+                                        {% for category in categories %}
+                                            <div class="category">
+                                                {% set id = category["_id"] | string %}
+                                                <input type="checkbox" class="uk-checkbox js-category-checkbox" id="{{ id }}Checkbox" name="categories" value="{{ id }}" {% if blogPost.categories and id in blogPost.categories %}checked{% endif %}>
+                                                <label for="{{ category["_id"] }}Checkbox">{{ category.name }}</label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </li>
+
+                                {# TAGS #}
+                                <li>
+                                    <div class="{% if not blogPost.tags %}uk-hidden{% endif %} uk-margin tag-cluster js-tag-cluster" id="tagCluster">
+                                        {% for tag in blogPost.tags %}
+                                            <span class="uk-badge uk-margin-small-right js-tag-badge"><span class="js-tag-text">{{ tag }}</span>&nbsp;<i class="fa fa-times cursor-pointer js-delete-tag"></i></span>
+                                        {% endfor %}
+                                    </div>
+
+                                    <input type="hidden" value="{{ blogPost.tags }}" class="tag-hidden js-tag-hidden" id="tagHidden">
+                                    <input type="text" class="uk-input js-tag-input" placeholder="Type tags and press enter">
+
+                                    <div class="uk-text-meta uk-margin-small">
+                                        Seperate tags with commas
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            add featured image
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-child-width-1-2 js-markdown-wrapper" uk-grid>
+                <div>
+                    <textarea class="js-markdown-editor">{{ blogPost.markdown }}</textarea>
+                </div>
+                <div>
+                    <div class="js-markdown-preview"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="uk-card-body">
-      <div class="uk-background-default uk-padding-small uk-panel uk-margin-bottom" style="z-index: 980;" uk-sticky="bottom: #offset">
-        <div uk-grid>
-          <div>
-            <ul class="uk-iconnav">
-              <li><a href="#" id="toolbarSaveButtton"><i class="fas fa-save"></i></a></li>
-              <li><a href="#" id="toolbarPreviewButtton"><i class="fas fa-eye"></i></a></li>
-              <li><a href="#" id="toolbarMediaButtton"><i class="fas fa-image"></i></a></li>
-              {% if blogPost %}
-                <li><a href="#" id="toolbarDeleteButtton"><i class="fas fa-trash"></i></a></li>
-              {% endif %}
-            </ul>
-          </div>
-
-          <div>
-            <select id="blogPostStatus" class="uk-select uk-form-small uk-form-width-small" data-status="{{ blogPost.status }}">
-              <option value="draft" {% if blogPost.status == 'draft' %}selected{% endif %}>Draft</option>
-              <option value="published" {% if blogPost.status == 'published' %}selected{% endif %}>Published</option>
-            </select>
-          </div>
-
-          {% if blogPost.status == 'published' and publishedDate %}
-            <div class="uk-text-small uk-text-muted">
-              <strong>Published:</strong> {{ publishedDate }}
-            </div>
-          {% endif %}
-
-          <div class="uk-width-expand uk-text-right uk-text-small">
-            <a href="#" id="markdownGuide">Markdown Guide</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="uk-child-width-1-2 uk-margin-bottom" uk-grid>
-        <div>
-          <div class="uk-margin">
-              <input class="uk-input" type="text" id="blogPostName" placeholder="Title" value="{{ blogPost.name }}">
-          </div>
-          <div class="uk-margin">
-              <textarea class="uk-textarea" rows="5" id="blogPostExcerpt" placeholder="Excerpt">{{ blogPost.excerpt }}</textarea>
-          </div>
-        </div>
-        <div>
-          <div class="uk-child-width-1-2 uk-margin-bottom" uk-grid>
-            <div>
-              <ul uk-tab>
-                <li class="uk-active"><a href="#">Categories</a></li>
-                <li><a href="#">Tags</a></li>
-              </ul>
-
-              <ul class="uk-switcher uk-margin">
-                {# CATEGORIES #}
-                <li>
-                  <div class="uk-panel-scrollable uk-height-small">
-                    {% for category in categories %}
-                      <div class="category">
-                        {% set id = category["_id"] | string %}
-                        <input type="checkbox" class="uk-checkbox js-category-checkbox" id="{{ id }}Checkbox" name="categories" value="{{ id }}" {% if blogPost.categories and id in blogPost.categories %}checked{% endif %}>
-                        <label for="{{ category["_id"] }}Checkbox">{{ category.name }}</label>
-                      </div>
-                    {% endfor %}
-                  </div>
-                </li>
-
-                {# TAGS #}
-                <li>
-                  <div class="{% if not blogPost.tags %}uk-hidden{% endif %} uk-margin tag-cluster js-tag-cluster" id="tagCluster">
-                    {% for tag in blogPost.tags %}
-                      <span class="uk-badge uk-margin-small-right js-tag-badge"><span class="js-tag-text">{{ tag }}</span>&nbsp;<i class="fa fa-times cursor-pointer js-delete-tag"></i></span>
-                    {% endfor %}
-                  </div>
-
-                  <input type="hidden" value="{{ blogPost.tags }}" class="tag-hidden js-tag-hidden" id="tagHidden">
-                  <input type="text" class="uk-input js-tag-input" placeholder="Type tags and press enter">
-
-                  <div class="uk-text-meta uk-margin-small">
-                    Seperate tags with commas
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div>
-              add featured image
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="uk-child-width-1-2 js-markdown-wrapper" uk-grid>
-        <div>
-          <textarea class="js-markdown-editor">{{ blogPost.markdown }}</textarea>
-        </div>
-        <div>
-          <div class="js-markdown-preview"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <input type="hidden" id="blogPostId" value="{{ blogPost._id }}">
+    <input type="hidden" id="blogPostId" value="{{ blogPost._id }}">
 {% endblock %}
 
 {% block javascripts %}
-  {{ super() }}
-  <script type="text/javascript" src="/js/dashboard/blog.js"></script>
+    {{ super() }}
+    <script type="text/javascript" src="/js/dashboard/blog.js"></script>
 {% endblock %}

@@ -1,23 +1,23 @@
 'use strict';
 
-const marked  = require('marked');
-const highlightjs  = require('highlight.js');
+const marked    = require('marked');
+const highlightjs    = require('highlight.js');
 
 module.exports = {
-  markdownToHtml,
-  markdownToHtmlWithCodeHighlighting
+    markdownToHtml,
+    markdownToHtmlWithCodeHighlighting
 };
 
 function markdownToHtml(markdown) {
-  return marked(markdown);
+    return marked(markdown);
 }
 
 function markdownToHtmlWithCodeHighlighting(markdown) {
-  marked.setOptions({
-    highlight: code => {
-      return highlightjs.highlightAuto(code).value;
-    }
-  });
+    marked.setOptions({
+        highlight: code => {
+            return highlightjs.highlightAuto(code).value;
+        }
+    });
 
-  return marked(markdown);
+    return marked(markdown);
 }

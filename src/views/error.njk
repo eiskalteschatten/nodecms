@@ -3,15 +3,15 @@
 {% block title %}An error occurred{% endblock %}
 
 {% block content %}
-  {% if message %}
-    <div>{{ message }}</div>
-  {% endif %}
-
-  <div>
-    {% if error %}
-      {{ error }}
-    {% else %}
-      An error occurred
+    {% if message %}
+        <div>{{ message }}</div>
     {% endif %}
-  </div>
+
+    <div>
+        {% if error %}
+            {{ error }}
+        {% else %}
+            An error occurred
+        {% endif %}
+    </div>
 {% endblock %}

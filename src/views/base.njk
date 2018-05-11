@@ -1,45 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9, user-scalable=0"/>
-    <meta name="description" content="">
-    <meta name="robots" content="index,follow">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta http-equiv="Content-Language" content="en">
-    <meta name="author" content="Alex Seifert">
-    <meta name="copyright" content="Copyright (c) Alex Seifert">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9, user-scalable=0"/>
+        <meta name="description" content="">
+        <meta name="robots" content="index,follow">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="Content-Language" content="en">
+        <meta name="author" content="Alex Seifert">
+        <meta name="copyright" content="Copyright (c) Alex Seifert">
 
-    <title>
-      {% if pageTitle %}
-        {% block title %}{% endblock %} - History Museum
-      {% else %}
-        History Museum
-      {% endif %}
-    </title>
+        <title>
+            {% if pageTitle %}
+                {% block title %}{% endblock %} - History Museum
+            {% else %}
+                History Museum
+            {% endif %}
+        </title>
 
-    {% block stylesheets %}
-      <link rel="stylesheet" href="/css/libs.css" type="text/css">
-      <link rel="stylesheet" href="/css/main.css" type="text/css">
-    {% endblock %}
-  </head>
-  <body class="{{ pageId | cssClass }}">
-    {% block body %}{% endblock %}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="/css/libs.css" type="text/css">
+            <link rel="stylesheet" href="/css/main.css" type="text/css">
+        {% endblock %}
+    </head>
+    <body class="{{ pageId | cssClass }}">
+        {% block body %}{% endblock %}
 
-    {% include "components/clientSideTemplates.njk" %}
-    {% include "components/loader.njk" %}
+        {% include "components/clientSideTemplates.njk" %}
+        {% include "components/loader.njk" %}
 
-    {% block javascripts %}
-      <script type="text/javascript" src="/js/libs.js"></script>
-      <script type="text/javascript" src="/js/scripts.js"></script>
+        {% block javascripts %}
+            <script type="text/javascript" src="/js/libs.js"></script>
+            <script type="text/javascript" src="/js/scripts.js"></script>
 
-      {% if flashMessage and flashMessage.length > 0 %}
-        <script type="text/javascript">
-          $(document).ready(function() {
-            _messages.show('error', '{{ flashMessage }}');
-          });
-        </script>
-      {% endif %}
-    {% endblock %}
-  </body>
+            {% if flashMessage and flashMessage.length > 0 %}
+                <script type="text/javascript">
+                    $(document).ready(function() {
+                        _messages.show('error', '{{ flashMessage }}');
+                    });
+                </script>
+            {% endif %}
+        {% endblock %}
+    </body>
 </html>
