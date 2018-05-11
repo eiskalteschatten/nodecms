@@ -32,12 +32,20 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   const body = req.body;
   const categoryName = body.categoryName;
+  const slug = helper.createSlug(categoryName);
 
-  // TODO: check if the the slug already exists
+  const category = await Categories.findOne({slug: slug}).exec();
+
+  if (category) {
+    return errorHandling.returnError({
+      statusCode: 409,
+      message: 'A category with that name already exists. Please choose a new name.'
+    }, res, req);
+  }
 
   const newCategory = new Categories({
     name: categoryName,
-    slug: helper.createSlug(categoryName),
+    slug: slug,
     description: body.categoryDescription
   });
 
