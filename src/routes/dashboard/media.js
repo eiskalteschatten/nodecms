@@ -8,6 +8,7 @@ const async = require('async');
 
 const errorHandling = require('../../lib/errorHandling');
 const helper = require('../../lib/helper');
+//const uploads = require('../../config/uploads');
 
 const MediaFile = require('../../models/MediaFile');
 //const Categories = require('../../models/Categories');
