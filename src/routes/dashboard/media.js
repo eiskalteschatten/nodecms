@@ -24,12 +24,17 @@ const storage = multer.diskStorage({
 });
 const upload = multer({storage: storage});
 
+const thumbnailLimit = 30;
+
 
 router.get('/', async (req, res) => {
     const pageTitle = 'Media';
+    const page = req.query.page || 0;
 
     try {
-        const mediaFiles = await MediaFile.find().sort({updatedAt: 'desc'}).exec();
+        const mediaFiles = await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
+        const count = await MediaFile.count().exec();
+        const numberOfPages = Math.ceil(count / thumbnailLimit);
         let i = 0;
 
         for (const file of mediaFiles) {
@@ -43,6 +48,10 @@ router.get('/', async (req, res) => {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
             mediaFiles: mediaFiles,
+            numberOfPages: numberOfPages,
+            page: page,
+            previousPage: page > 0 ? parseInt(page) - 1 : 0,
+            nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0,
             breadcrumbs: {
                 '/dashboard/media': pageTitle
             }
@@ -167,9 +176,12 @@ router.patch('/', async (req, res) => {
 
 router.get('/select', async (req, res) => {
     const pageTitle = 'Select Media';
+    const page = req.query.page || 0;
 
     try {
-        const mediaFiles = await MediaFile.find().sort({updatedAt: 'desc'}).exec();
+        const mediaFiles = await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
+        const count = await MediaFile.count().exec();
+        const numberOfPages = Math.ceil(count / thumbnailLimit);
         let i = 0;
 
         for (const file of mediaFiles) {
@@ -182,7 +194,11 @@ router.get('/select', async (req, res) => {
         res.render('dashboard/media/select.njk', {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
-            mediaFiles: mediaFiles
+            mediaFiles: mediaFiles,
+            numberOfPages: numberOfPages,
+            page: page,
+            previousPage: page > 0 ? parseInt(page) - 1 : 0,
+            nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0
         });
     }
     catch(error) {
@@ -193,9 +209,12 @@ router.get('/select', async (req, res) => {
 
 router.get('/select/featured', async (req, res) => {
     const pageTitle = 'Select Featured Image';
+    const page = req.query.page || 0;
 
     try {
-        const mediaFilesResults = await MediaFile.find().sort({updatedAt: 'desc'}).exec();
+        const mediaFilesResults = await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
+        const count = await MediaFile.count().exec();
+        const numberOfPages = Math.ceil(count / thumbnailLimit);
         const mediaFiles = [];
 
         for (const file of mediaFilesResults) {
@@ -211,7 +230,11 @@ router.get('/select/featured', async (req, res) => {
         res.render('dashboard/media/select.njk', {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
-            mediaFiles: mediaFiles
+            mediaFiles: mediaFiles,
+            numberOfPages: numberOfPages,
+            page: page,
+            previousPage: page > 0 ? parseInt(page) - 1 : 0,
+            nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0
         });
     }
     catch(error) {

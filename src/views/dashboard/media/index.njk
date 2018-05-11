@@ -24,6 +24,24 @@
     <div class="uk-card-body">
         {% include "dashboard/media/thumbnails.njk" %}
     </div>
+
+    {% if numberOfPages > 1 %}
+        <div class="uk-card-footer">
+            <ul class="uk-pagination uk-flex-center" uk-margin>
+                {% if page > 0 %}
+                    <li><a href="?page={{ previousPage }}"><span uk-pagination-previous></span></a></li>
+                {% endif %}
+
+                {% for i in range(0, numberOfPages) %}
+                    <li><a href="?page={{ i }}" {% if i == page %}class="uk-active"{% endif %}>{{ i + 1 }}</a></li>
+                {% endfor %}
+
+                {% if nextPage > 0 %}
+                    <li><a href="?page={{ nextPage }}"><span uk-pagination-next></span></a></li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}
 </div>
 
 <div class="file-upload-overlay js-file-upload-overlay uk-light uk-hidden">

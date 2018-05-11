@@ -19,8 +19,8 @@ router.get('/', async (req, res) => {
     const page = req.query.page || 0;
 
     try {
-        const count = await BlogPost.count().exec();
         const blogPosts = await BlogPost.find().sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
+        const count = await BlogPost.count().exec();
         const numberOfPages = Math.ceil(count / limit);
 
         res.render('dashboard/blog/index.njk', {
