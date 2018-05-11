@@ -16,12 +16,12 @@
             "thumbnail": "fallbackImage"
         },
         "audio": {
-            "fallbackImage": "/img/fallback-images/multimedia.svg",
+            "fallbackImage": "/img/fallback-images/audio.svg",
             "display": "file",
             "thumbnail": "fallbackImage"
         },
         "video": {
-            "fallbackImage": "/img/fallback-images/multimedia.svg",
+            "fallbackImage": "/img/fallback-images/video.svg",
             "display": "file",
             "thumbnail": "fallbackImage"
         },

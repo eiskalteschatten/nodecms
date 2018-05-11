@@ -8,6 +8,15 @@
 
         &:hover {
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
+
+            .media-file-info {
+                opacity: 1;
+            }
+        }
+
+        .media-file-info {
+            opacity: 0;
+            transition: opacity 250ms;
         }
     }
 }
