@@ -77,7 +77,7 @@
                             <div class="uk-h4">Featured Image</div>
                             <div id="featuredImagePreview">
                                 {% if featuredImage %}
-                                    <img src="{{ pathToFiles }}/{{ featuredImage.fileName }}" alt="{{ featuredImage.name }}">
+                                    <img src="{{ featuredImage.fileName | pathToUploads }}" alt="{{ featuredImage.name }}">
                                 {% endif %}
                             </div>
                             <input type="hidden" value="{{ post.featuredImage }}" id="featuredImageId">

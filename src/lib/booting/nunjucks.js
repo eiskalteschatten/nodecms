@@ -25,11 +25,16 @@ module.exports = app => {
         return '';
     });
 
+    nunjucksEnv.addFilter('pathToUploads', fileName => {
+        return `/uploads/${fileName}`;
+    });
+
 
     // Globals
     nunjucksEnv.addGlobal('getCurrentYear', () => {
         return new Date().getFullYear();
     });
+
 
     //nunjucksEnv.addGlobal('appLocals', app.locals);
 

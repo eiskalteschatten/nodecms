@@ -12,7 +12,6 @@ const uploadTypes = require('../../config/uploadTypes');
 const MediaFile = require('../../models/MediaFile');
 const Categories = require('../../models/Categories');
 
-const frontendPathToUploadDir = '/uploads';
 const fullPathToUploadDir = path.join(__dirname, '../../public/uploads');
 
 const storage = multer.diskStorage({
@@ -44,7 +43,6 @@ router.get('/', async (req, res) => {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
             mediaFiles: mediaFiles,
-            pathToFiles: frontendPathToUploadDir,
             breadcrumbs: {
                 '/dashboard/media': pageTitle
             }
@@ -133,7 +131,6 @@ router.get('/edit/:slug', async (req, res) => {
             pageTitle: pageTitle,
             pageId: 'editMediaFile',
             post: mediaFile,
-            pathToFiles: frontendPathToUploadDir,
             categories: categories,
             breadcrumbs: breadcrumbs
         });
@@ -185,8 +182,7 @@ router.get('/select', async (req, res) => {
         res.render('dashboard/media/select.njk', {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
-            mediaFiles: mediaFiles,
-            pathToFiles: frontendPathToUploadDir
+            mediaFiles: mediaFiles
         });
     }
     catch(error) {
@@ -215,8 +211,7 @@ router.get('/select/featured', async (req, res) => {
         res.render('dashboard/media/select.njk', {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
-            mediaFiles: mediaFiles,
-            pathToFiles: frontendPathToUploadDir
+            mediaFiles: mediaFiles
         });
     }
     catch(error) {

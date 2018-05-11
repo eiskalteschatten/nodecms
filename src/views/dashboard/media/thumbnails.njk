@@ -3,12 +3,12 @@
         {% set editLink = "/dashboard/media/edit/" + mediaFile.slug %}
 
         <div class="media-grid">
-            <div class="thumbnail js-media-grid-thumbnail" data-edit-link="{{ editLink }}" data-file-path="{{ pathToFiles }}/{{ mediaFile.fileName }}" data-file-name="{{ mediaFile.name }}" data-file-type="{{ mediaFile.fileType }}" data-file-id="{{ mediaFile._id }}">
+            <div class="thumbnail js-media-grid-thumbnail" data-edit-link="{{ editLink }}" data-file-path="{{ mediaFile.fileName | pathToUploads }}" data-file-name="{{ mediaFile.name }}" data-file-type="{{ mediaFile.fileType }}" data-file-id="{{ mediaFile._id }}">
                 {% if mediaFile.display.thumbnail == "file" and mediaFile.fileType == "image" %}
-                    <img src="{{ pathToFiles }}/{{ mediaFile.fileName }}" alt="{{ mediaFile.name }}">
+                    <img src="{{ mediaFile.fileName | pathToUploads }}" alt="{{ mediaFile.name }}">
 
                 {% elseif mediaFile.display.thumbnail == "fallbackImage" %}
-                    <img src="/img/{{ mediaFile.display.fallbackImage }}" alt="{{ mediaFile.name }}">
+                    <img src="{{ mediaFile.display.fallbackImage }}" alt="{{ mediaFile.name }}">
 
                 {% else %}
                     <div class="uk-text-center">

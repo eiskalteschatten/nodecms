@@ -12,8 +12,6 @@ const BlogPost = require('../../models/BlogPost');
 const Categories = require('../../models/Categories');
 const MediaFile = require('../../models/MediaFile');
 
-const frontendPathToUploadDir = '/uploads';
-
 
 router.get('/', async (req, res) => {
     const pageTitle = 'Blog';
@@ -100,7 +98,6 @@ router.get('/edit/:slug', async (req, res) => {
             categories: categories,
             publishedDate: publishedDate,
             featuredImage: featuredImage,
-            pathToFiles: frontendPathToUploadDir,
             breadcrumbs: breadcrumbs
         });
     }

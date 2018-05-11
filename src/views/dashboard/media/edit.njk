@@ -13,25 +13,25 @@
         <div uk-grid>
             <div class="uk-width-2-3@m media-preview">
                 {% if post.display.display == "file" and post.fileType == "image" %}
-                    <img src="{{ pathToFiles }}/{{ post.fileName }}" alt="{{ post.name }}">
+                    <img src="{{ post.fileName | pathToUploads }}" alt="{{ post.name }}">
 
                 {% elseif post.display.display == "iframe" %}
-                    <iframe src="{{ pathToFiles }}/{{ post.fileName }}"></iframe>
+                    <iframe src="{{ post.fileName | pathToUploads }}"></iframe>
 
                 {% elseif post.display.display == "file" and post.fileType == "audio" %}
                     <audio controls>
-                        <source src="{{ pathToFiles }}/{{ post.fileName }}" type="{{ post.mimeType }}">
+                        <source src="{{ post.fileName | pathToUploads }}" type="{{ post.mimeType }}">
                         Could not load audio file.
                     </audio>
 
                 {% elseif post.display.display == "file" and post.fileType == "video" %}
                     <video controls>
-                        <source src="{{ pathToFiles }}/{{ post.fileName }}" type="{{ post.mimeType }}">
+                        <source src="{{ post.fileName | pathToUploads }}" type="{{ post.mimeType }}">
                         Could not load video file.
                     </video>
 
                 {% elseif post.display.display == "fallbackImage" %}
-                    <img src="/img/{{ post.display.fallbackImage }}" alt="{{ post.name }}">
+                    <img src="{{ post.display.fallbackImage }}" alt="{{ post.name }}">
 
                 {% else %}
                     <div class="uk-text-center">
@@ -40,7 +40,7 @@
                 {% endif %}
 
                 <div class="uk-margin">
-                    <a href="{{ pathToFiles }}/{{ post.fileName }}" class="uk-button uk-button-default" target="_blank">
+                    <a href="{{ post.fileName | pathToUploads }}" class="uk-button uk-button-default" target="_blank">
                         <i class="fas fa-external-link-square-alt text-icon-left"></i>Open file in new window
                     </a>
                 </div>
