@@ -114,6 +114,18 @@ var _dashboardBlog = {
         if (file.type === 'image') {
             markdownToInsert = '![' +  file.name + '](' + file.path + ' "' + file.name + '")';
         }
+        else if (file.type === 'audio') {
+            markdownToInsert = '<audio controls>';
+            markdownToInsert += '<source src="' + file.path + '" type="' + file.mimeType + '">';
+            markdownToInsert += 'Could not load audio file.';
+            markdownToInsert += '</audio>';
+        }
+        else if (file.type === 'video') {
+            markdownToInsert = '<video controls>';
+            markdownToInsert += '<source src="' + file.path + '" type="' + file.mimeType + '">';
+            markdownToInsert += 'Could not load video file.';
+            markdownToInsert += '</video>';
+        }
         else {
             markdownToInsert = '[' +  file.name + '](' + file.path + ')';
         }

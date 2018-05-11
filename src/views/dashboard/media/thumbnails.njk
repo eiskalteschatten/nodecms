@@ -8,6 +8,7 @@
                 data-file-path="{{ mediaFile.fileName | pathToUploads }}"
                 data-file-name="{{ mediaFile.name }}"
                 data-file-type="{{ mediaFile.fileType }}"
+                data-file-mime-type="{{ mediaFile.mimeType }}"
                 data-file-id="{{ mediaFile._id }}">
 
                 {% if mediaFile.display.thumbnail == "file" and mediaFile.fileType == "image" %}
