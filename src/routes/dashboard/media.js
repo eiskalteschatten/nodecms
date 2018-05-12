@@ -31,9 +31,13 @@ const thumbnailLimit = 30;
 router.get('/', async (req, res) => {
     const pageTitle = 'Media';
     const page = req.query.page || 0;
+    const search = req.query.search;
 
     try {
-        const mediaFiles = await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
+        const mediaFiles = ! search
+            ? await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec()
+            : await searchMedia(search, page);
+
         const count = mediaFiles.length;
         const numberOfPages = Math.ceil(count / thumbnailLimit);
         let i = 0;
@@ -50,6 +54,7 @@ router.get('/', async (req, res) => {
             pageId: pageTitle.toLowerCase(),
             mediaFiles: mediaFiles,
             numberOfPages: numberOfPages,
+            search: search,
             page: page,
             previousPage: page > 0 ? parseInt(page) - 1 : 0,
             nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0,
@@ -178,9 +183,13 @@ router.patch('/', async (req, res) => {
 router.get('/select', async (req, res) => {
     const pageTitle = 'Select Media';
     const page = req.query.page || 0;
+    const search = req.query.search;
 
     try {
-        const mediaFiles = await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
+        const mediaFiles = ! search
+            ? await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec()
+            : await searchMedia(search, page);
+
         const count = mediaFiles.length;
         const numberOfPages = Math.ceil(count / thumbnailLimit);
         let i = 0;
@@ -196,6 +205,8 @@ router.get('/select', async (req, res) => {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
             mediaFiles: mediaFiles,
+            search: search,
+            searchUrl: '/dashboard/media/select/',
             numberOfPages: numberOfPages,
             page: page,
             previousPage: page > 0 ? parseInt(page) - 1 : 0,
@@ -211,9 +222,13 @@ router.get('/select', async (req, res) => {
 router.get('/select/featured', async (req, res) => {
     const pageTitle = 'Select Featured Image';
     const page = req.query.page || 0;
+    const search = req.query.search;
 
     try {
-        const mediaFilesResults = await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
+        const mediaFilesResults = ! search
+            ? await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec()
+            : await searchMedia(search, page);
+
         const mediaFiles = [];
 
         for (const file of mediaFilesResults) {
@@ -233,6 +248,8 @@ router.get('/select/featured', async (req, res) => {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
             mediaFiles: mediaFiles,
+            search: search,
+            searchUrl: '/dashboard/media/select/featured/',
             numberOfPages: numberOfPages,
             page: page,
             previousPage: page > 0 ? parseInt(page) - 1 : 0,
@@ -278,6 +295,31 @@ function getFileType(file) {
     else {
         return 'other';
     }
+}
+
+async function searchMedia(search, page) {
+    const queryRegex = new RegExp(search, 'i');
+    const categoryIds = ! search ? undefined
+        : await Categories.find().or([
+            {name: {$regex: queryRegex}},
+            {slug: {$regex: queryRegex}},
+            {description: {$regex: queryRegex}}
+        ]).select('_id').exec();
+
+    const categories = categoryIds.map(categoryId => {
+        return categoryId._id + '';
+    });
+
+    return await MediaFile.find().or([
+        {name: {$regex: queryRegex}},
+        {slug: {$regex: queryRegex}},
+        {caption: {$regex: queryRegex}},
+        {description: {$regex: queryRegex}},
+        {fileName: {$regex: queryRegex}},
+        {mimeType: {$regex: queryRegex}},
+        {tags: {$regex: queryRegex}},
+        {categories: {$in: categories}}
+    ]).sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
 }
 
 module.exports = router;
