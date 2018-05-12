@@ -14,17 +14,24 @@ router.get('/', async (req, res) => {
     const page = req.query.page || 0;
     const search = req.query.search;
     const queryRegex = new RegExp(search, 'i');
+    let categories;
+    let count;
 
     try {
-        const categories = ! search
-            ? await Categories.find().skip(page * limit).limit(limit).exec()
-            : await Categories.find().or([
+        if (search) {
+            const orQuery = [
                 {name: {$regex: queryRegex}},
                 {slug: {$regex: queryRegex}},
                 {description: {$regex: queryRegex}}
-            ]).skip(page * limit).limit(limit).exec();
+            ];
 
-        const count = categories.length;
+            categories = await Categories.find().or(orQuery).skip(page * limit).limit(limit).exec();
+            count = await Categories.find().or(orQuery).count().exec();
+        }
+        else {
+            categories = await Categories.find().skip(page * limit).limit(limit).exec();
+            count = await Categories.find().count().exec();
+        }
         const numberOfPages = Math.ceil(count / limit);
 
         res.render('dashboard/categories/index.njk', {

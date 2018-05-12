@@ -11,6 +11,7 @@ const schema = new mongoose.Schema({
     caption: String,
     description: String,
     fileName: String,
+    fileType: String,
     mimeType: String,
     categories: [],
     tags: []

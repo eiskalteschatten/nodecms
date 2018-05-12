@@ -19,6 +19,7 @@ router.get('/', async (req, res) => {
     const page = req.query.page || 0;
     const search = req.query.search;
     let blogPosts;
+    let count;
 
     try {
         if (search) {
@@ -34,7 +35,7 @@ router.get('/', async (req, res) => {
                 return categoryId._id + '';
             });
 
-            blogPosts = await BlogPost.find().or([
+            const orQuery = [
                 {name: {$regex: queryRegex}},
                 {slug: {$regex: queryRegex}},
                 {excerpt: {$regex: queryRegex}},
@@ -43,13 +44,17 @@ router.get('/', async (req, res) => {
                 {author: {$regex: queryRegex}},
                 {status: {$regex: queryRegex}},
                 {categories: {$in: categories}}
-            ]).sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
+            ];
+
+            blogPosts = await BlogPost.find().or(orQuery).sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
+
+            count = await BlogPost.find().or(orQuery).count().exec();
         }
         else {
             blogPosts = await BlogPost.find().sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
+            count = await BlogPost.find().count().exec();
         }
 
-        const count = blogPosts.length;
         const numberOfPages = Math.ceil(count / limit);
 
         res.render('dashboard/blog/index.njk', {

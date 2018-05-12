@@ -32,19 +32,25 @@ router.get('/', async (req, res) => {
     const pageTitle = 'Media';
     const page = req.query.page || 0;
     const search = req.query.search;
+    let mediaFiles;
+    let count;
 
     try {
-        const mediaFiles = ! search
-            ? await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec()
-            : await searchMedia(search, page);
+        if (search) {
+            const results = await searchMedia(search, page);
+            mediaFiles = results.mediaFiles;
+            count = results.count;
+        }
+        else {
+            mediaFiles = await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
+            count = await MediaFile.find().count().exec();
+        }
 
-        const count = mediaFiles.length;
         const numberOfPages = Math.ceil(count / thumbnailLimit);
         let i = 0;
 
         for (const file of mediaFiles) {
             const type = getFileType(file);
-            mediaFiles[i].fileType = type;
             mediaFiles[i].display = uploadTypes.fileTypes[type];
             i++;
         }
@@ -92,6 +98,7 @@ router.post('/', upload.array('files'), async (req, res) => {
                 name: name,
                 slug: slug,
                 fileName: fileName,
+                fileType: getFileType(file),
                 mimeType: file.mimetype
             };
 
@@ -132,7 +139,6 @@ router.get('/edit/:slug', async (req, res) => {
         }
 
         const type = getFileType(mediaFile);
-        mediaFile.fileType = type;
         mediaFile.display = uploadTypes.fileTypes[type];
 
         const pageTitle = 'Edit media file';
@@ -184,19 +190,25 @@ router.get('/select', async (req, res) => {
     const pageTitle = 'Select Media';
     const page = req.query.page || 0;
     const search = req.query.search;
+    let mediaFiles;
+    let count;
 
     try {
-        const mediaFiles = ! search
-            ? await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec()
-            : await searchMedia(search, page);
+        if (search) {
+            const results = await searchMedia(search, page);
+            mediaFiles = results.mediaFiles;
+            count = results.count;
+        }
+        else {
+            mediaFiles = await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
+            count = await MediaFile.find().count().exec();
+        }
 
-        const count = mediaFiles.length;
         const numberOfPages = Math.ceil(count / thumbnailLimit);
         let i = 0;
 
         for (const file of mediaFiles) {
             const type = getFileType(file);
-            mediaFiles[i].fileType = type;
             mediaFiles[i].display = uploadTypes.fileTypes[type];
             i++;
         }
@@ -223,26 +235,32 @@ router.get('/select/featured', async (req, res) => {
     const pageTitle = 'Select Featured Image';
     const page = req.query.page || 0;
     const search = req.query.search;
+    let mediaFiles;
+    let count;
+
+    const query = {
+        fileType: 'image'
+    };
 
     try {
-        const mediaFilesResults = ! search
-            ? await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec()
-            : await searchMedia(search, page);
-
-        const mediaFiles = [];
-
-        for (const file of mediaFilesResults) {
-            const type = getFileType(file);
-
-            if (type === 'image') {
-                file.fileType = type;
-                file.display = uploadTypes.fileTypes[type];
-                mediaFiles.push(file);
-            }
+        if (search) {
+            const results = await searchMedia(search, page, query);
+            mediaFiles = results.mediaFiles;
+            count = results.count;
+        }
+        else {
+            mediaFiles = await MediaFile.find(query).sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
+            count = await MediaFile.find(query).count().exec();
         }
 
-        const count = mediaFiles.length;
         const numberOfPages = Math.ceil(count / thumbnailLimit);
+        let i = 0;
+
+        for (const file of mediaFiles) {
+            const type = getFileType(file);
+            mediaFiles[i].display = uploadTypes.fileTypes[type];
+            i++;
+        }
 
         res.render('dashboard/media/select.njk', {
             pageTitle: pageTitle,
@@ -283,21 +301,21 @@ router.delete('/', (req, res) => {
 
 function getFileType(file) {
     const mimeTypes = uploadTypes.mimeTypes;
-    const mimeType = file.mimeType;
-    const mimeTypeParts = mimeType.split('/');
+    const mimeType = file.mimetype || file.mimeType;
+    const firstPartOfMimeType = mimeType.indexOf('/') > -1 ? mimeType.split('/')[0] : mimeType;
 
     if (mimeTypes[mimeType]) {
         return mimeTypes[mimeType].type;
     }
-    else if (mimeTypes[mimeTypeParts[0]]) {
-        return mimeTypes[mimeTypeParts[0]].type;
+    else if (mimeTypes[firstPartOfMimeType]) {
+        return mimeTypes[firstPartOfMimeType].type;
     }
     else {
         return 'other';
     }
 }
 
-async function searchMedia(search, page) {
+async function searchMedia(search, page, query={}) {
     const queryRegex = new RegExp(search, 'i');
     const categoryIds = ! search ? undefined
         : await Categories.find().or([
@@ -310,7 +328,7 @@ async function searchMedia(search, page) {
         return categoryId._id + '';
     });
 
-    return await MediaFile.find().or([
+    const orQuery = [
         {name: {$regex: queryRegex}},
         {slug: {$regex: queryRegex}},
         {caption: {$regex: queryRegex}},
@@ -319,7 +337,15 @@ async function searchMedia(search, page) {
         {mimeType: {$regex: queryRegex}},
         {tags: {$regex: queryRegex}},
         {categories: {$in: categories}}
-    ]).sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
+    ];
+
+    const mediaFiles = await MediaFile.find(query).or(orQuery).sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
+    const count = await MediaFile.find(query).or(orQuery).count().exec();
+
+    return {
+        mediaFiles: mediaFiles,
+        count: count
+    };
 }
 
 module.exports = router;
