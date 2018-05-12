@@ -10,6 +10,7 @@ const helper = require('../lib/helper');
 const BlogPost = require('../models/BlogPost');
 const Categories = require('../models/Categories');
 const MediaFile = require('../models/MediaFile');
+const User = require('../models/User');
 
 
 router.get('/', async (req, res) => {
@@ -59,6 +60,7 @@ router.get('/article/:slug', async (req, res) => {
         const blogPost = await BlogPost.findOne({slug: slug, status: 'published'}).exec();
         const categories = await Categories.find({_id: {$in: blogPost.categories}}).exec();
         const featuredImage = blogPost.featuredImage ? await MediaFile.findOne({_id: blogPost.featuredImage}).exec() : '';
+        const author = await User.findOne({userName: blogPost.author}).exec();
 
         let publishedDate;
 
@@ -85,6 +87,7 @@ router.get('/article/:slug', async (req, res) => {
             pageId: 'blogPost',
             post: blogPost,
             categories: categories,
+            author: author,
             publishedDate: publishedDate,
             featuredImage: featuredImage,
             breadcrumbs: breadcrumbs
