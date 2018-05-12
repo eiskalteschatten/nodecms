@@ -12,9 +12,18 @@ router.get('/', async (req, res) => {
     const pageTitle = 'Categories';
     const limit = 10;
     const page = req.query.page || 0;
+    const search = req.query.search;
+    const queryRegex = new RegExp(search, 'i');
 
     try {
-        const categories = await Categories.find().skip(page * limit).limit(limit).exec();
+        const categories = ! search
+            ? await Categories.find().skip(page * limit).limit(limit).exec()
+            : await Categories.find().or([
+                {name: {$regex: queryRegex}},
+                {slug: {$regex: queryRegex}},
+                {description: {$regex: queryRegex}}
+            ]).skip(page * limit).limit(limit).exec();
+
         const count = categories.length;
         const numberOfPages = Math.ceil(count / limit);
 
@@ -26,6 +35,7 @@ router.get('/', async (req, res) => {
             page: page,
             previousPage: page > 0 ? parseInt(page) - 1 : 0,
             nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0,
+            search: search,
             breadcrumbs: {
                 '/dashboard/categories': pageTitle
             }

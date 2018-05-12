@@ -6,7 +6,18 @@
 
 <div class="uk-margin uk-card uk-card-default">
     <div class="uk-card-header">
-        <h2 class="uk-card-title"><i class="fas fa-tags text-icon-left"></i>{{ pageTitle }}</h2>
+        <div class="uk-child-width-1-2@m uk-grid-small uk-grid-match" uk-grid>
+            <div>
+                <h2 class="uk-card-title"><i class="fas fa-tags text-icon-left"></i>{{ pageTitle }}</h2>
+            </div>
+            <div>
+                <div class="uk-text-right">
+                    <form class="uk-search uk-search-default uk-width-large@m" method="get" action="/dashboard/categories/">
+                        <input class="uk-search-input" name="search" id="searchField" value="{{ search }}" type="search" placeholder="Search...">
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="uk-card-body">
