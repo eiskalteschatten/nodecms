@@ -85,11 +85,15 @@
                         </div>
 
                         <input type="hidden" id="mediaFileId" value="{{ post._id }}">
+                        <input type="hidden" id="mediaFileName" value="{{ post.fileName }}">
                     </div>
 
                     <div class="uk-card-footer">
-                        <div class="uk-margin uk-text-right">
-                            <button class="uk-button uk-button-primary" id="saveMediaFileButton"><i class="fas fa-save text-icon-left"></i>Save</button>
+                        <div class="uk-margin">
+                            <a href="#" id="deleteFileButton" class="uk-text-large" title="Delete"><i class="fas fa-trash uk-text-danger"></i></a>
+                            <div class="uk-align-right">
+                                <button class="uk-button uk-button-primary" id="saveMediaFileButton"><i class="fas fa-save text-icon-left"></i>Save</button>
+                            </div>
                         </div>
                     </div>
                 </div>

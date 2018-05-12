@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const multer = require('multer');
+const fs = require('fs');
 
 const errorHandling = require('../../lib/errorHandling');
 const helper = require('../../lib/helper');
@@ -240,6 +241,25 @@ router.get('/select/featured', async (req, res) => {
     catch(error) {
         errorHandling.returnError(error, res, req);
     }
+});
+
+
+router.delete('/', (req, res) => {
+    const body = req.body;
+
+    fs.unlink(path.join(fullPathToUploadDir, body.fileName), async error => {
+        if (error) {
+            errorHandling.returnError(error, res, req);
+        }
+
+        try {
+            await MediaFile.findOneAndRemove({_id: req.body.id}).exec();
+            res.send('ok');
+        }
+        catch(error) {
+            errorHandling.returnError(error, res, req);
+        }
+    });
 });
 
 

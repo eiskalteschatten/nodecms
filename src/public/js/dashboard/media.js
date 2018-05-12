@@ -54,6 +54,8 @@ var _dashboardMedia = {
         });
 
         $('#saveMediaFileButton').click(_dashboardMedia.save);
+
+        $('#deleteFileButton').click(_dashboardMedia.delete);
     },
 
     upload: function(files = null) {
@@ -145,6 +147,33 @@ var _dashboardMedia = {
         .always(function() {
             _loader.close();
         });
+    },
+
+    delete: function(e) {
+        if (e) {
+            e.preventDefault();
+        }
+
+        if (confirm('Are you sure you want to delete this file? It cannot be undone.')) {
+            _loader.open();
+
+            $.ajax({
+                url: '/dashboard/media',
+                method: 'DELETE',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    id: $('#mediaFileId').val(),
+                    fileName: $('#mediaFileName').val()
+                })
+            })
+            .done(function() {
+                window.location = '/dashboard/media/';
+            })
+            .fail(function(xhr, status, error) {
+                _loader.close();
+                _messages.show('error', xhr.responseText);
+            });
+        }
     }
 };
 
