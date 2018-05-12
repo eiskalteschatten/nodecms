@@ -70,7 +70,8 @@ router.get('/edit/:slug', async (req, res) => {
     try {
         const blogPost = await BlogPost.findOne({slug: slug}).exec();
         const categories = await Categories.find({}).exec();
-        const featuredImage = await MediaFile.findOne({_id: blogPost.featuredImage}).exec();
+        const featuredImage = blogPost.featuredImage ? await MediaFile.findOne({_id: blogPost.featuredImage}).exec() : '';
+
         let publishedDate;
 
         if (!blogPost) {
