@@ -1,0 +1,11 @@
+{% for post in blogPosts %}
+    <div class="uk-margin">
+        <h3><a href="/blog/article/{{ post.slug }}">{{ post.name }}</a></h3>
+        <p>{{ post.excerpt }}</p>
+        {% if post.mediaFile %}
+            <img src="{{ post.mediaFile.fileName | pathToUploads }}" alt="{{ post.name }}" title="{{ post.name }}">
+        {% endif %}
+    </div>
+{% else %}
+    <div class="uk-text-meta">There are currently no blog posts. Please check again later.</div>
+{% endfor %}
