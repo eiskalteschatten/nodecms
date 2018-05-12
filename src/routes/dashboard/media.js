@@ -47,12 +47,10 @@ router.get('/', async (req, res) => {
         }
 
         const numberOfPages = Math.ceil(count / thumbnailLimit);
-        let i = 0;
 
-        for (const file of mediaFiles) {
-            const type = getFileType(file);
+        for (const i in mediaFiles) {
+            const type = getFileType(mediaFiles[i]);
             mediaFiles[i].display = uploadTypes.fileTypes[type];
-            i++;
         }
 
         res.render('dashboard/media/index.njk', {
@@ -205,12 +203,10 @@ router.get('/select', async (req, res) => {
         }
 
         const numberOfPages = Math.ceil(count / thumbnailLimit);
-        let i = 0;
 
-        for (const file of mediaFiles) {
-            const type = getFileType(file);
+        for (const i in mediaFiles) {
+            const type = getFileType(mediaFiles[i]);
             mediaFiles[i].display = uploadTypes.fileTypes[type];
-            i++;
         }
 
         res.render('dashboard/media/select.njk', {
@@ -254,12 +250,10 @@ router.get('/select/featured', async (req, res) => {
         }
 
         const numberOfPages = Math.ceil(count / thumbnailLimit);
-        let i = 0;
 
-        for (const file of mediaFiles) {
-            const type = getFileType(file);
+        for (const i in mediaFiles) {
+            const type = getFileType(mediaFiles[i]);
             mediaFiles[i].display = uploadTypes.fileTypes[type];
-            i++;
         }
 
         res.render('dashboard/media/select.njk', {
