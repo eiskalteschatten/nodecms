@@ -162,7 +162,7 @@ router.post('/edit', async (req, res) => {
         categories: body.categories,
         lastEditedBy: currentUser,
         status: status,
-        featuredImage: body.featuredImage
+        featuredImage: body.featuredImage || ''
     };
 
     if (isBeingPublished) {

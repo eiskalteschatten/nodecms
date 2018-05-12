@@ -26,6 +26,13 @@ router.get('/', async (req, res) => {
         const count = await BlogPost.find(query).count().exec();
         const numberOfPages = Math.ceil(count / limit);
 
+        for (const i in blogPosts) {
+            const featuredImage = blogPosts[i].featuredImage;
+            if (featuredImage) {
+                blogPosts[i].mediaFile = await MediaFile.findOne({_id: featuredImage}).exec();
+            }
+        }
+
         res.render('blog/index.njk', {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
