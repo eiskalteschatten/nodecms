@@ -42,7 +42,7 @@ router.get('/', async (req, res) => {
             previousPage: page > 0 ? parseInt(page) - 1 : 0,
             nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0,
             breadcrumbs: {
-                '/dashboard/blog': pageTitle
+                '/blog': pageTitle
             }
         });
     }
@@ -56,8 +56,8 @@ router.get('/article/:slug', async (req, res) => {
     const slug = req.params.slug;
 
     try {
-        const blogPost = await BlogPost.findOne({slug: slug, status: 'publishedDate'}).exec();
-        const categories = await Categories.find({}).exec();
+        const blogPost = await BlogPost.findOne({slug: slug, status: 'published'}).exec();
+        const categories = await Categories.find({_id: {$in: blogPost.categories}}).exec();
         const featuredImage = blogPost.featuredImage ? await MediaFile.findOne({_id: blogPost.featuredImage}).exec() : '';
 
         let publishedDate;
@@ -69,20 +69,20 @@ router.get('/article/:slug', async (req, res) => {
             }, res, req);
         }
 
-        const pageTitle = 'Edit blog post';
+        const pageTitle = blogPost.name;
         const breadcrumbs = {
-            '/dashboard/blog': 'Blog'
+            '/blog': 'Blog'
         };
 
-        breadcrumbs[`/dashboard/blog/edit/${slug}`] = pageTitle;
+        breadcrumbs[`/blog/article/${slug}`] = pageTitle;
 
         if (blogPost.published) {
             publishedDate = helper.formatDate(blogPost.published, 'LLL');
         }
 
-        res.render('dashboard/blog/edit.njk', {
+        res.render('blog/article.njk', {
             pageTitle: pageTitle,
-            pageId: 'editBlogPost',
+            pageId: 'blogPost',
             post: blogPost,
             categories: categories,
             publishedDate: publishedDate,

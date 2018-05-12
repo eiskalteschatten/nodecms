@@ -1,5 +1,5 @@
 {% for category in categories %}
-    <tr class="category-row {% if isNewRow %}new-row{% endif %}" data-id="{{ category["_id"] }}" data-lang="{{ lang }}">
+    <tr class="category-row {% if isNewRow %}new-row{% endif %}" data-id="{{ category["_id"] }}">
         <td id="name">{{ category.name }}</td>
         <td id="description">{{ category.description }}</td>
         <td id="slug">{{ category.slug }}</td>

@@ -1,0 +1,39 @@
+{% extends "mainBody.njk" %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block content %}
+
+<h1><a href="/blog/article/{{ post.slug }}">{{ post.name }}</a></h1>
+<p>{{ post.html | safe }}</p>
+
+<div class="uk-margin">
+    <b>Published:</b><br>
+    {{ publishedDate }}
+</div>
+
+<div class="uk-margin">
+    <b>Author:</b><br>
+    <a href="/author/{{ post.author | urlencode }}">{{ post.author }}</a>
+</div>
+
+<div class="uk-margin">
+    <b>Categories:</b><br>
+    {% for category in categories %}
+        <a href="/category/{{ category.slug }}">{{ category.name }}</a>,&nbsp;
+    {% endfor %}
+</div>
+
+<div class="uk-margin">
+    <b>Tags:</b><br>
+    {% for tag in post.tags %}
+        <a href="/tag/{{ tag | urlencode }}">{{ tag }}</a>,&nbsp;
+    {% endfor %}
+</div>
+
+<div class="uk-margin">
+    <b>Featured Image:</b><br>
+    <img src="{{ featuredImage.fileName | pathToUploads }}" alt="{{ post.name }}" title="{{ post.name }}">
+</div>
+
+{% endblock %}

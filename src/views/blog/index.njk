@@ -1,9 +1,11 @@
 {% extends "mainBody.njk" %}
 
+{% block title %}{{ pageTitle }}{% endblock %}
+
 {% block content %}
 
 {% for post in blogPosts %}
-    <div>
+    <div class="uk-margin">
         <h3><a href="/blog/article/{{ post.slug }}">{{ post.name }}</a></h3>
         <p>{{ post.excerpt }}</p>
         {% if post.mediaFile %}
