@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
 
     try {
         const mediaFiles = await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
-        const count = await MediaFile.count().exec();
+        const count = mediaFiles.length;
         const numberOfPages = Math.ceil(count / thumbnailLimit);
         let i = 0;
 
@@ -181,7 +181,7 @@ router.get('/select', async (req, res) => {
 
     try {
         const mediaFiles = await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
-        const count = await MediaFile.count().exec();
+        const count = mediaFiles.length;
         const numberOfPages = Math.ceil(count / thumbnailLimit);
         let i = 0;
 
@@ -214,8 +214,6 @@ router.get('/select/featured', async (req, res) => {
 
     try {
         const mediaFilesResults = await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
-        const count = await MediaFile.count().exec();
-        const numberOfPages = Math.ceil(count / thumbnailLimit);
         const mediaFiles = [];
 
         for (const file of mediaFilesResults) {
@@ -227,6 +225,9 @@ router.get('/select/featured', async (req, res) => {
                 mediaFiles.push(file);
             }
         }
+
+        const count = mediaFiles.length;
+        const numberOfPages = Math.ceil(count / thumbnailLimit);
 
         res.render('dashboard/media/select.njk', {
             pageTitle: pageTitle,

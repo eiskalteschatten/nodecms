@@ -49,7 +49,7 @@ router.get('/', async (req, res) => {
             blogPosts = await BlogPost.find().sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
         }
 
-        const count = await BlogPost.count().exec();
+        const count = blogPosts.length;
         const numberOfPages = Math.ceil(count / limit);
 
         res.render('dashboard/blog/index.njk', {

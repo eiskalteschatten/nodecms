@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 
     try {
         const categories = await Categories.find().skip(page * limit).limit(limit).exec();
-        const count = await Categories.count().exec();
+        const count = categories.length;
         const numberOfPages = Math.ceil(count / limit);
 
         res.render('dashboard/categories/index.njk', {
