@@ -18,20 +18,36 @@ router.get('/', async (req, res) => {
     const limit = 10;
     const page = req.query.page || 0;
     const search = req.query.search;
-    const queryRegex = new RegExp(search, 'i');
+    let blogPosts;
 
     try {
-        const blogPosts = ! search
-            ? await BlogPost.find().sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec()
-            : await BlogPost.find().or([
+        if (search) {
+            const queryRegex = new RegExp(search, 'i');
+            const categoryIds = ! search ? undefined
+                : await Categories.find().or([
+                    {name: {$regex: queryRegex}},
+                    {slug: {$regex: queryRegex}},
+                    {description: {$regex: queryRegex}}
+                ]).select('_id').exec();
+
+            const categories = categoryIds.map(categoryId => {
+                return categoryId._id + '';
+            });
+
+            blogPosts = await BlogPost.find().or([
                 {name: {$regex: queryRegex}},
                 {slug: {$regex: queryRegex}},
                 {excerpt: {$regex: queryRegex}},
                 {markdown: {$regex: queryRegex}},
                 {tags: {$regex: queryRegex}},
                 {author: {$regex: queryRegex}},
-                {status: {$regex: queryRegex}}
+                {status: {$regex: queryRegex}},
+                {categories: {$in: categories}}
             ]).sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
+        }
+        else {
+            blogPosts = await BlogPost.find().sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
+        }
 
         const count = await BlogPost.count().exec();
         const numberOfPages = Math.ceil(count / limit);
