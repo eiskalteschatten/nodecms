@@ -24,6 +24,7 @@ router.get('/', async (req, res) => {
         };
 
         const blogPosts = await BlogPost.find(query).sort({published: 'desc'}).skip(page * limit).limit(limit).exec();
+        const categories = await Categories.find().sort({name: 'asc'}).exec();
         const count = await BlogPost.find(query).count().exec();
         const numberOfPages = Math.ceil(count / limit);
 
@@ -40,6 +41,7 @@ router.get('/', async (req, res) => {
             blogPosts: blogPosts,
             numberOfPages: numberOfPages,
             page: page,
+            categories: categories,
             previousPage: page > 0 ? parseInt(page) - 1 : 0,
             nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0,
             breadcrumbs: {
