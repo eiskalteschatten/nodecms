@@ -17,9 +17,22 @@ router.get('/', async (req, res) => {
     const pageTitle = 'Blog';
     const limit = 10;
     const page = req.query.page || 0;
+    const search = req.query.search;
+    const queryRegex = new RegExp(search, 'i');
 
     try {
-        const blogPosts = await BlogPost.find().sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
+        const blogPosts = ! search
+            ? await BlogPost.find().sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec()
+            : await BlogPost.find().or([
+                {name: {$regex: queryRegex}},
+                {slug: {$regex: queryRegex}},
+                {excerpt: {$regex: queryRegex}},
+                {markdown: {$regex: queryRegex}},
+                {tags: {$regex: queryRegex}},
+                {author: {$regex: queryRegex}},
+                {status: {$regex: queryRegex}}
+            ]).sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
+
         const count = await BlogPost.count().exec();
         const numberOfPages = Math.ceil(count / limit);
 
@@ -31,6 +44,7 @@ router.get('/', async (req, res) => {
             page: page,
             previousPage: page > 0 ? parseInt(page) - 1 : 0,
             nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0,
+            search: search,
             breadcrumbs: {
                 '/dashboard/blog': pageTitle
             }

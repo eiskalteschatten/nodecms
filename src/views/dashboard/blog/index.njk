@@ -11,8 +11,15 @@
                     <h2 class="uk-card-title"><i class="fas fa-newspaper text-icon-left"></i>{{ pageTitle }}</h2>
                 </div>
                 <div>
-                    <div class="uk-text-right">
-                        <a href="/dashboard/blog/new" class="uk-button uk-button-secondary"><i class="fas fa-edit text-icon-left"></i>Create new blog post</a>
+                    <div uk-grid>
+                        <div class="uk-text-right uk-width-expand">
+                            <form class="uk-search uk-search-default uk-width-large@m" method="get" action="/dashboard/blog/">
+                                <input class="uk-search-input" name="search" id="searchField" value="{{ search }}" type="search" placeholder="Search...">
+                            </form>
+                        </div>
+                        <div>
+                            <a href="/dasheboard/blog/new" class="uk-button uk-button-secondary"><i class="fas fa-edit text-icon-left"></i>Create new blog post</a>
+                        </div>
                     </div>
                 </div>
             </div>
