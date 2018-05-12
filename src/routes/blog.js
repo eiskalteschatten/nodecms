@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
             status: 'published'
         };
 
-        const blogPosts = await BlogPost.find(query).sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
+        const blogPosts = await BlogPost.find(query).sort({published: 'desc'}).skip(page * limit).limit(limit).exec();
         const count = await BlogPost.find(query).count().exec();
         const numberOfPages = Math.ceil(count / limit);
 
