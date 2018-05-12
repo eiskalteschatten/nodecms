@@ -9,6 +9,7 @@ module.exports = {
     'controllerRoutes': {
         'public': {
             '/': './routes/index',
+            '/blog': './routes/blog',
             '/dashboard/login': './routes/dashboard/login'
         },
         'auth': {

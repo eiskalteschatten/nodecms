@@ -1,0 +1,32 @@
+{% extends "mainBody.njk" %}
+
+{% block content %}
+
+{% for post in blogPosts %}
+    <div>
+        <h3><a href="/blog/article/{{ post.slug }}">{{ post.name }}</a></h3>
+        <p>{{ post.excerpt }}</p>
+    </div>
+{% else %}
+    <div class="uk-text-meta">There are currently no blog posts. Please check again later.</div>
+{% endfor %}
+
+
+{% if numberOfPages > 1 %}
+    <ul class="uk-pagination uk-flex-center" uk-margin>
+        {% if page > 0 %}
+            <li><a href="?page={{ previousPage }}"><span uk-pagination-previous></span></a></li>
+        {% endif %}
+
+        {% for i in range(0, numberOfPages) %}
+            <li><a href="?page={{ i }}" {% if i == page %}class="uk-active"{% endif %}>{{ i + 1 }}</a></li>
+        {% endfor %}
+
+        {% if nextPage > 0 %}
+            <li><a href="?page={{ nextPage }}"><span uk-pagination-next></span></a></li>
+        {% endif %}
+    </ul>
+{% endif %}
+
+
+{% endblock %}

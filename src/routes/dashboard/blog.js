@@ -76,7 +76,7 @@ router.get('/new', async (req, res) => {
     const pageTitle = 'Create New Blog Post';
 
     try {
-        const categories = await Categories.find({}).exec();
+        const categories = await Categories.find().exec();
 
         res.render('dashboard/blog/edit.njk', {
             pageTitle: pageTitle,
@@ -99,7 +99,7 @@ router.get('/edit/:slug', async (req, res) => {
 
     try {
         const blogPost = await BlogPost.findOne({slug: slug}).exec();
-        const categories = await Categories.find({}).exec();
+        const categories = await Categories.find().exec();
         const featuredImage = blogPost.featuredImage ? await MediaFile.findOne({_id: blogPost.featuredImage}).exec() : '';
 
         let publishedDate;
