@@ -1,0 +1,12 @@
+{% extends "mainBody.njk" %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block content %}
+
+<h1>Posts written by "{{ pageTitle }}"</h1>
+
+{% include "blog/components/blogRows.njk" %}
+{% include "components/pagination.njk" %}
+
+{% endblock %}
