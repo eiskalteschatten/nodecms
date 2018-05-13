@@ -12,10 +12,11 @@ const Categories = require('../models/Categories');
 const MediaFile = require('../models/MediaFile');
 const User = require('../models/User');
 
+const limit = 10;
+
 
 router.get('/', async (req, res) => {
     const pageTitle = 'Blog';
-    const limit = 10;
     const page = req.query.page || 0;
 
     try {
@@ -92,6 +93,55 @@ router.get('/article/:slug', async (req, res) => {
             author: author,
             publishedDate: publishedDate,
             featuredImage: featuredImage,
+            breadcrumbs: breadcrumbs
+        });
+    }
+    catch(error) {
+        errorHandling.returnError(error, res, req);
+    }
+});
+
+
+router.get('/category/:slug', async (req, res) => {
+    const slug = req.params.slug;
+    const page = req.query.page || 0;
+
+    try {
+        const category = await Categories.findOne({slug: slug}).exec();
+        const categoryIdStr = category._id + '';
+
+        const query = {
+            status: 'published',
+            categories: categoryIdStr
+        };
+
+        const blogPosts = await BlogPost.find(query).sort({published: 'desc'}).skip(page * limit).limit(limit).exec();
+        const count = await BlogPost.find(query).count().exec();
+        const numberOfPages = Math.ceil(count / limit);
+
+        for (const i in blogPosts) {
+            const featuredImage = blogPosts[i].featuredImage;
+            if (featuredImage) {
+                blogPosts[i].mediaFile = await MediaFile.findOne({_id: featuredImage}).exec();
+            }
+        }
+
+        const pageTitle = category.name;
+        const breadcrumbs = {
+            '/blog': 'Blog'
+        };
+
+        breadcrumbs[`/blog/category/${slug}`] = pageTitle;
+
+        res.render('blog/index.njk', {
+            pageTitle: pageTitle,
+            pageId: pageTitle.toLowerCase(),
+            blogPosts: blogPosts,
+            numberOfPages: numberOfPages,
+            page: page,
+            category: category,
+            previousPage: page > 0 ? parseInt(page) - 1 : 0,
+            nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0,
             breadcrumbs: breadcrumbs
         });
     }
