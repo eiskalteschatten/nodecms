@@ -1,0 +1,28 @@
+{% extends "mainBody.njk" %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ pageTitle }} </h1>
+
+<form action="/search" method="get">
+    <input type="search" name="query" placeholder="Search..." value="{{ query }}">
+    <input type="submit" value="Search">
+</form>
+
+<div class="uk-margin">
+    <b>Blog posts:</b><br>
+    {% include "blog/components/blogRows.njk" %}
+    {% include "components/pagination.njk" %}
+</div>
+
+<div class="uk-margin">
+    <b>Categories:</b><br>
+    {% for category in categories %}
+        <a href="/blog/category/{{ category.slug }}">{{ category.name }}</a><br>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

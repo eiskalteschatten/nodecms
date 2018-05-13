@@ -1,15 +1,15 @@
 {% if numberOfPages > 1 %}
     <ul class="uk-pagination uk-flex-center" uk-margin>
         {% if page > 0 %}
-            <li><a href="?page={{ previousPage }}"><span uk-pagination-previous></span></a></li>
+            <li><a href="?page={{ previousPage }}{% if query %}&query={{ query }}{% endif %}"><span uk-pagination-previous></span></a></li>
         {% endif %}
 
         {% for i in range(0, numberOfPages) %}
-            <li><a href="?page={{ i }}" {% if i == page %}class="uk-active"{% endif %}>{{ i + 1 }}</a></li>
+            <li><a href="?page={{ i }}{% if query %}&query={{ query }}{% endif %}" {% if i == page %}class="uk-active"{% endif %}>{{ i + 1 }}</a></li>
         {% endfor %}
 
         {% if nextPage > 0 %}
-            <li><a href="?page={{ nextPage }}"><span uk-pagination-next></span></a></li>
+            <li><a href="?page={{ nextPage }}{% if query %}&query={{ query }}{% endif %}"><span uk-pagination-next></span></a></li>
         {% endif %}
     </ul>
 {% endif %}

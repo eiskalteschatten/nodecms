@@ -10,6 +10,7 @@ module.exports = {
         'public': {
             '/': './routes/index',
             '/blog': './routes/blog',
+            '/search': './routes/search',
             '/dashboard/login': './routes/dashboard/login'
         },
         'auth': {

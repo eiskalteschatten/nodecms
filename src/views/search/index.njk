@@ -1,0 +1,14 @@
+{% extends "mainBody.njk" %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ pageTitle }}</h1>
+
+<form action="/search" method="get">
+    <input type="search" name="query" placeholder="Search...">
+    <input type="submit" value="Search">
+</form>
+
+{% endblock %}
