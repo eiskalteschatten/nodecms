@@ -133,13 +133,58 @@ router.get('/category/:slug', async (req, res) => {
 
         breadcrumbs[`/blog/category/${slug}`] = pageTitle;
 
-        res.render('blog/index.njk', {
+        res.render('blog/category.njk', {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
             blogPosts: blogPosts,
             numberOfPages: numberOfPages,
             page: page,
             category: category,
+            previousPage: page > 0 ? parseInt(page) - 1 : 0,
+            nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0,
+            breadcrumbs: breadcrumbs
+        });
+    }
+    catch(error) {
+        errorHandling.returnError(error, res, req);
+    }
+});
+
+
+router.get('/tag/:tag', async (req, res) => {
+    const tag = decodeURIComponent(req.params.tag);
+    const page = req.query.page || 0;
+
+    try {
+        const query = {
+            status: 'published',
+            tags: tag
+        };
+
+        const blogPosts = await BlogPost.find(query).sort({published: 'desc'}).skip(page * limit).limit(limit).exec();
+        const count = await BlogPost.find(query).count().exec();
+        const numberOfPages = Math.ceil(count / limit);
+
+        for (const i in blogPosts) {
+            const featuredImage = blogPosts[i].featuredImage;
+            if (featuredImage) {
+                blogPosts[i].mediaFile = await MediaFile.findOne({_id: featuredImage}).exec();
+            }
+        }
+
+        const pageTitle = tag;
+        const breadcrumbs = {
+            '/blog': 'Blog'
+        };
+
+        breadcrumbs[`/blog/tag/${tag}`] = pageTitle;
+
+        res.render('blog/tag.njk', {
+            pageTitle: pageTitle,
+            pageId: pageTitle.toLowerCase(),
+            blogPosts: blogPosts,
+            numberOfPages: numberOfPages,
+            page: page,
             previousPage: page > 0 ? parseInt(page) - 1 : 0,
             nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0,
             breadcrumbs: breadcrumbs
