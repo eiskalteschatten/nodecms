@@ -6,13 +6,12 @@ const router = express.Router();
 
 const errorHandling = require('../lib/errorHandling');
 const helper = require('../lib/helper');
+const config = require('../config/config.json');
 
 const BlogPost = require('../models/BlogPost');
 const Categories = require('../models/Categories');
 const MediaFile = require('../models/MediaFile');
 const User = require('../models/User');
-
-const limit = 10;
 
 
 router.get('/', async (req, res) => {
@@ -24,27 +23,19 @@ router.get('/', async (req, res) => {
             status: 'published'
         };
 
-        const blogPosts = await BlogPost.find(query).sort({published: 'desc'}).skip(page * limit).limit(limit).exec();
         const categories = await Categories.find().sort({name: 'asc'}).exec();
-        const count = await BlogPost.find(query).count().exec();
-        const numberOfPages = Math.ceil(count / limit);
-
-        for (const i in blogPosts) {
-            const featuredImage = blogPosts[i].featuredImage;
-            if (featuredImage) {
-                blogPosts[i].mediaFile = await MediaFile.findOne({_id: featuredImage}).exec();
-            }
-        }
+        const blogPostsObj = await getBlogPosts(query, page);
+        const numberOfPages = blogPostsObj.numberOfPages;
 
         res.render('blog/index.njk', {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
-            blogPosts: blogPosts,
+            blogPosts: blogPostsObj.blogPosts,
             numberOfPages: numberOfPages,
             page: page,
             categories: categories,
-            previousPage: page > 0 ? parseInt(page) - 1 : 0,
-            nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0,
+            previousPage: blogPostsObj.previousPage,
+            nextPage: blogPostsObj.nextPage,
             breadcrumbs: {
                 '/blog': pageTitle
             }
@@ -115,16 +106,8 @@ router.get('/category/:slug', async (req, res) => {
             categories: categoryIdStr
         };
 
-        const blogPosts = await BlogPost.find(query).sort({published: 'desc'}).skip(page * limit).limit(limit).exec();
-        const count = await BlogPost.find(query).count().exec();
-        const numberOfPages = Math.ceil(count / limit);
-
-        for (const i in blogPosts) {
-            const featuredImage = blogPosts[i].featuredImage;
-            if (featuredImage) {
-                blogPosts[i].mediaFile = await MediaFile.findOne({_id: featuredImage}).exec();
-            }
-        }
+        const blogPostsObj = await getBlogPosts(query, page);
+        const numberOfPages = blogPostsObj.numberOfPages;
 
         const pageTitle = category.name;
         const breadcrumbs = {
@@ -136,12 +119,12 @@ router.get('/category/:slug', async (req, res) => {
         res.render('blog/category.njk', {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
-            blogPosts: blogPosts,
+            blogPosts: blogPostsObj.blogPosts,
             numberOfPages: numberOfPages,
             page: page,
             category: category,
-            previousPage: page > 0 ? parseInt(page) - 1 : 0,
-            nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0,
+            previousPage: blogPostsObj.previousPage,
+            nextPage: blogPostsObj.nextPage,
             breadcrumbs: breadcrumbs
         });
     }
@@ -161,16 +144,8 @@ router.get('/tag/:tag', async (req, res) => {
             tags: tag
         };
 
-        const blogPosts = await BlogPost.find(query).sort({published: 'desc'}).skip(page * limit).limit(limit).exec();
-        const count = await BlogPost.find(query).count().exec();
-        const numberOfPages = Math.ceil(count / limit);
-
-        for (const i in blogPosts) {
-            const featuredImage = blogPosts[i].featuredImage;
-            if (featuredImage) {
-                blogPosts[i].mediaFile = await MediaFile.findOne({_id: featuredImage}).exec();
-            }
-        }
+        const blogPostsObj = await getBlogPosts(query, page);
+        const numberOfPages = blogPostsObj.numberOfPages;
 
         const pageTitle = tag;
         const breadcrumbs = {
@@ -182,11 +157,11 @@ router.get('/tag/:tag', async (req, res) => {
         res.render('blog/tag.njk', {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
-            blogPosts: blogPosts,
+            blogPosts: blogPostsObj.blogPosts,
             numberOfPages: numberOfPages,
             page: page,
-            previousPage: page > 0 ? parseInt(page) - 1 : 0,
-            nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0,
+            previousPage: blogPostsObj.previousPage,
+            nextPage: blogPostsObj.nextPage,
             breadcrumbs: breadcrumbs
         });
     }
@@ -209,16 +184,8 @@ router.get('/author/:userName', async (req, res) => {
             author: userName
         };
 
-        const blogPosts = await BlogPost.find(query).sort({published: 'desc'}).skip(page * limit).limit(limit).exec();
-        const count = await BlogPost.find(query).count().exec();
-        const numberOfPages = Math.ceil(count / limit);
-
-        for (const i in blogPosts) {
-            const featuredImage = blogPosts[i].featuredImage;
-            if (featuredImage) {
-                blogPosts[i].mediaFile = await MediaFile.findOne({_id: featuredImage}).exec();
-            }
-        }
+        const blogPostsObj = await getBlogPosts(query, page);
+        const numberOfPages = blogPostsObj.numberOfPages;
 
         const pageTitle = fullName;
         const breadcrumbs = {
@@ -230,11 +197,11 @@ router.get('/author/:userName', async (req, res) => {
         res.render('blog/author.njk', {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
-            blogPosts: blogPosts,
+            blogPosts: blogPostsObj.blogPosts,
             numberOfPages: numberOfPages,
             page: page,
-            previousPage: page > 0 ? parseInt(page) - 1 : 0,
-            nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0,
+            previousPage: blogPostsObj.previousPage,
+            nextPage: blogPostsObj.nextPage,
             breadcrumbs: breadcrumbs
         });
     }
@@ -242,5 +209,27 @@ router.get('/author/:userName', async (req, res) => {
         errorHandling.returnError(error, res, req);
     }
 });
+
+
+async function getBlogPosts(query, page) {
+    const limit = config.blogPostLimit;
+    const blogPosts = await BlogPost.find(query).sort({published: 'desc'}).skip(page * limit).limit(limit).exec();
+    const count = await BlogPost.find(query).count().exec();
+    const numberOfPages = Math.ceil(count / limit);
+
+    for (const i in blogPosts) {
+        const featuredImage = blogPosts[i].featuredImage;
+        if (featuredImage) {
+            blogPosts[i].mediaFile = await MediaFile.findOne({_id: featuredImage}).exec();
+        }
+    }
+
+    return {
+        blogPosts: blogPosts,
+        numberOfPages: numberOfPages,
+        previousPage: page > 0 ? parseInt(page) - 1 : 0,
+        nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0
+    };
+}
 
 module.exports = router;

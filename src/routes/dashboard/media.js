@@ -9,6 +9,7 @@ const fs = require('fs');
 const errorHandling = require('../../lib/errorHandling');
 const helper = require('../../lib/helper');
 const uploadTypes = require('../../config/uploadTypes');
+const thumbnailLimit = require('../../config/config.json').mediaThumbnailLimit;
 
 const MediaFile = require('../../models/MediaFile');
 const Categories = require('../../models/Categories');
@@ -24,8 +25,6 @@ const storage = multer.diskStorage({
     }
 });
 const upload = multer({storage: storage});
-
-const thumbnailLimit = 30;
 
 
 router.get('/', async (req, res) => {

@@ -7,6 +7,7 @@ const marked = require('marked');
 
 const errorHandling = require('../../lib/errorHandling');
 const helper = require('../../lib/helper');
+const config = require('../../config/config.json');
 
 const BlogPost = require('../../models/BlogPost');
 const Categories = require('../../models/Categories');
@@ -15,7 +16,7 @@ const MediaFile = require('../../models/MediaFile');
 
 router.get('/', async (req, res) => {
     const pageTitle = 'Blog';
-    const limit = 10;
+    const limit = config.blogPostLimitDashboard;
     const page = req.query.page || 0;
     const search = req.query.search;
     let blogPosts;

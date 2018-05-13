@@ -6,5 +6,8 @@
         "password": "alexseifert",
         "emailAddress": "alex@alexseifert.com",
         "role": "admin"
-    }
+    },
+    "blogPostLimit": 10,
+    "blogPostLimitDashboard": 10,
+    "mediaThumbnailLimit": 30
 }
