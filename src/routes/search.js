@@ -93,7 +93,6 @@ async function searchBlogPosts(query, page, limit) {
 
 async function searchCategories(query, page, limit) {
     const queryRegex = new RegExp(query, 'i');
-
     return await Categories.find().or([
         {name: {$regex: queryRegex}},
         {slug: {$regex: queryRegex}},
