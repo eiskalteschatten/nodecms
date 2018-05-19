@@ -13,7 +13,6 @@ const BlogPost = require('../models/BlogPost');
 const Categories = require('../models/Categories');
 const MediaFile = require('../models/MediaFile');
 
-
 const initialSearchLimit = config.initialSearchLimit;
 //const resultsListLimit = config.blogPostLimit;
 
