@@ -15,6 +15,7 @@
     <b>Blog posts:</b><br>
     {% include "blog/components/blogRows.njk" %}
     {% include "components/pagination.njk" %}
+    <a href="/search/blog/?query={{ query }}">Show all blog posts</a>
 </div>
 
 <div class="uk-margin">
@@ -22,6 +23,7 @@
     {% for category in categories %}
         <a href="/blog/category/{{ category.slug }}">{{ category.name }}</a><br>
     {% endfor %}
+    <a href="/search/categories/?query={{ query }}">Show all categories</a>
 </div>
 
 

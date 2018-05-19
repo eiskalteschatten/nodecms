@@ -9,5 +9,6 @@
     },
     "blogPostLimit": 10,
     "blogPostLimitDashboard": 10,
+    "initialSearchLimit": 5,
     "mediaThumbnailLimit": 30
 }
