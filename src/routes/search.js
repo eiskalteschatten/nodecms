@@ -14,7 +14,7 @@ const Categories = require('../models/Categories');
 const MediaFile = require('../models/MediaFile');
 
 const initialSearchLimit = config.initialSearchLimit;
-//const resultsListLimit = config.blogPostLimit;
+const resultsListLimit = config.blogPostLimit;
 
 
 router.get('/', async (req, res) => {
@@ -32,19 +32,76 @@ router.get('/', async (req, res) => {
         });
     }
     else {
-        return renderSearchResults(req, res, query);
+        return renderInitialSearchResults(req, res, query);
     }
 });
 
 
-async function renderSearchResults(req, res, query) {
+router.get('/:resultsType', async (req, res) => {
+    const resultsType = req.params.resultsType;
+    const query = req.query.query;
+    const page = req.query.page || 0;
+    const pageTitle = `Search results for "${query}"`;
+    const pageId = 'search-results';
+    const categories = await Categories.find().sort({name: 'asc'}).exec();
+    let searchResults;
+    let template;
+
+
+    switch(resultsType) {
+        case 'blog':
+            searchResults = await searchBlogPosts(query, page, resultsListLimit);
+            template = 'blog/index.njk';
+            break;
+
+        case 'categories':
+            searchResults = await searchCategories(query, page, resultsListLimit);
+            break;
+
+        case 'media':
+            searchResults = await searchMedia(query, page, resultsListLimit);
+            break;
+
+        default:
+            return errorHandling.returnError({
+                message: `No search results of type "${resultsType}" were found.`,
+                statusCode: 404
+            }, res, req);
+    }
+
+    const breadcrumbs = {
+        '/search': 'Search'
+    };
+
+    breadcrumbs[`/search/${resultsType}/?query=${query}`] = pageTitle;
+
+    res.render(template, {
+        pageTitle: pageTitle,
+        pageId: pageId,
+        blogPosts: searchResults.results,
+        numberOfPages: searchResults.numberOfPages,
+        page: page,
+        categories: categories,
+        previousPage: searchResults.previousPage,
+        nextPage: searchResults.nextPage,
+        breadcrumbs: breadcrumbs
+    });
+});
+
+
+async function renderInitialSearchResults(req, res, query) {
     const pageTitle = `Search results for "${query}"`;
     const page = req.query.page || 0;
 
     try {
-        const blogPosts = await searchBlogPosts(query, page, initialSearchLimit);
-        const categories = await searchCategories(query, page, initialSearchLimit);
-        const mediaFiles = await searchMedia(query, page, initialSearchLimit);
+        const blogPostsObj = await searchBlogPosts(query, page, initialSearchLimit);
+        const blogPosts = blogPostsObj.results;
+
+        const categoriesObj = await searchCategories(query, page, initialSearchLimit);
+        const categories = categoriesObj.results;
+
+        const mediaFilesObj = await searchMedia(query, page, initialSearchLimit);
+        const mediaFiles = mediaFilesObj.results;
 
         const breadcrumbs = {
             '/search': 'Search'
@@ -87,17 +144,40 @@ async function searchBlogPosts(query, page, limit) {
         {categories: {$in: categories}}
     ];
 
-    return await BlogPost.find({status: 'published'}).or(orQuery).sort({published: 'desc'}).skip(page * limit).limit(limit).exec();
+    const blogPosts = await BlogPost.find({status: 'published'}).or(orQuery).sort({published: 'desc'}).skip(page * limit).limit(limit).exec();
+    const count = await BlogPost.find().or(orQuery).count().exec();
+    const numberOfPages = Math.ceil(count / limit);
+
+    return {
+        results: blogPosts,
+        count: count,
+        numberOfPages: numberOfPages,
+        previousPage: page > 0 ? parseInt(page) - 1 : 0,
+        nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0
+    };
 }
 
 
 async function searchCategories(query, page, limit) {
     const queryRegex = new RegExp(query, 'i');
-    return await Categories.find().or([
+
+    const orQuery = [
         {name: {$regex: queryRegex}},
         {slug: {$regex: queryRegex}},
         {description: {$regex: queryRegex}}
-    ]).sort({published: 'desc'}).skip(page * limit).limit(limit).exec();
+    ];
+
+    const categories = await Categories.find().or(orQuery).sort({published: 'desc'}).skip(page * limit).limit(limit).exec();
+    const count = await Categories.find().or(orQuery).count().exec();
+    const numberOfPages = Math.ceil(count / limit);
+
+    return {
+        results: categories,
+        count: count,
+        numberOfPages: numberOfPages,
+        previousPage: page > 0 ? parseInt(page) - 1 : 0,
+        nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0
+    };
 }
 
 
@@ -121,13 +201,21 @@ async function searchMedia(query, page, limit) {
     ];
 
     const mediaFiles = await MediaFile.find().or(orQuery).sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
+    const count = await MediaFile.find().or(orQuery).count().exec();
+    const numberOfPages = Math.ceil(count / limit);
 
     for (const i in mediaFiles) {
         const type = helper.getFileType(mediaFiles[i]);
         mediaFiles[i].display = uploadTypes.fileTypes[type];
     }
 
-    return mediaFiles;
+    return {
+        results: mediaFiles,
+        count: count,
+        numberOfPages: numberOfPages,
+        previousPage: page > 0 ? parseInt(page) - 1 : 0,
+        nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0
+    };
 }
 
 
