@@ -48,7 +48,7 @@ router.get('/', async (req, res) => {
         const numberOfPages = Math.ceil(count / thumbnailLimit);
 
         for (const i in mediaFiles) {
-            const type = getFileType(mediaFiles[i]);
+            const type = helper.getFileType(mediaFiles[i]);
             mediaFiles[i].display = uploadTypes.fileTypes[type];
         }
 
@@ -95,7 +95,7 @@ router.post('/', upload.array('files'), async (req, res) => {
                 name: name,
                 slug: slug,
                 fileName: fileName,
-                fileType: getFileType(file),
+                fileType: helper.getFileType(file),
                 mimeType: file.mimetype
             };
 
@@ -135,7 +135,7 @@ router.get('/edit/:slug', async (req, res) => {
             }, res, req);
         }
 
-        const type = getFileType(mediaFile);
+        const type = helper.getFileType(mediaFile);
         mediaFile.display = uploadTypes.fileTypes[type];
 
         const pageTitle = 'Edit media file';
@@ -204,7 +204,7 @@ router.get('/select', async (req, res) => {
         const numberOfPages = Math.ceil(count / thumbnailLimit);
 
         for (const i in mediaFiles) {
-            const type = getFileType(mediaFiles[i]);
+            const type = helper.getFileType(mediaFiles[i]);
             mediaFiles[i].display = uploadTypes.fileTypes[type];
         }
 
@@ -251,7 +251,7 @@ router.get('/select/featured', async (req, res) => {
         const numberOfPages = Math.ceil(count / thumbnailLimit);
 
         for (const i in mediaFiles) {
-            const type = getFileType(mediaFiles[i]);
+            const type = helper.getFileType(mediaFiles[i]);
             mediaFiles[i].display = uploadTypes.fileTypes[type];
         }
 
@@ -291,22 +291,6 @@ router.delete('/', (req, res) => {
     });
 });
 
-
-function getFileType(file) {
-    const mimeTypes = uploadTypes.mimeTypes;
-    const mimeType = file.mimetype || file.mimeType;
-    const firstPartOfMimeType = mimeType.indexOf('/') > -1 ? mimeType.split('/')[0] : mimeType;
-
-    if (mimeTypes[mimeType]) {
-        return mimeTypes[mimeType].type;
-    }
-    else if (mimeTypes[firstPartOfMimeType]) {
-        return mimeTypes[firstPartOfMimeType].type;
-    }
-    else {
-        return 'other';
-    }
-}
 
 async function searchMedia(search, page, query={}) {
     const queryRegex = new RegExp(search, 'i');

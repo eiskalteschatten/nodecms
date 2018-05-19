@@ -22,8 +22,32 @@
     <b>Categories:</b><br>
     {% for category in categories %}
         <a href="/blog/category/{{ category.slug }}">{{ category.name }}</a><br>
+    {% else %}
+        <div>There are no categories matching your query.</div>
     {% endfor %}
     <a href="/search/categories/?query={{ query }}">Show all categories</a>
+</div>
+
+<div class="uk-margin">
+    <b>Media:</b><br>
+    {% for mediaFile in mediaFiles %}
+        <div>
+            {% if mediaFile.display.thumbnail == "file" and mediaFile.fileType == "image" %}
+                <img src="{{ mediaFile.fileName | pathToUploads }}" alt="{{ mediaFile.name }}">
+                <div>{{ mediaFile.name }}</div>
+
+            {% elseif mediaFile.display.thumbnail == "fallbackImage" %}
+                <img src="{{ mediaFile.display.fallbackImage }}" alt="{{ mediaFile.name }}">
+                <div>{{ mediaFile.name }}</div>
+
+            {% else %}
+                <div>{{ mediaFile.name }}</div>
+            {% endif %}
+        </div>
+    {% else %}
+        <div>There are no media files matching your query.</div>
+    {% endfor %}
+    <a href="/search/media/?query={{ query }}">Show all media files</a>
 </div>
 
 

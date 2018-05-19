@@ -3,10 +3,13 @@
 const slug = require('slug');
 const moment = require('moment');
 
+const uploadTypes = require('../config/uploadTypes');
+
 module.exports = {
     parseRoute,
     createSlug,
-    formatDate
+    formatDate,
+    getFileType
 };
 
 function parseRoute(origRoute) {
@@ -21,4 +24,20 @@ function createSlug(value) {
 
 function formatDate(date, formatType) {
     return moment(date).locale('en-GB').format(formatType);
+}
+
+function getFileType(file) {
+    const mimeTypes = uploadTypes.mimeTypes;
+    const mimeType = file.mimetype || file.mimeType;
+    const firstPartOfMimeType = mimeType.indexOf('/') > -1 ? mimeType.split('/')[0] : mimeType;
+
+    if (mimeTypes[mimeType]) {
+        return mimeTypes[mimeType].type;
+    }
+    else if (mimeTypes[firstPartOfMimeType]) {
+        return mimeTypes[firstPartOfMimeType].type;
+    }
+    else {
+        return 'other';
+    }
 }
