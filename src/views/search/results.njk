@@ -31,7 +31,7 @@
 <div class="uk-margin">
     <b>Media:</b><br>
     {% for mediaFile in mediaFiles %}
-        <div>
+        <a href="{{ mediaFile.fileName | pathToUploads }}">
             {% if mediaFile.display.thumbnail == "file" and mediaFile.fileType == "image" %}
                 <img src="{{ mediaFile.fileName | pathToUploads }}" alt="{{ mediaFile.name }}">
                 <div>{{ mediaFile.name }}</div>
@@ -43,7 +43,7 @@
             {% else %}
                 <div>{{ mediaFile.name }}</div>
             {% endif %}
-        </div>
+        </a>
     {% else %}
         <div>There are no media files matching your query.</div>
     {% endfor %}
