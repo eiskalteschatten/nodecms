@@ -48,11 +48,12 @@ router.get('/:resultsType', async (req, res) => {
     switch(resultsType) {
         case 'blog':
             searchResults = await searchBlogPosts(query, page, resultsListLimit);
-            template = 'blog/index.njk';
+            template = 'search/blogPosts.njk';
             break;
 
         case 'media':
             searchResults = await searchMedia(query, page, resultsListLimit);
+            template = 'search/media.njk';
             break;
 
         default:

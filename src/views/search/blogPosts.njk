@@ -1,0 +1,19 @@
+{% extends "mainBody.njk" %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block content %}
+
+{% include "blog/components/blogRows.njk" %}
+{% include "components/pagination.njk" %}
+
+
+<div class="uk-margin">
+    <b>Categories:</b><br>
+    {% for category in categories %}
+        <a href="/blog/category/{{ category.slug }}">{{ category.name }}</a><br>
+    {% endfor %}
+</div>
+
+
+{% endblock %}
