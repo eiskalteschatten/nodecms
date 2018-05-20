@@ -162,9 +162,7 @@ async function searchCategories(query) {
         {description: {$regex: queryRegex}}
     ];
 
-    const categories = await Categories.find().or(orQuery).sort({published: 'desc'}).exec();
-
-    return categories;
+    return await Categories.find().or(orQuery).sort({published: 'desc'}).exec();
 }
 
 
