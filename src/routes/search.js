@@ -41,19 +41,36 @@ router.get('/:resultsType', async (req, res) => {
     const resultsType = req.params.resultsType;
     const query = req.query.query;
     const page = req.query.page || 0;
+    const pageTitle = `Search results for "${query}"`;
     const categories = await Categories.find().sort({name: 'asc'}).exec();
     let searchResults;
     let template;
+
+    const breadcrumbs = {
+        '/search': 'Search'
+    };
+
+    breadcrumbs[`/search/${resultsType}/?query=${query}`] = pageTitle;
+
+    const renderVars = {
+        pageTitle: pageTitle,
+        pageId: 'search-results',
+        page: page,
+        categories: categories,
+        breadcrumbs: breadcrumbs
+    };
 
     switch(resultsType) {
         case 'blog':
             searchResults = await searchBlogPosts(query, page, resultsListLimit);
             template = 'search/blogPosts.njk';
+            renderVars.blogPosts = searchResults.results;
             break;
 
         case 'media':
             searchResults = await searchMedia(query, page, resultsListLimit);
             template = 'search/media.njk';
+            renderVars.mediaFiles = searchResults.results;
             break;
 
         default:
@@ -63,25 +80,11 @@ router.get('/:resultsType', async (req, res) => {
             }, res, req);
     }
 
-    const pageTitle = `Search results for "${query}"`;
-    const pageId = 'search-results';
-    const breadcrumbs = {
-        '/search': 'Search'
-    };
+    renderVars.numberOfPages = searchResults.numberOfPages;
+    renderVars.previousPage = searchResults.previousPage;
+    renderVars.nextPage = searchResults.nextPage;
 
-    breadcrumbs[`/search/${resultsType}/?query=${query}`] = pageTitle;
-
-    res.render(template, {
-        pageTitle: pageTitle,
-        pageId: pageId,
-        blogPosts: searchResults.results,
-        numberOfPages: searchResults.numberOfPages,
-        page: page,
-        categories: categories,
-        previousPage: searchResults.previousPage,
-        nextPage: searchResults.nextPage,
-        breadcrumbs: breadcrumbs
-    });
+    res.render(template, renderVars);
 });
 
 
