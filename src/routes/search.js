@@ -54,10 +54,6 @@ router.get('/:resultsType', async (req, res) => {
             template = 'blog/index.njk';
             break;
 
-        case 'categories':
-            searchResults = await searchCategories(query, page, resultsListLimit);
-            break;
-
         case 'media':
             searchResults = await searchMedia(query, page, resultsListLimit);
             break;
@@ -97,8 +93,7 @@ async function renderInitialSearchResults(req, res, query) {
         const blogPostsObj = await searchBlogPosts(query, page, initialSearchLimit);
         const blogPosts = blogPostsObj.results;
 
-        const categoriesObj = await searchCategories(query, page, initialSearchLimit);
-        const categories = categoriesObj.results;
+        const categories = await searchCategories(query);
 
         const mediaFilesObj = await searchMedia(query, page, initialSearchLimit);
         const mediaFiles = mediaFilesObj.results;
@@ -158,7 +153,7 @@ async function searchBlogPosts(query, page, limit) {
 }
 
 
-async function searchCategories(query, page, limit) {
+async function searchCategories(query) {
     const queryRegex = new RegExp(query, 'i');
 
     const orQuery = [
@@ -167,17 +162,9 @@ async function searchCategories(query, page, limit) {
         {description: {$regex: queryRegex}}
     ];
 
-    const categories = await Categories.find().or(orQuery).sort({published: 'desc'}).skip(page * limit).limit(limit).exec();
-    const count = await Categories.find().or(orQuery).count().exec();
-    const numberOfPages = Math.ceil(count / limit);
+    const categories = await Categories.find().or(orQuery).sort({published: 'desc'}).exec();
 
-    return {
-        results: categories,
-        count: count,
-        numberOfPages: numberOfPages,
-        previousPage: helper.calculatePreviousPage(page),
-        nextPage: helper.calculateNextPage(page, numberOfPages)
-    };
+    return categories;
 }
 
 
