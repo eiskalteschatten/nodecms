@@ -41,12 +41,9 @@ router.get('/:resultsType', async (req, res) => {
     const resultsType = req.params.resultsType;
     const query = req.query.query;
     const page = req.query.page || 0;
-    const pageTitle = `Search results for "${query}"`;
-    const pageId = 'search-results';
     const categories = await Categories.find().sort({name: 'asc'}).exec();
     let searchResults;
     let template;
-
 
     switch(resultsType) {
         case 'blog':
@@ -65,6 +62,8 @@ router.get('/:resultsType', async (req, res) => {
             }, res, req);
     }
 
+    const pageTitle = `Search results for "${query}"`;
+    const pageId = 'search-results';
     const breadcrumbs = {
         '/search': 'Search'
     };
@@ -86,7 +85,6 @@ router.get('/:resultsType', async (req, res) => {
 
 
 async function renderInitialSearchResults(req, res, query) {
-    const pageTitle = `Search results for "${query}"`;
     const page = req.query.page || 0;
 
     try {
@@ -98,6 +96,7 @@ async function renderInitialSearchResults(req, res, query) {
         const mediaFilesObj = await searchMedia(query, page, initialSearchLimit);
         const mediaFiles = mediaFilesObj.results;
 
+        const pageTitle = `Search results for "${query}"`;
         const breadcrumbs = {
             '/search': 'Search'
         };
