@@ -59,8 +59,8 @@ router.get('/', async (req, res) => {
             numberOfPages: numberOfPages,
             search: search,
             page: page,
-            previousPage: page > 0 ? parseInt(page) - 1 : 0,
-            nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0,
+            previousPage: helper.calculatePreviousPage(page),
+            nextPage: helper.calculateNextPage(page, numberOfPages),
             breadcrumbs: {
                 '/dashboard/media': pageTitle
             }
@@ -216,8 +216,8 @@ router.get('/select', async (req, res) => {
             searchUrl: '/dashboard/media/select/',
             numberOfPages: numberOfPages,
             page: page,
-            previousPage: page > 0 ? parseInt(page) - 1 : 0,
-            nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0
+            previousPage: helper.calculatePreviousPage(page),
+            nextPage: helper.calculateNextPage(page, numberOfPages)
         });
     }
     catch(error) {
@@ -263,8 +263,8 @@ router.get('/select/featured', async (req, res) => {
             searchUrl: '/dashboard/media/select/featured/',
             numberOfPages: numberOfPages,
             page: page,
-            previousPage: page > 0 ? parseInt(page) - 1 : 0,
-            nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0
+            previousPage: helper.calculatePreviousPage(page),
+            nextPage: helper.calculateNextPage(page, numberOfPages)
         });
     }
     catch(error) {

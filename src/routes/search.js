@@ -152,8 +152,8 @@ async function searchBlogPosts(query, page, limit) {
         results: blogPosts,
         count: count,
         numberOfPages: numberOfPages,
-        previousPage: page > 0 ? parseInt(page) - 1 : 0,
-        nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0
+        previousPage: helper.calculatePreviousPage(page),
+        nextPage: helper.calculateNextPage(page, numberOfPages)
     };
 }
 
@@ -175,8 +175,8 @@ async function searchCategories(query, page, limit) {
         results: categories,
         count: count,
         numberOfPages: numberOfPages,
-        previousPage: page > 0 ? parseInt(page) - 1 : 0,
-        nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0
+        previousPage: helper.calculatePreviousPage(page),
+        nextPage: helper.calculateNextPage(page, numberOfPages)
     };
 }
 
@@ -213,8 +213,8 @@ async function searchMedia(query, page, limit) {
         results: mediaFiles,
         count: count,
         numberOfPages: numberOfPages,
-        previousPage: page > 0 ? parseInt(page) - 1 : 0,
-        nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0
+        previousPage: helper.calculatePreviousPage(page),
+        nextPage: helper.calculateNextPage(page, numberOfPages)
     };
 }
 
@@ -227,5 +227,6 @@ async function getCategoryIds(query) {
         {description: {$regex: queryRegex}}
     ]).select('_id').exec();
 }
+
 
 module.exports = router;

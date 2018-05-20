@@ -9,8 +9,11 @@ module.exports = {
     parseRoute,
     createSlug,
     formatDate,
-    getFileType
+    getFileType,
+    calculatePreviousPage,
+    calculateNextPage
 };
+
 
 function parseRoute(origRoute) {
     const route = origRoute.split('/');
@@ -40,4 +43,13 @@ function getFileType(file) {
     else {
         return 'other';
     }
+}
+
+function calculatePreviousPage(page) {
+    return page > 0 ? parseInt(page) - 1 : 0;
+}
+
+
+function calculateNextPage(page, numberOfPages) {
+    return page < (numberOfPages - 1) ? parseInt(page) + 1 : 0;
 }

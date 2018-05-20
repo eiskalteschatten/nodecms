@@ -64,8 +64,8 @@ router.get('/', async (req, res) => {
             blogPosts: blogPosts,
             numberOfPages: numberOfPages,
             page: page,
-            previousPage: page > 0 ? parseInt(page) - 1 : 0,
-            nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0,
+            previousPage: helper.calculatePreviousPage(page),
+            nextPage: helper.calculateNextPage(page, numberOfPages),
             search: search,
             breadcrumbs: {
                 '/dashboard/blog': pageTitle
