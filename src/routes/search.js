@@ -42,7 +42,6 @@ router.get('/:resultsType', async (req, res) => {
     const query = req.query.query;
     const page = req.query.page || 0;
     const pageTitle = `Search results for "${query}"`;
-    const categories = await Categories.find().sort({name: 'asc'}).exec();
     let searchResults;
     let template;
 
@@ -56,7 +55,7 @@ router.get('/:resultsType', async (req, res) => {
         pageTitle: pageTitle,
         pageId: 'search-results',
         page: page,
-        categories: categories,
+        query: query,
         breadcrumbs: breadcrumbs
     };
 
@@ -65,6 +64,7 @@ router.get('/:resultsType', async (req, res) => {
             searchResults = await searchBlogPosts(query, page, resultsListLimit);
             template = 'search/blogPosts.njk';
             renderVars.blogPosts = searchResults.results;
+            renderVars.categories = await Categories.find().sort({name: 'asc'}).exec();
             break;
 
         case 'media':

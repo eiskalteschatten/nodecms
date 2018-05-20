@@ -1,49 +1,17 @@
 {% for mediaFile in mediaFiles %}
-    {% set editLink = "/dashboard/media/edit/" + mediaFile.slug %}
+    <a href="{{ mediaFile.fileName | pathToUploads }}">
+        {% if mediaFile.display.thumbnail == "file" and mediaFile.fileType == "image" %}
+            <img src="{{ mediaFile.fileName | pathToUploads }}" alt="{{ mediaFile.name }}">
+            <div>{{ mediaFile.name }}</div>
 
-    <div class="media-grid">
-        <div class="thumbnail js-media-grid-thumbnail uk-text-center"
-            data-edit-link="{{ editLink }}"
-            data-file-path="{{ mediaFile.fileName | pathToUploads }}"
-            data-file-name="{{ mediaFile.name }}"
-            data-file-type="{{ mediaFile.fileType }}"
-            data-file-mime-type="{{ mediaFile.mimeType }}"
-            data-file-id="{{ mediaFile._id }}">
+        {% elseif mediaFile.display.thumbnail == "fallbackImage" %}
+            <img src="{{ mediaFile.display.fallbackImage }}" alt="{{ mediaFile.name }}">
+            <div>{{ mediaFile.name }}</div>
 
-            {% if mediaFile.display.thumbnail == "file" and mediaFile.fileType == "image" %}
-                <img src="{{ mediaFile.fileName | pathToUploads }}" alt="{{ mediaFile.name }}">
-
-                <div class="media-file-info">
-                    <div class="uk-overlay-default uk-position-cover"></div>
-                    <div class="uk-overlay uk-position-bottom uk-dark">
-                        <strong>{{ mediaFile.name }}</strong>
-                        <div class="uk-text-small">
-                            {{ mediaFile.mimeType }}
-                        </div>
-                    </div>
-                </div>
-
-
-            {% elseif mediaFile.display.thumbnail == "fallbackImage" %}
-                <img src="{{ mediaFile.display.fallbackImage }}" alt="{{ mediaFile.name }}">
-
-                <div class="uk-overlay uk-overlay-default uk-position-bottom">
-                    <strong>{{ mediaFile.name }}</strong>
-                    <div class="uk-text-small">
-                        {{ mediaFile.mimeType }}
-                    </div>
-                </div>
-
-            {% else %}
-                <div>
-                    <strong>{{ mediaFile.name }}</strong>
-                    <div class="uk-text-small">
-                        {{ mediaFile.mimeType }}
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-    </div>
+        {% else %}
+            <div>{{ mediaFile.name }}</div>
+        {% endif %}
+    </a>
 {% else %}
-    <div class="uk-text-meta">There are no media files at the moment.</div>
+    <div>There are no media files matching your query.</div>
 {% endfor %}
