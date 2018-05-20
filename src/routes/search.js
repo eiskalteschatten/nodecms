@@ -41,28 +41,22 @@ router.get('/:resultsType', async (req, res) => {
     const resultsType = req.params.resultsType;
     const query = req.query.query;
     const page = req.query.page || 0;
-    const pageTitle = `Search results for "${query}"`;
+    let pageTitle;
+    let pageId;
     let searchResults;
     let template;
 
-    const breadcrumbs = {
-        '/search': 'Search'
-    };
-
-    breadcrumbs[`/search/${resultsType}/?query=${query}`] = pageTitle;
-
     const renderVars = {
-        pageTitle: pageTitle,
-        pageId: 'search-results',
         page: page,
         query: query,
-        breadcrumbs: breadcrumbs
     };
 
     switch(resultsType) {
         case 'blog':
             searchResults = await searchBlogPosts(query, page, resultsListLimit);
             template = 'search/blogPosts.njk';
+            pageTitle = `Blog article search results for "${query}"`;
+            pageId = 'search-results-blog';
             renderVars.blogPosts = searchResults.results;
             renderVars.categories = await Categories.find().sort({name: 'asc'}).exec();
             break;
@@ -70,6 +64,8 @@ router.get('/:resultsType', async (req, res) => {
         case 'media':
             searchResults = await searchMedia(query, page, resultsListLimit);
             template = 'search/media.njk';
+            pageTitle = `Media file search results for "${query}"`;
+            pageId = 'search-results-media';
             renderVars.mediaFiles = searchResults.results;
             break;
 
@@ -80,6 +76,15 @@ router.get('/:resultsType', async (req, res) => {
             }, res, req);
     }
 
+    const breadcrumbs = {
+        '/search': 'Search'
+    };
+
+    breadcrumbs[`/search/${resultsType}/?query=${query}`] = pageTitle;
+
+    renderVars.breadcrumbs = breadcrumbs;
+    renderVars.pageTitle = pageTitle;
+    renderVars.pageId = pageId;
     renderVars.numberOfPages = searchResults.numberOfPages;
     renderVars.previousPage = searchResults.previousPage;
     renderVars.nextPage = searchResults.nextPage;
