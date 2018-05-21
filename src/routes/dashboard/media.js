@@ -36,8 +36,8 @@ router.get('/', async (req, res) => {
 
     try {
         if (search) {
-            const results = await searchMedia(search, page);
-            mediaFiles = results.mediaFiles;
+            const results = await MediaFile.searchMedia(search, page);
+            mediaFiles = results.results;
             count = results.count;
         }
         else {
@@ -192,8 +192,8 @@ router.get('/select', async (req, res) => {
 
     try {
         if (search) {
-            const results = await searchMedia(search, page);
-            mediaFiles = results.mediaFiles;
+            const results = await MediaFile.searchMedia(search, page);
+            mediaFiles = results.results;
             count = results.count;
         }
         else {
@@ -239,8 +239,8 @@ router.get('/select/featured', async (req, res) => {
 
     try {
         if (search) {
-            const results = await searchMedia(search, page, query);
-            mediaFiles = results.mediaFiles;
+            const results = await MediaFile.searchMedia(search, page, null, query);
+            mediaFiles = results.results;
             count = results.count;
         }
         else {
@@ -290,39 +290,5 @@ router.delete('/', (req, res) => {
         }
     });
 });
-
-
-async function searchMedia(search, page, query={}) {
-    const queryRegex = new RegExp(search, 'i');
-    const categoryIds = ! search ? undefined
-        : await Categories.find().or([
-            {name: {$regex: queryRegex}},
-            {slug: {$regex: queryRegex}},
-            {description: {$regex: queryRegex}}
-        ]).select('_id').exec();
-
-    const categories = categoryIds.map(categoryId => {
-        return categoryId._id + '';
-    });
-
-    const orQuery = [
-        {name: {$regex: queryRegex}},
-        {slug: {$regex: queryRegex}},
-        {caption: {$regex: queryRegex}},
-        {description: {$regex: queryRegex}},
-        {fileName: {$regex: queryRegex}},
-        {mimeType: {$regex: queryRegex}},
-        {tags: {$regex: queryRegex}},
-        {categories: {$in: categories}}
-    ];
-
-    const mediaFiles = await MediaFile.find(query).or(orQuery).sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
-    const count = await MediaFile.find(query).or(orQuery).count().exec();
-
-    return {
-        mediaFiles: mediaFiles,
-        count: count
-    };
-}
 
 module.exports = router;

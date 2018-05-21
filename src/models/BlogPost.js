@@ -6,8 +6,8 @@ const db = require('../lib/mongo/connection');
 const helper = require('../lib/helper');
 const config = require('../config/config.json');
 
-const Categories = require('../models/Categories');
-const MediaFile = require('../models/MediaFile');
+const Categories = require('./Categories');
+const MediaFile = require('./MediaFile');
 
 const modelName = 'BlogPost';
 
