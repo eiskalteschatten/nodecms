@@ -30,7 +30,7 @@
 <div class="uk-margin">
     <b>Media:</b><br>
     {% for mediaFile in mediaFiles %}
-        <a href="{{ mediaFile.fileName | pathToUploads }}">
+        <a href="/media/file/{{ mediaFile.slug }}">
             {% if mediaFile.display.thumbnail == "file" and mediaFile.fileType == "image" %}
                 <img src="{{ mediaFile.fileName | pathToUploads }}" alt="{{ mediaFile.name }}">
                 <div>{{ mediaFile.name }}</div>

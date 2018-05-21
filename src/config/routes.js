@@ -11,6 +11,7 @@ module.exports = {
             '/': './routes/index',
             '/blog': './routes/blog',
             '/search': './routes/search',
+            '/media': './routes/media',
             '/dashboard/login': './routes/dashboard/login'
         },
         'auth': {

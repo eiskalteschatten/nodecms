@@ -126,7 +126,7 @@ router.get('/edit/:slug', async (req, res) => {
 
     try {
         const mediaFile = await MediaFile.findOne({slug: slug}).exec();
-        const categories = await Categories.find({}).exec();
+        const categories = await Categories.find().exec();
 
         if (!mediaFile) {
             return errorHandling.returnError({

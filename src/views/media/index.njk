@@ -1,0 +1,56 @@
+{% extends "mainBody.njk" %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ pageTitle }}</h1>
+
+{% if mediaFile %}
+
+    {% if mediaFile.display.display == "file" and mediaFile.fileType == "image" %}
+        <img src="{{ mediaFile.fileName | pathToUploads }}" alt="{{ mediaFile.name }}">
+
+    {% elseif mediaFile.display.display == "iframe" %}
+        <iframe src="{{ mediaFile.fileName | pathToUploads }}"></iframe>
+
+    {% elseif mediaFile.display.display == "file" and mediaFile.fileType == "audio" %}
+        <audio controls>
+            <source src="{{ mediaFile.fileName | pathToUploads }}" type="{{ mediaFile.mimeType }}">
+            Could not load audio file.
+        </audio>
+
+    {% elseif mediaFile.display.display == "file" and mediaFile.fileType == "video" %}
+        <video controls>
+            <source src="{{ mediaFile.fileName | pathToUploads }}" type="{{ mediaFile.mimeType }}">
+            Could not load video file.
+        </video>
+
+    {% elseif mediaFile.display.display == "fallbackImage" %}
+        <img src="{{ mediaFile.display.fallbackImage }}" alt="{{ mediaFile.name }}">
+
+    {% else %}
+        <div class="uk-text-center">
+            {{ mediaFile.name }}
+        </div>
+    {% endif %}
+
+
+    <div class="uk-margin">
+        <b>Categories:</b><br>
+        {% for category in categories %}
+            <a href="/blog/category/{{ category.slug }}">{{ category.name }}</a>{% if not loop.last %},&nbsp;{% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="uk-margin">
+        <b>Tags:</b><br>
+        {% for tag in mediaFile.tags %}
+            <a href="/blog/tag/{{ tag | urlencode }}">{{ tag }}</a>{% if not loop.last %},&nbsp;{% endif %}
+        {% endfor %}
+    </div>
+{% else %}
+    <div>Media file not found.</div>
+{% endif %}
+
+{% endblock %}
