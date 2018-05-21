@@ -2,13 +2,13 @@
 
 const express = require('express');
 const router = express.Router();
-//const cache = require('apicache').middleware;
+const cache = require('apicache').middleware;
 
 const errorHandling = require('../lib/errorHandling');
 
 const MediaFile = require('../models/MediaFile');
 
-router.get('/file/:slug', async (req, res) => {
+router.get('/file/:slug', cache('5 minutes'), async (req, res) => {
     const slug = req.params.slug;
 
     try {

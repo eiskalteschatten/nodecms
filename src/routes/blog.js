@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-// const cache = require('apicache').middleware;
+const cache = require('apicache').middleware;
 
 const errorHandling = require('../lib/errorHandling');
 const helper = require('../lib/helper');
@@ -13,7 +13,7 @@ const MediaFile = require('../models/MediaFile');
 const User = require('../models/User');
 
 
-router.get('/', async (req, res) => {
+router.get('/', cache('1 minute'), async (req, res) => {
     const pageTitle = 'Blog';
     const page = req.query.page || 0;
 
@@ -46,7 +46,7 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/article/:slug', async (req, res) => {
+router.get('/article/:slug', cache('5 minutes'), async (req, res) => {
     const slug = req.params.slug;
 
     try {
@@ -93,7 +93,7 @@ router.get('/article/:slug', async (req, res) => {
 });
 
 
-router.get('/category/:slug', async (req, res) => {
+router.get('/category/:slug', cache('1 minute'), async (req, res) => {
     const slug = req.params.slug;
     const page = req.query.page || 0;
 
@@ -134,7 +134,7 @@ router.get('/category/:slug', async (req, res) => {
 });
 
 
-router.get('/tag/:tag', async (req, res) => {
+router.get('/tag/:tag', cache('1 minute'), async (req, res) => {
     const tag = decodeURIComponent(req.params.tag);
     const page = req.query.page || 0;
 
@@ -171,7 +171,7 @@ router.get('/tag/:tag', async (req, res) => {
 });
 
 
-router.get('/author/:userName', async (req, res) => {
+router.get('/author/:userName', cache('1 minute'), async (req, res) => {
     const userName = decodeURIComponent(req.params.userName);
     const page = req.query.page || 0;
 
