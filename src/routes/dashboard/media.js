@@ -8,7 +8,6 @@ const fs = require('fs');
 
 const errorHandling = require('../../lib/errorHandling');
 const helper = require('../../lib/helper');
-const uploadTypes = require('../../config/uploadTypes');
 const thumbnailLimit = require('../../config/config.json').mediaThumbnailLimit;
 
 const MediaFile = require('../../models/MediaFile');
@@ -31,31 +30,18 @@ router.get('/', async (req, res) => {
     const pageTitle = 'Media';
     const page = req.query.page || 0;
     const search = req.query.search;
-    let mediaFiles;
-    let count;
 
     try {
-        if (search) {
-            const results = await MediaFile.searchMedia(search, page);
-            mediaFiles = results.results;
-            count = results.count;
-        }
-        else {
-            mediaFiles = await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
-            count = await MediaFile.find().count().exec();
-        }
+        const mediaFilesObj = search
+            ? await MediaFile.searchMedia(search, page)
+            : await MediaFile.getMediaFiles(page, thumbnailLimit);
 
-        const numberOfPages = Math.ceil(count / thumbnailLimit);
-
-        for (const i in mediaFiles) {
-            const type = helper.getFileType(mediaFiles[i]);
-            mediaFiles[i].display = uploadTypes.fileTypes[type];
-        }
+        const numberOfPages = Math.ceil(mediaFilesObj.count / thumbnailLimit);
 
         res.render('dashboard/media/index.njk', {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
-            mediaFiles: mediaFiles,
+            mediaFiles: mediaFilesObj.results,
             numberOfPages: numberOfPages,
             search: search,
             page: page,
@@ -125,8 +111,9 @@ router.get('/edit/:slug', async (req, res) => {
     const slug = req.params.slug;
 
     try {
-        const mediaFile = await MediaFile.findOne({slug: slug}).exec();
-        const categories = await Categories.find().exec();
+        const mediaFileObj = await MediaFile.getMediaFile({slug: slug});
+        const mediaFile = mediaFileObj.results;
+        const allCategories = await Categories.find().exec();
 
         if (!mediaFile) {
             return errorHandling.returnError({
@@ -134,9 +121,6 @@ router.get('/edit/:slug', async (req, res) => {
                 message: 'Media file not found'
             }, res, req);
         }
-
-        const type = helper.getFileType(mediaFile);
-        mediaFile.display = uploadTypes.fileTypes[type];
 
         const pageTitle = 'Edit media file';
         const breadcrumbs = {
@@ -149,7 +133,7 @@ router.get('/edit/:slug', async (req, res) => {
             pageTitle: pageTitle,
             pageId: 'editMediaFile',
             post: mediaFile,
-            categories: categories,
+            categories: allCategories,
             breadcrumbs: breadcrumbs
         });
     }
@@ -187,31 +171,18 @@ router.get('/select', async (req, res) => {
     const pageTitle = 'Select Media';
     const page = req.query.page || 0;
     const search = req.query.search;
-    let mediaFiles;
-    let count;
 
     try {
-        if (search) {
-            const results = await MediaFile.searchMedia(search, page);
-            mediaFiles = results.results;
-            count = results.count;
-        }
-        else {
-            mediaFiles = await MediaFile.find().sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
-            count = await MediaFile.find().count().exec();
-        }
+        const mediaFilesObj = search
+            ? await MediaFile.searchMedia(search, page)
+            : await MediaFile.getMediaFiles(page, thumbnailLimit);
 
-        const numberOfPages = Math.ceil(count / thumbnailLimit);
-
-        for (const i in mediaFiles) {
-            const type = helper.getFileType(mediaFiles[i]);
-            mediaFiles[i].display = uploadTypes.fileTypes[type];
-        }
+        const numberOfPages = Math.ceil(mediaFilesObj.count / thumbnailLimit);
 
         res.render('dashboard/media/select.njk', {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
-            mediaFiles: mediaFiles,
+            mediaFiles: mediaFilesObj.results,
             search: search,
             searchUrl: '/dashboard/media/select/',
             numberOfPages: numberOfPages,
@@ -230,35 +201,22 @@ router.get('/select/featured', async (req, res) => {
     const pageTitle = 'Select Featured Image';
     const page = req.query.page || 0;
     const search = req.query.search;
-    let mediaFiles;
-    let count;
 
     const query = {
         fileType: 'image'
     };
 
     try {
-        if (search) {
-            const results = await MediaFile.searchMedia(search, page, null, query);
-            mediaFiles = results.results;
-            count = results.count;
-        }
-        else {
-            mediaFiles = await MediaFile.find(query).sort({updatedAt: 'desc'}).skip(page * thumbnailLimit).limit(thumbnailLimit).exec();
-            count = await MediaFile.find(query).count().exec();
-        }
+        const mediaFilesObj = search
+            ? await MediaFile.searchMedia(search, page, null, query)
+            : await MediaFile.getMediaFiles(page, thumbnailLimit, query);
 
-        const numberOfPages = Math.ceil(count / thumbnailLimit);
-
-        for (const i in mediaFiles) {
-            const type = helper.getFileType(mediaFiles[i]);
-            mediaFiles[i].display = uploadTypes.fileTypes[type];
-        }
+        const numberOfPages = Math.ceil(mediaFilesObj.count / thumbnailLimit);
 
         res.render('dashboard/media/select.njk', {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
-            mediaFiles: mediaFiles,
+            mediaFiles: mediaFilesObj.results,
             search: search,
             searchUrl: '/dashboard/media/select/featured/',
             numberOfPages: numberOfPages,

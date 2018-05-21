@@ -28,8 +28,15 @@ const schema = new mongoose.Schema({
 });
 
 
-schema.statics.getLatest = function(limit) {
-    return this.find().sort({updatedAt: 'desc'}).limit(limit).exec();
+schema.statics.getLatest = async function(limit) {
+    const mediaFiles = await this.find().sort({updatedAt: 'desc'}).limit(limit).exec();
+
+    for (const i in mediaFiles) {
+        const type = helper.getFileType(mediaFiles[i]);
+        mediaFiles[i].display = uploadTypes.fileTypes[type];
+    }
+
+    return mediaFiles;
 };
 
 
@@ -80,6 +87,38 @@ schema.statics.searchMedia = async function(query, page, limit, find={}) {
         numberOfPages: numberOfPages,
         previousPage: helper.calculatePreviousPage(page),
         nextPage: helper.calculateNextPage(page, numberOfPages)
+    };
+};
+
+
+schema.statics.getMediaFiles = async function(page, limit, find={}) {
+    const mediaFiles = await this.find(find).sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
+
+    for (const i in mediaFiles) {
+        const type = helper.getFileType(mediaFiles[i]);
+        mediaFiles[i].display = uploadTypes.fileTypes[type];
+    }
+
+    const count = await this.find(find).count().exec();
+
+    return {
+        results: mediaFiles,
+        count: count
+    };
+};
+
+
+schema.statics.getMediaFile = async function(find={}) {
+    const mediaFile = await this.findOne(find).exec();
+
+    const type = helper.getFileType(mediaFile);
+    mediaFile.display = uploadTypes.fileTypes[type];
+
+    const categories = await Categories.find({_id: {$in: mediaFile.categories}}).exec();
+
+    return {
+        results: mediaFile,
+        categories: categories
     };
 };
 
