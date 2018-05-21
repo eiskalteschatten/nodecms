@@ -6,7 +6,6 @@ const router = express.Router();
 
 const errorHandling = require('../lib/errorHandling');
 const helper = require('../lib/helper');
-const config = require('../config/config.json');
 
 const BlogPost = require('../models/BlogPost');
 const Categories = require('../models/Categories');
@@ -24,7 +23,7 @@ router.get('/', async (req, res) => {
         };
 
         const categories = await Categories.find().sort({name: 'asc'}).exec();
-        const blogPostsObj = await getBlogPosts(query, page);
+        const blogPostsObj = await BlogPost.getFrontendPosts(query, page);
         const numberOfPages = blogPostsObj.numberOfPages;
 
         res.render('blog/index.njk', {
@@ -107,7 +106,7 @@ router.get('/category/:slug', async (req, res) => {
             categories: categoryIdStr
         };
 
-        const blogPostsObj = await getBlogPosts(query, page);
+        const blogPostsObj = await BlogPost.getFrontendPosts(query, page);
         const numberOfPages = blogPostsObj.numberOfPages;
 
         const pageTitle = category.name;
@@ -145,7 +144,7 @@ router.get('/tag/:tag', async (req, res) => {
             tags: tag
         };
 
-        const blogPostsObj = await getBlogPosts(query, page);
+        const blogPostsObj = await BlogPost.getFrontendPosts(query, page);
         const numberOfPages = blogPostsObj.numberOfPages;
 
         const pageTitle = tag;
@@ -185,7 +184,7 @@ router.get('/author/:userName', async (req, res) => {
             author: userName
         };
 
-        const blogPostsObj = await getBlogPosts(query, page);
+        const blogPostsObj = await BlogPost.getFrontendPosts(query, page);
         const numberOfPages = blogPostsObj.numberOfPages;
 
         const pageTitle = fullName;
@@ -211,26 +210,5 @@ router.get('/author/:userName', async (req, res) => {
     }
 });
 
-
-async function getBlogPosts(query, page) {
-    const limit = config.blogPostLimit;
-    const blogPosts = await BlogPost.find(query).lt('published', new Date()).sort({published: 'desc'}).skip(page * limit).limit(limit).exec();
-    const count = await BlogPost.find(query).count().exec();
-    const numberOfPages = Math.ceil(count / limit);
-
-    for (const i in blogPosts) {
-        const featuredImage = blogPosts[i].featuredImage;
-        if (featuredImage) {
-            blogPosts[i].mediaFile = await MediaFile.findOne({_id: featuredImage}).exec();
-        }
-    }
-
-    return {
-        blogPosts: blogPosts,
-        numberOfPages: numberOfPages,
-        previousPage: page > 0 ? parseInt(page) - 1 : 0,
-        nextPage: page < (numberOfPages - 1) ? parseInt(page) + 1 : 0
-    };
-}
 
 module.exports = router;

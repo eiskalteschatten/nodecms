@@ -25,32 +25,9 @@ router.get('/', async (req, res) => {
 
     try {
         if (search) {
-            const queryRegex = new RegExp(search, 'i');
-            const categoryIds = ! search ? undefined
-                : await Categories.find().or([
-                    {name: {$regex: queryRegex}},
-                    {slug: {$regex: queryRegex}},
-                    {description: {$regex: queryRegex}}
-                ]).select('_id').exec();
-
-            const categories = categoryIds.map(categoryId => {
-                return categoryId._id + '';
-            });
-
-            const orQuery = [
-                {name: {$regex: queryRegex}},
-                {slug: {$regex: queryRegex}},
-                {excerpt: {$regex: queryRegex}},
-                {markdown: {$regex: queryRegex}},
-                {tags: {$regex: queryRegex}},
-                {author: {$regex: queryRegex}},
-                {status: {$regex: queryRegex}},
-                {categories: {$in: categories}}
-            ];
-
-            blogPosts = await BlogPost.find().or(orQuery).sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
-
-            count = await BlogPost.find().or(orQuery).count().exec();
+            const blogPostsObj = await BlogPost.searchBlogPosts(search, page, limit, false);
+            blogPosts = blogPostsObj.results;
+            count = blogPostsObj.count;
         }
         else {
             blogPosts = await BlogPost.find().sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
