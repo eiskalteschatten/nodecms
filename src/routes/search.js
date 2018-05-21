@@ -56,7 +56,7 @@ router.get('/:resultsType', async (req, res) => {
             searchResults = await searchBlogPosts(query, page, resultsListLimit);
             template = 'search/blogPosts.njk';
             pageTitle = `Blog article search results for "${query}"`;
-            pageId = 'search-results-blog';
+            pageId = 'searchResultsBlog';
             renderVars.blogPosts = searchResults.results;
             renderVars.categories = await Categories.find().sort({name: 'asc'}).exec();
             break;
@@ -65,7 +65,7 @@ router.get('/:resultsType', async (req, res) => {
             searchResults = await searchMedia(query, page, resultsListLimit);
             template = 'search/media.njk';
             pageTitle = `Media file search results for "${query}"`;
-            pageId = 'search-results-media';
+            pageId = 'searchResultsMedia';
             renderVars.mediaFiles = searchResults.results;
             break;
 
