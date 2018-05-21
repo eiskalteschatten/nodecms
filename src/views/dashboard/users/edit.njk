@@ -38,7 +38,10 @@
                 </div>
 
                 <div class="uk-card-footer">
-                    <a href="#" id="deleteUserButton" class="uk-text-large" title="Delete User"><i class="fas fa-trash uk-text-danger"></i></a>
+                    {% if user.userName != req.user.userName %}
+                        <a href="#" id="deleteUserButton" class="uk-text-large" title="Delete User"><i class="fas fa-trash uk-text-danger"></i></a>
+                    {% endif %}
+
                     <div class="uk-align-right">
                         <button class="uk-button uk-button-primary"><i class="fas fa-save text-icon-left"></i>Save</button>
                     </div>
