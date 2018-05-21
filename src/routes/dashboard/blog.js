@@ -135,7 +135,6 @@ router.get('/edit/:slug', async (req, res) => {
             pageId: 'editBlogPost',
             post: blogPost,
             categories: categories,
-            scheduled: blogPost.getStatus() === 'scheduled',
             publishedDate: publishedDate,
             featuredImage: featuredImage,
             breadcrumbs: breadcrumbs
@@ -155,7 +154,6 @@ router.post('/edit', async (req, res) => {
     const status = body.status;
     const currentUser = req.user.userName;
     const isBeingPublished = status === 'published' && body.currentStatus !== 'published';
-    const isBeingScheduled = status === 'scheduled' && body.currentStatus !== 'published';
 
     const setBlogPost = {
         name: body.name,
@@ -173,7 +171,7 @@ router.post('/edit', async (req, res) => {
     if (isBeingPublished) {
         setBlogPost.published = new Date();
     }
-    else if (isBeingScheduled) {
+    else if (status === 'scheduled') {
         setBlogPost.published = new Date(body.scheduledDate);
     }
 

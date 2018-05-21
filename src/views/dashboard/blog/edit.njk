@@ -21,9 +21,9 @@
                         <ul class="uk-iconnav">
                             <li><a href="#" id="toolbarSaveButtton"><i class="fas fa-save"></i></a></li>
 
-                            {% if post.getStatus() == 'published' %}
+                            {% if post and post.getStatus() == 'published' %}
                                 <li><a href="/blog/article/{{ post.slug }}" target="postPreview"><i class="fas fa-eye"></i></a></li>
-                            {% else %}
+                            {% elseif post %}
                                 <li><a href="/dashboard/blog/preview/{{ post.slug }}" target="postPreview"><i class="fas fa-eye"></i></a></li>
                             {% endif %}
 
@@ -37,17 +37,17 @@
 
                     <div>
                         <select id="blogPostStatus" class="uk-select uk-form-small uk-form-width-small" data-status="{{ post.status }}">
-                            <option value="draft" {% if post.status == 'draft' %}selected{% endif %}>Draft</option>
-                            <option value="scheduled" {% if post.status == 'published' and scheduled == true %}selected{% endif %}>Scheduled</option>
-                            <option value="published" {% if post.status == 'published' and scheduled == false %}selected{% endif %}>Published</option>
+                            <option value="draft" {% if post and post.getStatus() == 'draft' %}selected{% endif %}>Draft</option>
+                            <option value="scheduled" {% if post and post.getStatus() == 'scheduled' %}selected{% endif %}>Scheduled</option>
+                            <option value="published" {% if post and post.getStatus() == 'published' %}selected{% endif %}>Published</option>
                         </select>
                     </div>
 
-                    <div id="scheduleForm" {% if scheduled == false %}class="uk-hidden"{% endif %}>
+                    <div id="scheduleForm" {% if not post or post.getStatus() != 'scheduled' %}class="uk-hidden"{% endif %}>
                         <i class="far fa-calendar-alt uk-margin-small-right"></i><input class="uk-input uk-form-small uk-form-width-medium" id="scheduleDateField" value="{{ publishedDate }}" type="text" placeholder="16 September 2025 14:30">
                     </div>
 
-                    {% if post.status == 'published' and publishedDate %}
+                    {% if post and post.getStatus() == 'published' and publishedDate %}
                         <div class="uk-text-small uk-text-muted">
                             <strong>Published:</strong> {{ publishedDate }}
                         </div>
