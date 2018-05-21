@@ -73,7 +73,6 @@ schema.statics.searchMedia = async function(query, page, limit, find={}) {
     }
 
     const count = await this.find(find).or(orQuery).count().exec();
-
     const numberOfPages = Math.ceil(count / limit);
 
     for (const i in mediaFiles) {

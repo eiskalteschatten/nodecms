@@ -35,6 +35,7 @@ schema.statics.searchCategories = async function(query) {
     };
 };
 
+
 const Model = db.model(modelName, schema);
 
 if (Model.on) {
