@@ -109,6 +109,7 @@ router.get('/edit/:slug', async (req, res) => {
         const categories = await Categories.find().exec();
         const featuredImage = blogPost.featuredImage ? await MediaFile.findOne({_id: blogPost.featuredImage}).exec() : '';
 
+        const publishedDateUnformatted = blogPost.published;
         let publishedDate;
 
         if (!blogPost) {
@@ -125,8 +126,8 @@ router.get('/edit/:slug', async (req, res) => {
 
         breadcrumbs[`/dashboard/blog/edit/${slug}`] = pageTitle;
 
-        if (blogPost.published) {
-            publishedDate = helper.formatDate(blogPost.published, 'LLL');
+        if (publishedDateUnformatted) {
+            publishedDate = helper.formatDate(publishedDateUnformatted, 'LLL');
         }
 
         res.render('dashboard/blog/edit.njk', {
@@ -134,6 +135,7 @@ router.get('/edit/:slug', async (req, res) => {
             pageId: 'editBlogPost',
             post: blogPost,
             categories: categories,
+            scheduled: publishedDateUnformatted && publishedDateUnformatted > new Date(),
             publishedDate: publishedDate,
             featuredImage: featuredImage,
             breadcrumbs: breadcrumbs
@@ -153,6 +155,7 @@ router.post('/edit', async (req, res) => {
     const status = body.status;
     const currentUser = req.user.userName;
     const isBeingPublished = status === 'published' && body.currentStatus !== 'published';
+    const isBeingScheduled = status === 'scheduled' && body.currentStatus !== 'published';
 
     const setBlogPost = {
         name: body.name,
@@ -163,12 +166,15 @@ router.post('/edit', async (req, res) => {
         tags: body.tags,
         categories: body.categories,
         lastEditedBy: currentUser,
-        status: status,
+        status: status === 'scheduled' ? 'published' : status,
         featuredImage: body.featuredImage || ''
     };
 
     if (isBeingPublished) {
         setBlogPost.published = new Date();
+    }
+    else if (isBeingScheduled) {
+        setBlogPost.published = new Date(body.scheduledDate);
     }
 
     try {

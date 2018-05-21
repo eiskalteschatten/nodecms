@@ -38,7 +38,16 @@ var _dashboardBlogEditor = {
             _dashboardBlogEditor.notSaved = true;
         });
 
-        _dashboard.simplemdes[0].codemirror.on("change", function(){
+        $('#blogPostStatus').on('change', function() {
+            if ($(this).val() === 'scheduled') {
+                $('#scheduleForm').removeClass('uk-hidden');
+            }
+            else {
+                $('#scheduleForm').addClass('uk-hidden');
+            }
+        });
+
+        _dashboard.simplemdes[0].codemirror.on('change', function(){
             _dashboardBlogEditor.notSaved = true;
         });
     },
@@ -47,6 +56,7 @@ var _dashboardBlogEditor = {
         var name = $('#blogPostName').val();
         var blogPostId = $('#blogPostId').val();
         var currentStatus = $('#blogPostStatus').data('status');
+        var chosenStatus = $('#blogPostStatus').val();
         var currentSlug = $('#blogPostSlug').val();
         var categories = [];
         var tags = $('#tagHidden').val().split(',');
@@ -62,21 +72,27 @@ var _dashboardBlogEditor = {
             categories.push($(this).val());
         });
 
+        var data = {
+            name: name,
+            excerpt: $('#blogPostExcerpt').val(),
+            markdown: _dashboard.simplemdes[0].value(),
+            status: chosenStatus,
+            currentStatus: currentStatus,
+            categories: categories,
+            tags: tags[0] !== '' ? tags : [],
+            featuredImage: $('#featuredImageId').val(),
+            blogPostId: blogPostId
+        };
+
+        if (chosenStatus === 'scheduled') {
+            data.scheduledDate = $('#scheduleDateField').val();
+        }
+
         $.ajax({
             url: '/dashboard/blog/edit',
             method: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({
-                name: name,
-                excerpt: $('#blogPostExcerpt').val(),
-                markdown: _dashboard.simplemdes[0].value(),
-                status: $('#blogPostStatus').val(),
-                currentStatus: currentStatus,
-                categories: categories,
-                tags: tags[0] !== '' ? tags : [],
-                featuredImage: $('#featuredImageId').val(),
-                blogPostId: blogPostId
-            })
+            data: JSON.stringify(data)
         })
         .done(function(post) {
             _messages.show('success', 'Saved successfully.', false);

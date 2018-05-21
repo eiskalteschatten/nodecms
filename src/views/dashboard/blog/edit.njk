@@ -28,6 +28,7 @@
                             {% endif %}
 
                             <li><a href="#" id="toolbarMediaButtton"><i class="fas fa-image"></i></a></li>
+
                             {% if post %}
                                 <li><a href="#" id="toolbarDeleteButtton"><i class="fas fa-trash"></i></a></li>
                             {% endif %}
@@ -37,8 +38,13 @@
                     <div>
                         <select id="blogPostStatus" class="uk-select uk-form-small uk-form-width-small" data-status="{{ post.status }}">
                             <option value="draft" {% if post.status == 'draft' %}selected{% endif %}>Draft</option>
-                            <option value="published" {% if post.status == 'published' %}selected{% endif %}>Published</option>
+                            <option value="scheduled" {% if post.status == 'published' and scheduled == true %}selected{% endif %}>Scheduled</option>
+                            <option value="published" {% if post.status == 'published' and scheduled == false %}selected{% endif %}>Published</option>
                         </select>
+                    </div>
+
+                    <div id="scheduleForm" {% if scheduled == false %}class="uk-hidden"{% endif %}>
+                        <i class="far fa-calendar-alt uk-margin-small-right"></i><input class="uk-input uk-form-small uk-form-width-medium" id="scheduleDateField" value="{{ publishedDate }}" type="text" placeholder="16 September 2025 14:30">
                     </div>
 
                     {% if post.status == 'published' and publishedDate %}
