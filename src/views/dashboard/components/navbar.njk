@@ -34,11 +34,14 @@
     <div class="uk-navbar-right">
         <ul class="uk-navbar-nav">
             <li>
-                <a href="#">{{ req.user.firstName }}<i class="fas fa-caret-down text-icon-right"></i></a>
+                <a href="#">{{ req.user.firstName }}&nbsp;{{ req.user.lastName }}<i class="fas fa-caret-down text-icon-right"></i></a>
                 <div class="uk-navbar-dropdown">
                     <ul class="uk-nav uk-navbar-dropdown-nav">
                         <li {% if pageId == "account" %}class="uk-active"{% endif %}>
-                            <a href="/dashboard/account"><i class="fas fa-user-circle text-icon-left"></i>Account</a>
+                            <a href="/dashboard/users/edit/{{ req.user.userName }}"><i class="fas fa-user-circle text-icon-left"></i>My Account</a>
+                        </li>
+                        <li {% if pageId == "users" %}class="uk-active"{% endif %}>
+                            <a href="/dashboard/users"><i class="fas fa-users text-icon-left"></i>Users</a>
                         </li>
                         <li class="uk-nav-divider"></li>
                         <li>

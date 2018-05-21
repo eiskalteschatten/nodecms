@@ -1,0 +1,63 @@
+{% extends "dashboard/mainBody.njk" %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block content %}
+
+<div class="uk-card uk-card-default">
+    <div class="uk-card-header">
+        <h2 class="uk-card-title"><i class="fas fa-user-plus text-icon-left"></i>Add New User</h2>
+    </div>
+
+    <form id="accountForm" action="/dashboard/users/new" method="post" class="uk-form-horizontal">
+        <div class="uk-card-body">
+            <div class="uk-margin">
+                <label for="firstName" class="uk-form-label">User Name</label>
+                <div class="uk-form-controls">
+                    <input type="text"  name="userName" class="uk-input" placeholder="User Name" required>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label for="firstName" class="uk-form-label">First Name</label>
+                <div class="uk-form-controls">
+                    <input type="text"  name="firstName" class="uk-input" placeholder="First Name" required>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label for="lastName" class="uk-form-label">Last Name</label>
+                <div class="uk-form-controls">
+                    <input type="text" name="lastName" class="uk-input" placeholder="Last Name" required>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label for="emailAddress" class="uk-form-label">Email Address</label>
+                <div class="uk-form-controls">
+                    <input type="email" name="emailAddress" class="uk-input" placeholder="Email Address" required>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label for="password" class="uk-form-label">New Password</label>
+                <div class="uk-form-controls">
+                    <input type="password" name="password" id="password" class="uk-input" placeholder="New Password" required>
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <label for="repeatPassword" class="uk-form-label">Repeat New Password</label>
+                <div class="uk-form-controls">
+                    <input type="password" name="repeatPassword" class="uk-input" placeholder="Repeat New Password" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="uk-card-footer uk-text-right">
+            <button class="uk-button uk-button-primary"><i class="fas fa-edit text-icon-left"></i>Add new user</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

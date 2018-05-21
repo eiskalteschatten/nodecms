@@ -1,0 +1,19 @@
+{% for user in users %}
+    {% set editLink = "/dashboard/users/edit/" + user.userName %}
+
+    <tr>
+        <td class="item-row js-item-row" data-edit-link="{{ editLink }}">
+            {{ user.firstName }}&nbsp;<strong>{{ user.lastName }}</strong>&nbsp;<em class="uk-text-muted uk-text-small">({{ user.userName }})</em>
+        </td>
+        <td class="uk-text-right">
+            <a href="{{ editLink }}" class="uk-margin-small-right"><i class="fas fa-pencil-alt"></i></a>
+        </td>
+    </tr>
+{% else %}
+    <tr>
+        <td>
+            <div class="uk-text-meta">No users could be found.</div>
+        </td>
+        <td></td>
+    </tr>
+{% endfor %}

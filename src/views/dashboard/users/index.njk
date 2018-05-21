@@ -1,0 +1,30 @@
+{% extends "dashboard/mainBody.njk" %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block content %}
+
+    <div class="uk-margin uk-card uk-card-default">
+        <div class="uk-card-header">
+            <div class="uk-child-width-1-2@m uk-grid-small" uk-grid>
+                <div>
+                    <h2 class="uk-card-title"><i class="fas fa-users text-icon-left"></i>{{ pageTitle }}</h2>
+                </div>
+                <div class="uk-text-right">
+                    <a href="/dashboard/users/new" class="uk-button uk-button-secondary"><i class="fas fa-user-plus text-icon-left"></i>Add new user</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="uk-card-body">
+            <table class="uk-table uk-table-middle uk-table-striped">
+                <tbody>
+                    {% include "dashboard/users/tableRows.njk" %}
+                </tbody>
+            </table>
+        </div>
+
+        {% include "dashboard/components/pagination.njk" %}
+    </div>
+
+{% endblock %}

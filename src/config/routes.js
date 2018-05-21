@@ -16,10 +16,10 @@ module.exports = {
         },
         'auth': {
             '/dashboard/': './routes/dashboard/index',
-            '/dashboard/account': './routes/dashboard/account',
             '/dashboard/blog': './routes/dashboard/blog',
             '/dashboard/categories': './routes/dashboard/categories',
             '/dashboard/media': './routes/dashboard/media',
+            '/dashboard/users': './routes/dashboard/users'
         }
     }
 };
