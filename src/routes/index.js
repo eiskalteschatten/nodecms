@@ -2,9 +2,9 @@
 
 const express = require('express');
 const router = express.Router();
-//const cache = require('apicache').middleware;
+const cache = require('apicache').middleware;
 
-router.get('/', async (req, res) => {
+router.get('/', cache('1 minute'), async (req, res) => {
     res.render('home/index.njk', {
         pageId: 'home'
     });

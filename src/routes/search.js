@@ -2,7 +2,6 @@
 
 const express = require('express');
 const router = express.Router();
-// const cache = require('apicache').middleware;
 
 const errorHandling = require('../lib/errorHandling');
 const config = require('../config/config.json');
