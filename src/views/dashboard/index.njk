@@ -27,7 +27,32 @@
                 </div>
             </div>
         </div>
+        <div>
+            <div class="uk-margin uk-card uk-card-default">
+                <div class="uk-card-header">
+                    <h2 class="uk-card-title"><i class="fas fa-image text-icon-left"></i>Media</h2>
+                </div>
+
+                <div class="uk-card-body">
+                    <h3>The latest four media file uploads</h3>
+                    {% include "dashboard/media/thumbnails.njk" %}
+                </div>
+
+                <div class="uk-card-footer uk-text-right">
+                    <a href="/dashboard/media" class="uk-button uk-button-default uk-margin-right">All media files</a>
+                </div>
+            </div>
+        </div>
     </div>
 
+{% endblock %}
 
+{% block javascripts %}
+    {{ super() }}
+
+    <script type="text/javascript">
+        $('.js-media-grid-thumbnail').click(function() {
+            window.location = $(this).data('edit-link');
+        });
+    </script>
 {% endblock %}

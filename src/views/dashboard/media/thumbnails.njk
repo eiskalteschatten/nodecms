@@ -1,4 +1,10 @@
-<div class="uk-child-width-1-2@s uk-child-width-1-4@m uk-child-width-1-6@l" uk-grid>
+{% set gridClasses = 'uk-child-width-1-2@s uk-child-width-1-4@m uk-child-width-1-6@l' %}
+
+{% if mediaFiles | length < 6 %}
+    {% set gridClasses = 'uk-child-width-1-2@s uk-child-width-1-4@m' %}
+{% endif %}
+
+<div class="{{ gridClasses }}" uk-grid>
     {% for mediaFile in mediaFiles %}
         {% set editLink = "/dashboard/media/edit/" + mediaFile.slug %}
 
@@ -46,6 +52,6 @@
             </div>
         </div>
     {% else %}
-        <div class="uk-text-meta">There are no media files at the moment.</div>
+        <div class="uk-text-meta uk-width-expand">There are no media files at the moment.</div>
     {% endfor %}
 </div>

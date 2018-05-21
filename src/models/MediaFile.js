@@ -22,7 +22,9 @@ const schema = new mongoose.Schema({
     timestamps: true
 });
 
-// Can add methods to the schema (http://mongoosejs.com/docs/index.html)
+schema.statics.getLatest = function(limit) {
+    return this.find().sort({updatedAt: 'desc'}).limit(limit).exec();
+};
 
 const Model = db.model(modelName, schema);
 
