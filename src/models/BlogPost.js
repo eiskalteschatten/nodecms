@@ -33,6 +33,17 @@ schema.statics.getLatestPublished = function(limit) {
     return this.find({status: 'published'}).sort({updatedAt: 'desc'}).limit(limit).exec();
 };
 
+schema.methods.getStatus = function() {
+    if (this.status === 'published' && this.published > new Date()) {
+        return 'scheduled';
+    }
+    else if (this.status === 'published') {
+        return 'published';
+    }
+
+    return 'draft';
+};
+
 const Model = db.model(modelName, schema);
 
 if (Model.on) {

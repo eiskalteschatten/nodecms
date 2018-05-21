@@ -21,7 +21,7 @@
                         <ul class="uk-iconnav">
                             <li><a href="#" id="toolbarSaveButtton"><i class="fas fa-save"></i></a></li>
 
-                            {% if post.status == 'published' %}
+                            {% if post.getStatus() == 'published' %}
                                 <li><a href="/blog/article/{{ post.slug }}" target="postPreview"><i class="fas fa-eye"></i></a></li>
                             {% else %}
                                 <li><a href="/dashboard/blog/preview/{{ post.slug }}" target="postPreview"><i class="fas fa-eye"></i></a></li>

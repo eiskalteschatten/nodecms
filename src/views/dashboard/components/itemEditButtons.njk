@@ -1,6 +1,6 @@
 <a href="{{ editLink }}" class="uk-margin-small-right"><i class="fas fa-pencil-alt"></i></a>
 
-{% if post.status == 'published' %}
+{% if post.getStatus() == 'published' %}
     <a href="/blog/article/{{ post.slug }}" target="postPreview"><i class="fas fa-eye"></i></a>
 {% else %}
     <a href="/dashboard/blog/preview/{{ post.slug }}" target="postPreview"><i class="fas fa-eye"></i></a>

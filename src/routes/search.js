@@ -147,7 +147,7 @@ async function searchBlogPosts(query, page, limit) {
         {categories: {$in: categories}}
     ];
 
-    const blogPosts = await BlogPost.find({status: 'published'}).or(orQuery).sort({published: 'desc'}).skip(page * limit).limit(limit).exec();
+    const blogPosts = await BlogPost.find({status: 'published'}).or(orQuery).sort({published: 'desc'}).lt('published', new Date()).skip(page * limit).limit(limit).exec();
     const count = await BlogPost.find().or(orQuery).count().exec();
     const numberOfPages = Math.ceil(count / limit);
 

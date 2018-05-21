@@ -51,12 +51,7 @@ router.get('/article/:slug', async (req, res) => {
     const slug = req.params.slug;
 
     try {
-        const blogPost = await BlogPost.findOne({slug: slug, status: 'published'}).exec();
-        const categories = await Categories.find({_id: {$in: blogPost.categories}}).exec();
-        const featuredImage = blogPost.featuredImage ? await MediaFile.findOne({_id: blogPost.featuredImage}).exec() : '';
-        const author = await User.findOne({userName: blogPost.author}).exec();
-
-        let publishedDate;
+        const blogPost = await BlogPost.findOne({slug: slug, status: 'published'}).lt('published', new Date()).exec();
 
         if (!blogPost) {
             return errorHandling.returnError({
@@ -64,6 +59,12 @@ router.get('/article/:slug', async (req, res) => {
                 message: 'Blog post not found'
             }, res, req);
         }
+
+        const categories = await Categories.find({_id: {$in: blogPost.categories}}).exec();
+        const featuredImage = blogPost.featuredImage ? await MediaFile.findOne({_id: blogPost.featuredImage}).exec() : '';
+        const author = await User.findOne({userName: blogPost.author}).exec();
+
+        let publishedDate;
 
         const pageTitle = blogPost.name;
         const breadcrumbs = {
@@ -213,7 +214,7 @@ router.get('/author/:userName', async (req, res) => {
 
 async function getBlogPosts(query, page) {
     const limit = config.blogPostLimit;
-    const blogPosts = await BlogPost.find(query).sort({published: 'desc'}).skip(page * limit).limit(limit).exec();
+    const blogPosts = await BlogPost.find(query).lt('published', new Date()).sort({published: 'desc'}).skip(page * limit).limit(limit).exec();
     const count = await BlogPost.find(query).count().exec();
     const numberOfPages = Math.ceil(count / limit);
 

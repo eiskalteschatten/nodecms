@@ -135,7 +135,7 @@ router.get('/edit/:slug', async (req, res) => {
             pageId: 'editBlogPost',
             post: blogPost,
             categories: categories,
-            scheduled: publishedDateUnformatted && publishedDateUnformatted > new Date(),
+            scheduled: blogPost.getStatus() === 'scheduled',
             publishedDate: publishedDate,
             featuredImage: featuredImage,
             breadcrumbs: breadcrumbs
