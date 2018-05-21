@@ -2,31 +2,37 @@
     "fileTypes": {
         "image": {
             "fallbackImage": "/img/fallback-images/image.svg",
+            "fallbackImageDashboard": "/img/fallback-images/image.svg",
             "display": "file",
             "thumbnail": "file"
         },
         "pdf": {
             "fallbackImage": "/img/fallback-images/pdf.svg",
+            "fallbackImageDashboard": "/img/fallback-images/pdf.svg",
             "display": "iframe",
             "thumbnail": "fallbackImage"
         },
         "text": {
             "fallbackImage": "/img/fallback-images/file.svg",
+            "fallbackImageDashboard": "/img/fallback-images/file.svg",
             "display": "iframe",
             "thumbnail": "fallbackImage"
         },
         "audio": {
             "fallbackImage": "/img/fallback-images/audio.svg",
+            "fallbackImageDashboard": "/img/fallback-images/audio.svg",
             "display": "file",
             "thumbnail": "fallbackImage"
         },
         "video": {
             "fallbackImage": "/img/fallback-images/video.svg",
+            "fallbackImageDashboard": "/img/fallback-images/video.svg",
             "display": "file",
             "thumbnail": "fallbackImage"
         },
         "other": {
             "fallbackImage": "/img/fallback-images/file.svg",
+            "fallbackImageDashboard": "/img/fallback-images/file.svg",
             "display": "fallbackImage",
             "thumbnail": "fallbackImage"
         }
