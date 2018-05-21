@@ -12,6 +12,7 @@ const config = require('../../config/config.json');
 const BlogPost = require('../../models/BlogPost');
 const Categories = require('../../models/Categories');
 const MediaFile = require('../../models/MediaFile');
+const User = require('../../models/User');
 
 
 router.get('/', async (req, res) => {
@@ -216,6 +217,52 @@ router.delete('/edit', async (req, res) => {
     try {
         await BlogPost.findOneAndRemove({_id: req.body.blogPostId}).exec();
         res.send('ok');
+    }
+    catch(error) {
+        errorHandling.returnError(error, res, req);
+    }
+});
+
+
+router.get('/preview/:slug', async (req, res) => {
+    const slug = req.params.slug;
+
+    try {
+        const blogPost = await BlogPost.findOne({slug: slug}).exec();
+        const categories = await Categories.find({_id: {$in: blogPost.categories}}).exec();
+        const featuredImage = blogPost.featuredImage ? await MediaFile.findOne({_id: blogPost.featuredImage}).exec() : '';
+        const author = await User.findOne({userName: blogPost.author}).exec();
+
+        let publishedDate;
+
+        if (!blogPost) {
+            return errorHandling.returnError({
+                statusCode: 404,
+                message: 'Blog post not found'
+            }, res, req);
+        }
+
+        const pageTitle = blogPost.name;
+        const breadcrumbs = {
+            '/blog': 'Blog'
+        };
+
+        breadcrumbs[`/blog/article/${slug}`] = pageTitle;
+
+        if (blogPost.published) {
+            publishedDate = helper.formatDate(blogPost.published, 'LLL');
+        }
+
+        res.render('blog/article.njk', {
+            pageTitle: pageTitle,
+            pageId: 'blogPost',
+            post: blogPost,
+            categories: categories,
+            author: author,
+            publishedDate: publishedDate,
+            featuredImage: featuredImage,
+            breadcrumbs: breadcrumbs
+        });
     }
     catch(error) {
         errorHandling.returnError(error, res, req);

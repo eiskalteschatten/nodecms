@@ -20,11 +20,6 @@ var _dashboardBlogEditor = {
             _dashboardBlogEditor.save();
         });
 
-        $('#toolbarPreviewButtton').click(function(e) {
-            e.preventDefault();
-            //_dashboardBlogEditor.save();
-        });
-
         $('#toolbarMediaButtton').click(function(e) {
             e.preventDefault();
             window.open('/dashboard/media/select', 'mediaWindow', 'resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no, width=1200, height=800');
