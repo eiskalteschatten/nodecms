@@ -13,20 +13,13 @@ router.get('/', async (req, res) => {
     const limit = 10;
     const page = req.query.page || 0;
     const search = req.query.search;
-    const queryRegex = new RegExp(search, 'i');
     let categories;
     let count;
 
     try {
         if (search) {
-            const orQuery = [
-                {name: {$regex: queryRegex}},
-                {slug: {$regex: queryRegex}},
-                {description: {$regex: queryRegex}}
-            ];
-
-            categories = await Categories.find().or(orQuery).skip(page * limit).limit(limit).exec();
-            count = await Categories.find().or(orQuery).count().exec();
+            const categoriesObj = await Categories.searchCategories(search);
+            categories = categoriesObj.categories;
         }
         else {
             categories = await Categories.find().skip(page * limit).limit(limit).exec();

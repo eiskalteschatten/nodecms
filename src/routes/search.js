@@ -100,7 +100,8 @@ async function renderInitialSearchResults(req, res, query) {
         const blogPostsObj = await BlogPost.searchBlogPosts(query, page, initialSearchLimit);
         const blogPosts = blogPostsObj.results;
 
-        const categories = await searchCategories(query);
+        const categoriesObj = await Categories.searchCategories(query);
+        const categories = categoriesObj.categories;
 
         const mediaFilesObj = await searchMedia(query, page, initialSearchLimit);
         const mediaFiles = mediaFilesObj.results;
@@ -125,19 +126,6 @@ async function renderInitialSearchResults(req, res, query) {
     catch(error) {
         errorHandling.returnError(error, res, req);
     }
-}
-
-
-async function searchCategories(query) {
-    const queryRegex = new RegExp(query, 'i');
-
-    const orQuery = [
-        {name: {$regex: queryRegex}},
-        {slug: {$regex: queryRegex}},
-        {description: {$regex: queryRegex}}
-    ];
-
-    return await Categories.find().or(orQuery).sort({published: 'desc'}).exec();
 }
 
 
