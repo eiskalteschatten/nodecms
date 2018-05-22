@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-//const cache = require('apicache').middleware;
+const cache = require('apicache').middleware;
 const RSS = require('rss');
 
 const errorHandling = require('../lib/errorHandling');
@@ -14,7 +14,7 @@ const Categories = require('../models/Categories');
 const User = require('../models/User');
 
 
-router.get('/', async (req, res) => {
+router.get('/', cache('1 hour'), async (req, res) => {
     try {
         const blogPostsObj = await BlogPost.getFrontendPosts({ status: 'published' });
         const blogPosts = blogPostsObj.blogPosts;
