@@ -37,6 +37,7 @@
     "nunjucks-markdown": "^2.0.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "rss": "^1.2.2",
     "serve-favicon": "~2.3.0",
     "simplemde": "^1.11.2",
     "slug": "^0.9.1",
