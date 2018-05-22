@@ -11,7 +11,14 @@
 
     <div class="uk-margin uk-card uk-card-default">
         <div class="uk-card-header">
-            <h2 class="uk-card-title"><i class="fas fa-edit text-icon-left"></i>{{ pageTitle }}</h2>
+            <div class="uk-child-width-1-2@m uk-grid-small" uk-grid>
+                <div>
+                    <h2 class="uk-card-title"><i class="fas fa-edit text-icon-left"></i>{{ pageTitle }}</h2>
+                </div>
+                <div class="uk-text-right">
+                    <button class="uk-button uk-button-secondary" type="button" uk-toggle="target: #offcanvas-flip"><i class="fas fa-bars text-icon-left"></i>Meta Information</button>
+                </div>
+            </div>
         </div>
 
         <div class="uk-card-body">
@@ -59,46 +66,8 @@
                 </div>
             </div>
 
-            <div class="uk-child-width-1-2 uk-margin-bottom" uk-grid>
-                <div>
-                    <div class="uk-margin">
-                        <input class="uk-input" type="text" id="blogPostName" placeholder="Title" value="{{ post.name }}">
-                    </div>
-                    <div class="uk-margin">
-                        <textarea class="uk-textarea" rows="5" id="blogPostExcerpt" placeholder="Excerpt">{{ post.excerpt }}</textarea>
-                    </div>
-                </div>
-                <div>
-                    <div class="uk-child-width-1-2 uk-margin-bottom" uk-grid>
-                        <div>
-                            <ul uk-tab>
-                                <li class="uk-active"><a href="#">Categories</a></li>
-                                <li><a href="#">Tags</a></li>
-                            </ul>
-
-                            <ul class="uk-switcher uk-margin">
-                                <li>
-                                    {% include "dashboard/components/categorySelection.njk" %}
-                                </li>
-                                <li>
-                                    {% include "dashboard/components/tagSelection.njk" %}
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <div class="uk-h4">Featured Image</div>
-                            <div id="featuredImagePreview">
-                                {% if featuredImage %}
-                                    <img src="{{ featuredImage.fileName | pathToUploads }}" alt="{{ featuredImage.name }}">
-                                {% endif %}
-                            </div>
-                            <input type="hidden" value="{{ post.featuredImage }}" id="featuredImageId">
-                            <button class="uk-button uk-button-default uk-margin-top" id="selectFeaturedImageButton">
-                                <i class="fas fa-image text-icon-left"></i>Select featured image...
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            <div class="uk-margin">
+                <input class="uk-input uk-form-blank uk-form-large" type="text" id="blogPostName" placeholder="Title" value="{{ post.name }}">
             </div>
 
             <div class="uk-child-width-1-2 js-markdown-wrapper" uk-grid>
@@ -114,9 +83,47 @@
 
     <input type="hidden" id="blogPostId" value="{{ post._id }}">
     <input type="hidden" id="blogPostSlug" value="{{ post.slug }}">
+
+    <div id="offcanvas-flip" uk-offcanvas="flip: true; overlay: true">
+        <div class="uk-offcanvas-bar">
+            <button class="uk-offcanvas-close" type="button" uk-close></button>
+
+            <h3>Meta Information</h3>
+
+            <div class="uk-margin">
+                <h4>Excerpt</h4>
+                <textarea class="uk-textarea" rows="5" id="blogPostExcerpt" placeholder="Excerpt">{{ post.excerpt }}</textarea>
+            </div>
+
+            <div class="uk-margin-large">
+                <h4>Categories</h4>
+                {% include "dashboard/components/categorySelection.njk" %}
+            </div>
+
+            <div class="uk-margin-large">
+                <h4>Tags</h4>
+                {% include "dashboard/components/tagSelection.njk" %}
+            </div>
+
+            <div class="uk-margin-large">
+                <h4>Featured Image</h4>
+                <div id="featuredImagePreview">
+                    {% if featuredImage %}
+                        <img src="{{ featuredImage.fileName | pathToUploads }}" alt="{{ featuredImage.name }}">
+                    {% endif %}
+                </div>
+                <input type="hidden" value="{{ post.featuredImage }}" id="featuredImageId">
+                <button class="uk-button uk-button-default uk-margin-top" id="selectFeaturedImageButton">
+                    <i class="fas fa-image text-icon-left"></i>Select featured image...
+                </button>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}
 
 {% block javascripts %}
     {{ super() }}
-    <script type="text/javascript" src="/js/dashboard/blog-editor.js"></script>
+        <script type="text/javascript" src="/js/dashboard/blog-editor.js"></script>
 {% endblock %}
