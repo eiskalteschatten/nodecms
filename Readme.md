@@ -13,6 +13,7 @@ NodeCMS is a content management system based on Node.js that is designed to be p
 - SASS that is automatically compiled
 - A sandbox frontend that is not styled, but includes all blog posts, categories, tags, media files, search, etc
 - User authentication and management for the admin area
+- Build-in RSS feed for blog posts
 - And several more...
 
 
@@ -43,6 +44,7 @@ NodeCMS is a content management system based on Node.js that is designed to be p
 - Can create blog posts with categories, tags, featured images, etc
 - Search in both the dashboard and the frontend
 - Sandbox frontend
+- RSS feed
 
 
 ## Maintainer
