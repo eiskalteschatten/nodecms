@@ -22,7 +22,7 @@
     {% for category in categories %}
         <a href="/blog/category/{{ category.slug }}">{{ category.name }}</a><br>
     {% else %}
-        <div>There are no categories matching your query.</div>
+        <div>No categories were found.</div>
     {% endfor %}
 </div>
 
@@ -43,7 +43,7 @@
             {% endif %}
         </a>
     {% else %}
-        <div>There are no media files matching your query.</div>
+        <div>No media files were found.</div>
     {% endfor %}
     <a href="/search/media/?query={{ query }}">Show all media files</a>
 </div>
