@@ -82,7 +82,7 @@ var _dashboardBlogEditor = {
             categories: categories,
             tags: tags[0] !== '' ? tags : [],
             featuredImage: $('#featuredImageId').val(),
-            postType: $('#blogPostType').val(),
+            postType: $('#blogPostType').val()
         };
 
         if (chosenStatus === 'scheduled') {

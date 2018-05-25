@@ -89,7 +89,7 @@ schema.statics.searchBlogPosts = async function(query, page, limit, published=tr
         blogPosts = await this.find({status: 'published', postType: postType}).or(orQuery).sort({published: 'desc'}).lt('published', new Date()).skip(page * limit).limit(limit).exec();
     }
     else {
-        blogPosts = await this.find().or(orQuery).sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
+        blogPosts = await this.find({postType: postType}).or(orQuery).sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
     }
 
     const count = await this.find().or(orQuery).count().exec();
