@@ -92,6 +92,13 @@ schema.statics.searchBlogPosts = async function(query, page, limit, published=tr
         blogPosts = await this.find({postType: postType}).or(orQuery).sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
     }
 
+    for (const i in blogPosts) {
+        const featuredImage = blogPosts[i].featuredImage;
+        if (featuredImage) {
+            blogPosts[i].mediaFile = await MediaFile.findOne({_id: featuredImage}).exec();
+        }
+    }
+
     const count = await this.find().or(orQuery).count().exec();
     const numberOfPages = Math.ceil(count / limit);
 
