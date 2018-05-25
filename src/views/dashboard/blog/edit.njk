@@ -95,6 +95,14 @@
                 <textarea class="uk-textarea" rows="5" id="blogPostExcerpt" placeholder="Excerpt">{{ post.excerpt }}</textarea>
             </div>
 
+            <h3>Post Type</h3>
+
+            <select id="blogPostType" class="uk-select">
+                {% for type, name in postTypes %}
+                    <option value="{{ type }}" {% if type == post.postType %}selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+            </select>
+
             <div class="uk-margin-large">
                 <h4>Categories</h4>
                 {% include "dashboard/components/categorySelection.njk" %}

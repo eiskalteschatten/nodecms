@@ -7,6 +7,7 @@ const marked = require('marked');
 const errorHandling = require('../../lib/errorHandling');
 const helper = require('../../lib/helper');
 const config = require('../../config/config.json');
+const postTypes = require('../../config/postTypes.json');
 
 const BlogPost = require('../../models/BlogPost');
 const Categories = require('../../models/Categories');
@@ -29,7 +30,7 @@ router.get('/', async (req, res) => {
             count = blogPostsObj.count;
         }
         else {
-            blogPosts = await BlogPost.find().sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
+            blogPosts = await BlogPost.find({postType: 'blog'}).sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
             count = await BlogPost.find().count().exec();
         }
 
@@ -65,6 +66,7 @@ router.get('/new', async (req, res) => {
             pageTitle: pageTitle,
             pageId: 'newBlogPost',
             categories: categories,
+            postTypes: postTypes,
             breadcrumbs: {
                 '/dashboard/blog': 'Blog',
                 '/dashboard/blog/new': pageTitle,
@@ -113,6 +115,7 @@ router.get('/edit/:slug', async (req, res) => {
             categories: categories,
             publishedDate: publishedDate,
             featuredImage: featuredImage,
+            postTypes: postTypes,
             breadcrumbs: breadcrumbs
         });
     }
@@ -141,7 +144,8 @@ router.post('/edit', async (req, res) => {
         categories: body.categories,
         lastEditedBy: currentUser,
         status: status === 'scheduled' ? 'published' : status,
-        featuredImage: body.featuredImage || ''
+        featuredImage: body.featuredImage || '',
+        postType: body.postType
     };
 
     if (isBeingPublished) {

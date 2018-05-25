@@ -23,7 +23,8 @@ const schema = new mongoose.Schema({
     lastEditedBy: String,
     status: String,
     published: Date,
-    featuredImage: String
+    featuredImage: String,
+    postType: String
 },
 {
     collection: 'blogPost',
@@ -32,8 +33,8 @@ const schema = new mongoose.Schema({
 });
 
 
-schema.statics.getLatest = function(limit) {
-    return this.find().sort({updatedAt: 'desc'}).limit(limit).exec();
+schema.statics.getLatest = function(limit, postType='blog') {
+    return this.find({postType: postType}).sort({updatedAt: 'desc'}).limit(limit).exec();
 };
 
 
@@ -59,7 +60,7 @@ schema.statics.getFrontendPosts = async function(query, page) {
 };
 
 
-schema.statics.searchBlogPosts = async function(query, page, limit, published=true) {
+schema.statics.searchBlogPosts = async function(query, page, limit, published=true, postType='blog') {
     const queryRegex = new RegExp(query, 'i');
     const categoryIds = await Categories.find().or([
         {name: {$regex: queryRegex}},
@@ -85,7 +86,7 @@ schema.statics.searchBlogPosts = async function(query, page, limit, published=tr
     let blogPosts;
 
     if (published) {
-        blogPosts = await this.find({status: 'published'}).or(orQuery).sort({published: 'desc'}).lt('published', new Date()).skip(page * limit).limit(limit).exec();
+        blogPosts = await this.find({status: 'published', postType: postType}).or(orQuery).sort({published: 'desc'}).lt('published', new Date()).skip(page * limit).limit(limit).exec();
     }
     else {
         blogPosts = await this.find().or(orQuery).sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();

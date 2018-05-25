@@ -19,7 +19,8 @@ router.get('/', cache('1 minute'), async (req, res) => {
 
     try {
         const query = {
-            status: 'published'
+            status: 'published',
+            postType: 'blog'
         };
 
         const categories = await Categories.find().sort({name: 'asc'}).exec();
@@ -103,7 +104,8 @@ router.get('/category/:slug', cache('1 minute'), async (req, res) => {
 
         const query = {
             status: 'published',
-            categories: categoryIdStr
+            categories: categoryIdStr,
+            postType: 'blog'
         };
 
         const blogPostsObj = await BlogPost.getFrontendPosts(query, page);
@@ -141,7 +143,8 @@ router.get('/tag/:tag', cache('1 minute'), async (req, res) => {
     try {
         const query = {
             status: 'published',
-            tags: tag
+            tags: tag,
+            postType: 'blog'
         };
 
         const blogPostsObj = await BlogPost.getFrontendPosts(query, page);
@@ -181,7 +184,8 @@ router.get('/author/:userName', cache('1 minute'), async (req, res) => {
 
         const query = {
             status: 'published',
-            author: userName
+            author: userName,
+            postType: 'blog'
         };
 
         const blogPostsObj = await BlogPost.getFrontendPosts(query, page);

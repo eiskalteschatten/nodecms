@@ -73,6 +73,7 @@ var _dashboardBlogEditor = {
         });
 
         var data = {
+            blogPostId: blogPostId,
             name: name,
             excerpt: $('#blogPostExcerpt').val(),
             markdown: _dashboard.simplemdes[0].value(),
@@ -81,7 +82,7 @@ var _dashboardBlogEditor = {
             categories: categories,
             tags: tags[0] !== '' ? tags : [],
             featuredImage: $('#featuredImageId').val(),
-            blogPostId: blogPostId
+            postType: $('#blogPostType').val(),
         };
 
         if (chosenStatus === 'scheduled') {
