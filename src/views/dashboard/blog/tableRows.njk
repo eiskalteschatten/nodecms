@@ -6,6 +6,13 @@
             {{ post.name }} <em class="uk-text-muted uk-text-small">({{ post.getStatus() }})</em>
             <div class="uk-text-meta">{{ post.excerpt }}</div>
         </td>
+
+        {% if postTypes %}
+            <td class="uk-text-right">
+                {{ postTypes[post.postType] }}
+            </td>
+        {% endif %}
+
         <td class="uk-text-right">
             {% include "dashboard/components/itemEditButtons.njk" %}
         </td>
@@ -15,6 +22,9 @@
         <td>
             <div class="uk-text-meta">There are no blog posts.</div>
         </td>
+        {% if postTypes %}
+            <td></td>
+        {% endif %}
         <td></td>
     </tr>
 {% endfor %}

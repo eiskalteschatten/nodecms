@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
             count = blogPostsObj.count;
         }
         else {
-            blogPosts = await BlogPost.find({postType: 'blog'}).sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
+            blogPosts = await BlogPost.find().sort({updatedAt: 'desc'}).skip(page * limit).limit(limit).exec();
             count = await BlogPost.find().count().exec();
         }
 
@@ -40,6 +40,7 @@ router.get('/', async (req, res) => {
             pageTitle: pageTitle,
             pageId: pageTitle.toLowerCase(),
             blogPosts: blogPosts,
+            postTypes: postTypes,
             numberOfPages: numberOfPages,
             page: page,
             previousPage: helper.calculatePreviousPage(page),

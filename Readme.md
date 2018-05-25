@@ -36,7 +36,7 @@ NodeCMS is a content management system based on Node.js that is designed to be p
 
 ### 1.0.0
 
-22 May 2018
+25 May 2018
 
 - Initial version
 - Can create and manage users for the dashboard
