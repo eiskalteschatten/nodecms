@@ -9,7 +9,8 @@ function returnError(error, res) {
         res.status(error.statusCode).send(error.message);
     }
     else {
+        const errorMessage = error.message || 'An error occurred.';
         console.error(error);
-        res.status(500).send('An error occurred.');
+        res.status(500).send(errorMessage);
     }
 }
