@@ -16,7 +16,7 @@ const User = require('../models/User');
 
 router.get('/', cache('1 hour'), async (req, res) => {
     try {
-        const blogPostsObj = await BlogPost.getFrontendPosts({ status: 'published' });
+        const blogPostsObj = await BlogPost.getFrontendPosts({ status: 'published', postType: 'blog' });
         const blogPosts = blogPostsObj.blogPosts;
 
         const feed = new RSS({
