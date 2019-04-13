@@ -13,4 +13,4 @@ cache:
 lint:
     image: node:11-alpine
     stage: lint
-    script: "npm install && npm run lint"
+    script: "npm ci && npm run lint"
