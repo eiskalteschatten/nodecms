@@ -1,0 +1,16 @@
+image: docker:latest
+
+services:
+    - docker:dind
+
+stages:
+    - lint
+
+cache:
+    paths:
+     - node_modules
+
+lint:
+    image: node:11-alpine
+    stage: lint
+    script: "npm ci && npm run lint"
