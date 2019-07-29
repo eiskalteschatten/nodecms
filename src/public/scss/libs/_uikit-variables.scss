@@ -466,6 +466,39 @@ $heading-line-height: $heading-line-border-width !default;
 $heading-line-width: 2000px !default;
 $heading-line-border: $global-border !default;
 $heading-line-margin-horizontal: 0.6em !default;
+$heading-medium-font-size-l:                     4rem !default;                                   // 64px
+$heading-large-font-size-l:                      6rem !default;                                   // 96px
+$heading-xlarge-font-size-l:                     8rem !default;                                   // 128px
+$heading-2xlarge-font-size-l:                    11rem !default;                                  // 176px
+$heading-small-font-size-m:                      $heading-medium-font-size-l * 0.8125 !default;   // 3.25rem / 52px
+$heading-medium-font-size-m:                     $heading-medium-font-size-l * 0.875 !default;    // 3.5rem / 56px
+$heading-large-font-size-m:                      $heading-medium-font-size-l !default;            // 4rem / 64px
+$heading-xlarge-font-size-m:                     $heading-large-font-size-l !default;             // 6rem / 96px
+$heading-2xlarge-font-size-m:                    $heading-xlarge-font-size-l !default;            // 8rem / 128px
+$heading-small-font-size:                        $heading-small-font-size-m * 0.8 !default;      // 38px 0.73
+$heading-medium-font-size:                       $heading-medium-font-size-m * 0.825 !default;     // 40px 0.714
+$heading-large-font-size:                        $heading-large-font-size-m * 0.85 !default;      // 50px 0.78
+$heading-xlarge-font-size:                       $heading-large-font-size-m !default;             // 4rem / 64px
+$heading-2xlarge-font-size:                      $heading-xlarge-font-size-m !default;            // 6rem / 96px
+$heading-small-line-height:                      1.2 !default;
+$heading-medium-line-height:                     1.1 !default;
+$heading-large-line-height:                      1.1 !default;
+$heading-xlarge-line-height:                     1 !default;
+$heading-2xlarge-line-height:                    1 !default;
+$heading-divider-padding-bottom:                 unquote('calc(5px + 0.1em)') !default;
+$heading-divider-border-width:                   unquote('calc(0.2px + 0.05em)') !default;
+$heading-divider-border:                         $global-border !default;
+$heading-bullet-top:                             unquote('calc(-0.1 * 1em)') !default;
+$heading-bullet-height:                          unquote('calc(4px + 0.7em)') !default;
+$heading-bullet-margin-right:                    unquote('calc(5px + 0.2em)') !default;
+$heading-bullet-border-width:                    unquote('calc(5px + 0.1em)') !default;
+$heading-bullet-border:                          $global-border !default;
+$heading-line-top:                               50% !default;
+$heading-line-height:                            $heading-line-border-width !default;
+$heading-line-width:                             2000px !default;
+$heading-line-border-width:                      unquote('calc(0.2px + 0.05em)') !default;
+$heading-line-border:                            $global-border !default;
+$heading-line-margin-horizontal:                 unquote('calc(5px + 0.3em)') !default;
 $inverse-heading-divider-border: $inverse-global-border !default;
 $inverse-heading-bullet-border: $inverse-global-border !default;
 $inverse-heading-line-border: $inverse-global-border !default;
@@ -984,6 +1017,7 @@ $width-large-width: 450px !default;
 $width-xlarge-width: 600px !default;
 $width-xxlarge-width: 750px !default;
 $accordion-icon-color: $global-color !default;
+$accordion-icon-margin-left: $global-margin;
 $internal-accordion-open-image: "data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2213%22%20height%3D%2213%22%20viewBox%3D%220%200%2013%2013%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Crect%20fill%3D%22#000%22%20width%3D%2213%22%20height%3D%221%22%20x%3D%220%22%20y%3D%226%22%20%2F%3E%0A%3C%2Fsvg%3E" !default;
 $internal-accordion-close-image: "data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2213%22%20height%3D%2213%22%20viewBox%3D%220%200%2013%2013%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Crect%20fill%3D%22#000%22%20width%3D%2213%22%20height%3D%221%22%20x%3D%220%22%20y%3D%226%22%20%2F%3E%0A%20%20%20%20%3Crect%20fill%3D%22#000%22%20width%3D%221%22%20height%3D%2213%22%20x%3D%226%22%20y%3D%220%22%20%2F%3E%0A%3C%2Fsvg%3E" !default;
 $alert-close-opacity: 0.4 !default;

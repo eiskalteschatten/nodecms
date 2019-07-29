@@ -11,6 +11,6 @@ cache:
      - node_modules
 
 lint:
-    image: node:11-alpine
+    image: node:12-alpine
     stage: lint
     script: "npm ci && npm run lint"
